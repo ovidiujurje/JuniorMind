@@ -14,7 +14,8 @@ namespace Trains
         }
         float CalculateDistanceCoveredByBird(float initialDistance)
         {
-            return initialDistance - initialDistance / 4;
+            float distanceCoveredByTrainsBeforeBirdStarts = initialDistance / 4;
+            return initialDistance - distanceCoveredByTrainsBeforeBirdStarts;
         }
     }
 }
