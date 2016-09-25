@@ -21,8 +21,8 @@ namespace Trains
             float CalculateDistanceCoveredByBird(float initialDistance)
         {
             float distanceCoveredByTrainsBeforeBirdStarts = initialDistance / 4;
-            //aici nu inteleg exact din enunt daca fiecare tren parcurge cate o patrime
-            //din distanta sau amandoua impreuna parcurg o patrime
+            // aici nu inteleg exact din enunt daca fiecare tren parcurge cate o patrime
+            // din distanta sau amandoua impreuna parcurg o patrime
             return initialDistance - distanceCoveredByTrainsBeforeBirdStarts;
         }
     }
