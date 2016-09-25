@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trains", "Trains\Trains.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goats", "Goats\Goats.csproj", "{8F852AE0-8D30-4160-8FF2-1B4F6DAC96CA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mushrooms", "Mushrooms\Mushrooms.csproj", "{EE6E4327-5876-40DD-B7FD-EC92BA8FBF60}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{8F852AE0-8D30-4160-8FF2-1B4F6DAC96CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F852AE0-8D30-4160-8FF2-1B4F6DAC96CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F852AE0-8D30-4160-8FF2-1B4F6DAC96CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE6E4327-5876-40DD-B7FD-EC92BA8FBF60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE6E4327-5876-40DD-B7FD-EC92BA8FBF60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE6E4327-5876-40DD-B7FD-EC92BA8FBF60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE6E4327-5876-40DD-B7FD-EC92BA8FBF60}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
