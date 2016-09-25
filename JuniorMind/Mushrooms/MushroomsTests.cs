@@ -14,7 +14,8 @@ namespace Mushrooms
         }
         float CalculateNumberOfRedMushrooms(uint nMushrooms, float xMoreRedThanWhiteMushrooms)
         {
-            return xMoreRedThanWhiteMushrooms * nMushrooms / (xMoreRedThanWhiteMushrooms + 1);
+            float factorForRedMushrooms = xMoreRedThanWhiteMushrooms / (xMoreRedThanWhiteMushrooms + 1);
+            return factorForRedMushrooms * nMushrooms;
         }
     }
 }
