@@ -4,11 +4,17 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Goats
 {
     [TestClass]
-    public class UnitTest1
+    public class GoatsTests
     {
         [TestMethod]
-        public void TestMethod1()
+        public void HayForTwoGoatsInTwoDays()
         {
+            float hay = CalculateHayEatenByQGoatsInWDays(1, 2, 2, 2, 2);
+            Assert.AreEqual(4, hay);
+        }
+        float CalculateHayEatenByQGoatsInWDays(float xDays, uint yGoats, float zKgOfHay, float wDays, uint qGoats)
+        {
+            return wDays / xDays * qGoats / yGoats * zKgOfHay;
         }
     }
 }
