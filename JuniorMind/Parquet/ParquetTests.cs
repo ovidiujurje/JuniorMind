@@ -18,7 +18,9 @@ namespace Parquet
             float lossInWidthFromEachParquetPiece = 0.15f * bParquetPieceWidth;
             float remainingParquetPieceLength = aParquetPieceLength - lossInLengthFromEachParquetPiece;
             float remainingParquetPieceWidth = bParquetPieceWidth - lossInWidthFromEachParquetPiece;
-            return nRoomLength / remainingParquetPieceLength * mRoomWidth / remainingParquetPieceWidth;
+            float parquetRequiredLengthwise = nRoomLength / remainingParquetPieceLength;
+            float parquetRequiredWidthwise = mRoomWidth / remainingParquetPieceWidth;
+            return parquetRequiredLengthwise * parquetRequiredWidthwise;
         }
     }
 }
