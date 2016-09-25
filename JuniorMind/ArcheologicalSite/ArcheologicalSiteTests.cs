@@ -12,6 +12,12 @@ namespace ArcheologicalSite
             double area = CalculateMinimumBuildingArea(1, 1, 2, 2, 3, 3);
             Assert.AreEqual(0, area);
         }
+        [TestMethod]
+        public void MinimumAreaCondition2()
+        {
+            double area = CalculateMinimumBuildingArea(1, 2, 1, 5, 5, 2);
+            Assert.AreEqual(6, area);
+        }
         double CalculateMinimumBuildingArea(float latitudeColumnA, float longitudeColumnA, float latitudeColumnB, float longitudeColumnB, float latitudeColumnC, float longitudeColumnC)
         {
             double distanceFromAToB = Math.Sqrt((latitudeColumnA - latitudeColumnB) * (latitudeColumnA - latitudeColumnB) + (longitudeColumnA - longitudeColumnB) * (longitudeColumnA - longitudeColumnB));
