@@ -14,7 +14,9 @@ namespace Parquet
         }
         float CalculateNumberOfParquetPiecesRequiredForRoom(float nRoomLength, float mRoomWidth, float aParquetPieceLength, float bParquetPieceWidth)
         {
-            return nRoomLength / (aParquetPieceLength - 0.15f * aParquetPieceLength) * mRoomWidth / (bParquetPieceWidth - 0.15f * bParquetPieceWidth);
+            float lossInLengthFromEachParquetPiece = 0.15f * aParquetPieceLength;
+            float lossInWidthFromEachParquetPiece = 0.15f * bParquetPieceWidth;
+            return nRoomLength / (aParquetPieceLength - lossInLengthFromEachParquetPiece) * mRoomWidth / (bParquetPieceWidth - lossInWidthFromEachParquetPiece);
         }
     }
 }
