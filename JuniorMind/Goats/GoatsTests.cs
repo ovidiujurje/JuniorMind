@@ -12,7 +12,13 @@ namespace Goats
             float hay = CalculateHayEatenByQGoatsInWDays(1, 2, 2, 2, 2);
             Assert.AreEqual(4, hay);
         }
-        float CalculateHayEatenByQGoatsInWDays(float xDays, uint yGoats, float zKgOfHay, float wDays, uint qGoats)
+        [TestMethod]
+        public void HayForThreeGoatsInTwoDays()
+        {
+            float hay = CalculateHayEatenByQGoatsInWDays(8, 6, 40, 2, 3);
+            Assert.AreEqual(5, hay);
+        }
+        float CalculateHayEatenByQGoatsInWDays(float xDays, uint yGoats, float zKgOfHay, float wDays, float qGoats)
         {
             float factorIncreaseInDays = wDays / xDays;
             float factorIncreaseInGoats = qGoats / yGoats;
