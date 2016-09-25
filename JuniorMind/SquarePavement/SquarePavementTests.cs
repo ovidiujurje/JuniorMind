@@ -14,7 +14,9 @@ namespace SquarePavement
         }
         double CalculateCubicStonesRequiredToPaveSquare(float mSquareLength, float nSquareWidth, float aStoneLengthWidth)
         {
-            return Math.Ceiling(mSquareLength / aStoneLengthWidth) * Math.Ceiling(nSquareWidth / aStoneLengthWidth);
+            double stonesRequiredLengthwise = Math.Ceiling(mSquareLength / aStoneLengthWidth);
+            double stonesRequiredWidthwise = Math.Ceiling(nSquareWidth / aStoneLengthWidth);
+            return stonesRequiredLengthwise * stonesRequiredWidthwise;
         }
     }
 }
