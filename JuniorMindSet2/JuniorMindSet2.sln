@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaxiFare", "TaxiFare\TaxiFa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Watermelon", "Watermelon\Watermelon.csproj", "{F3CF0A63-12E7-4A46-97F3-19A6CAC76466}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FizzBuzz", "FizzBuzz\FizzBuzz.csproj", "{1EDBB8EB-452E-49AC-945A-4B0E6A0899AD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{F3CF0A63-12E7-4A46-97F3-19A6CAC76466}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3CF0A63-12E7-4A46-97F3-19A6CAC76466}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3CF0A63-12E7-4A46-97F3-19A6CAC76466}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EDBB8EB-452E-49AC-945A-4B0E6A0899AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EDBB8EB-452E-49AC-945A-4B0E6A0899AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EDBB8EB-452E-49AC-945A-4B0E6A0899AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EDBB8EB-452E-49AC-945A-4B0E6A0899AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

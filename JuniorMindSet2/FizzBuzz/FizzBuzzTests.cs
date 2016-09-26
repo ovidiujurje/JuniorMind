@@ -4,11 +4,16 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace FizzBuzz
 {
     [TestClass]
-    public class UnitTest1
+    public class FizzBuzzTests
     {
         [TestMethod]
-        public void TestMethod1()
+        public void DoFizzForMultipleOfThree()
         {
+            Assert.AreEqual("Fizz", DoFizzOrBuzzOrBoth(3));
+        }
+        string DoFizzOrBuzzOrBoth(int number)
+        {
+            return "Fizz";
         }
     }
 }
