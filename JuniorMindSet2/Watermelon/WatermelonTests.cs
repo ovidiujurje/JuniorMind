@@ -20,6 +20,11 @@ namespace Watermelon
         string CalculateIfWatermelonCanBeDividedInTwoEvenNumbersOfKgs(int xMelonWeight)
         {
             int melonRemainderAfterSplit = xMelonWeight % 2;
+            return PossibleToSplitOrNot(melonRemainderAfterSplit);
+        }
+
+        private static string PossibleToSplitOrNot(int melonRemainderAfterSplit)
+        {
             return melonRemainderAfterSplit == 0 ? "DA" : "NU";
         }
     }
