@@ -20,11 +20,15 @@ namespace ArcheologicalSite
         }
         double CalculateMinimumBuildingArea(float latitudeColumnA, float longitudeColumnA, float latitudeColumnB, float longitudeColumnB, float latitudeColumnC, float longitudeColumnC)
         {
-            double distanceFromAToB = Math.Sqrt((latitudeColumnA - latitudeColumnB) * (latitudeColumnA - latitudeColumnB) + (longitudeColumnA - longitudeColumnB) * (longitudeColumnA - longitudeColumnB));
-            double distanceFromBToC = Math.Sqrt((latitudeColumnB - latitudeColumnC) * (latitudeColumnB - latitudeColumnC) + (longitudeColumnB - longitudeColumnC) * (longitudeColumnB - longitudeColumnC));
-            double distanceFromCtoA = Math.Sqrt((latitudeColumnC - latitudeColumnA) * (latitudeColumnC - latitudeColumnA) + (longitudeColumnC - longitudeColumnA) * (longitudeColumnC - longitudeColumnA));
+            double distanceFromAToB = DistanceBetweenTwoPoints(latitudeColumnA, longitudeColumnA, latitudeColumnB, longitudeColumnB);
+            double distanceFromBToC = DistanceBetweenTwoPoints(latitudeColumnB, longitudeColumnB, latitudeColumnC, longitudeColumnC);
+            double distanceFromCtoA = DistanceBetweenTwoPoints(latitudeColumnA, longitudeColumnA, latitudeColumnC, longitudeColumnC);
             double semiPerimeter = (distanceFromAToB + distanceFromBToC + distanceFromCtoA) / 2;
             return Math.Sqrt(semiPerimeter * (semiPerimeter - distanceFromAToB) * (semiPerimeter - distanceFromBToC) * (semiPerimeter - distanceFromCtoA));
+        }
+        double DistanceBetweenTwoPoints (float latitudeX, float longitudeX, float latitudeY, float longitudeY)
+        {
+            return Math.Sqrt((latitudeX - latitudeY) * (latitudeX - latitudeY) + (longitudeX - longitudeY) * (longitudeX - longitudeY));
         }
     }
 }
