@@ -9,11 +9,20 @@ namespace FizzBuzz
         [TestMethod]
         public void DoFizzForMultipleOfThree()
         {
-            Assert.AreEqual("Fizz", DoFizzOrBuzzOrBoth(3));
+            Assert.AreEqual("Fizz", DoFizzOrBuzzOrBoth(9));
+        }
+        [TestMethod]
+        public void DoBuzzForMultipleOfFive()
+        {
+            Assert.AreEqual("Buzz", DoFizzOrBuzzOrBoth(20));
         }
         string DoFizzOrBuzzOrBoth(int number)
         {
-            return "Fizz";
+            if (number % 3 == 0)
+                return "Fizz";
+            if (number % 5 == 0)
+                return "Buzz";
+            return "";
         }
     }
 }
