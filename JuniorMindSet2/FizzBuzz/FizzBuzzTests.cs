@@ -23,11 +23,13 @@ namespace FizzBuzz
         }
         string DoFizzOrBuzzOrBoth(int number)
         {
-            if (number % 3 == 0 && number % 5 == 0)
+            int numberRemainderThree = number % 3;
+            int numberRemainderFive = number % 5;
+            if (numberRemainderThree == 0 && numberRemainderFive == 0)
                 return "FizzBuzz";
-            if (number % 3 == 0)
+            if (numberRemainderThree == 0)
                 return "Fizz";
-            if (number % 5 == 0)
+            if (numberRemainderFive == 0)
                 return "Buzz";
             return "";
         }
