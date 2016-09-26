@@ -18,9 +18,14 @@ namespace Debt
         }
         decimal CalculateTotalDebt(decimal rent, int daysLate)
         {
-            decimal percentPenalty = daysLate > 10 ? 0.05m : 0.02m;
+            decimal percentPenalty = IsModeratelyLate(daysLate) ? 0.05m : 0.02m;
             decimal penalty = rent * percentPenalty * daysLate;
             return rent + penalty;
+        }
+
+        private static bool IsModeratelyLate(int daysLate)
+        {
+            return daysLate > 10;
         }
     }
 }
