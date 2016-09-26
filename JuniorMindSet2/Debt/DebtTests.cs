@@ -13,7 +13,8 @@ namespace Debt
         }
         decimal CalculateTotalDebt(decimal rent, int daysLate)
         {
-            return rent + rent * 0.02m * daysLate ;
+            decimal penalty = rent * 0.02m * daysLate;
+            return rent +  penalty;
         }
     }
 }
