@@ -31,7 +31,11 @@ namespace TaxiFare
         {
             Assert.AreEqual(210, CalculateTaxiFare(21, 21));
         }
-
+        [TestMethod]
+        public void NighttimeFareForLongDistances()
+        {
+            Assert.AreEqual(800, CalculateTaxiFare(100, 21));
+        }
         decimal CalculateTaxiFare(int distanceInKm, int hour)
         {
             decimal[] prices = GetPrices(hour);
