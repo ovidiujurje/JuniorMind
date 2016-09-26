@@ -16,11 +16,25 @@ namespace Debt
         {
             Assert.AreEqual(200, CalculateTotalDebt(100, 20));
         }
+        [TestMethod]
+        public void RentThirtyFiveDaysLate()
+        {
+            Assert.AreEqual(450, CalculateTotalDebt(100, 35));
+        }
         decimal CalculateTotalDebt(decimal rent, int daysLate)
         {
-            decimal percentPenalty = IsModeratelyLate(daysLate) ? 0.05m : 0.02m;
+            decimal percentPenalty = 0.02m;
+            if (IsVeryLate(daysLate))
+                percentPenalty = 0.10m;
+            else if (IsModeratelyLate(daysLate))
+                percentPenalty = 0.05m;
             decimal penalty = rent * percentPenalty * daysLate;
             return rent + penalty;
+        }
+
+        private bool IsVeryLate(int daysLate)
+        {
+            return daysLate > 30;
         }
 
         private static bool IsModeratelyLate(int daysLate)
