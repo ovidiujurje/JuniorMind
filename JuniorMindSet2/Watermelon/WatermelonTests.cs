@@ -7,20 +7,24 @@ namespace Watermelon
     public class WatermelonTests
     {
         [TestMethod]
-        public void DivisionPossibilityForEvenNumberOfKg()
+        public void DivisionPossibilityForTwoKg()
         {
-            Assert.AreEqual("DA" ,CalculateIfWatermelonCanBeDividedInTwoEvenNumbersOfKgs(2));
+            Assert.AreEqual("NU" ,CalculateIfWatermelonCanBeDividedInTwoEvenNumbersOfKgs(2));
         }
         [TestMethod]
         public void DivisionPossibilityForOddNumberOfKg()
         {
             Assert.AreEqual("NU", CalculateIfWatermelonCanBeDividedInTwoEvenNumbersOfKgs(7));
         }
-
+        [TestMethod]
+        public void DivisionPossibilityForEvenNumberOfKg()
+        {
+            Assert.AreEqual("DA", CalculateIfWatermelonCanBeDividedInTwoEvenNumbersOfKgs(8));
+        }
         string CalculateIfWatermelonCanBeDividedInTwoEvenNumbersOfKgs(int xMelonWeight)
         {
             int melonRemainderAfterSplit = xMelonWeight % 2;
-            return melonRemainderAfterSplit == 0 ? "DA" : "NU";
+            return melonRemainderAfterSplit == 0 && xMelonWeight > 2 ? "DA" : "NU";
         }
     }
 }
