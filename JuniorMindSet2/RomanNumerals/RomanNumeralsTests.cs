@@ -33,32 +33,16 @@ namespace RomanNumerals
         }
         string ConvertNumberToRomanNumeral(int number)
         {
-            string[] romanNr = { "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I" };
-            int[] arabicNr = { 100, 90, 50, 40, 10, 9, 5, 4, 1 };
             string romanNumeral = string.Empty;
-            AddRomanSubtractFromNumber(ref number, romanNr, arabicNr, ref romanNumeral, 0);
-            AddRomanSubtractFromNumber(ref number, romanNr, arabicNr, ref romanNumeral, 1);
-            AddRomanSubtractFromNumber(ref number, romanNr, arabicNr, ref romanNumeral, 2);
-            AddRomanSubtractFromNumber(ref number, romanNr, arabicNr, ref romanNumeral, 3);
-            AddRomanSubtractFromNumber(ref number, romanNr, arabicNr, ref romanNumeral, 4);
-            AddRomanSubtractFromNumber(ref number, romanNr, arabicNr, ref romanNumeral, 4);
-            AddRomanSubtractFromNumber(ref number, romanNr, arabicNr, ref romanNumeral, 4);
-            AddRomanSubtractFromNumber(ref number, romanNr, arabicNr, ref romanNumeral, 5);
-            AddRomanSubtractFromNumber(ref number, romanNr, arabicNr, ref romanNumeral, 6);
-            AddRomanSubtractFromNumber(ref number, romanNr, arabicNr, ref romanNumeral, 7);
-            AddRomanSubtractFromNumber(ref number, romanNr, arabicNr, ref romanNumeral, 8);
-            AddRomanSubtractFromNumber(ref number, romanNr, arabicNr, ref romanNumeral, 8);
-            AddRomanSubtractFromNumber(ref number, romanNr, arabicNr, ref romanNumeral, 8);
+            string[] thousands = { "", "M", "MM", "MMM" };
+            string[] hundreds = { "", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM" };
+            string[] tens = { "", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC" };
+            string[] ones = { "", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX" };
+            romanNumeral += thousands[(int)(number / 1000) % 10];
+            romanNumeral += hundreds[(int)(number / 100) % 10];
+            romanNumeral += tens[(int)(number / 10) % 10];
+            romanNumeral += ones[number % 10];
             return romanNumeral;
-        }
-
-        private static void AddRomanSubtractFromNumber(ref int number, string[] romanNr, int[] arabicNr, ref string romanNumeral, int i)
-        {
-            if (number >= arabicNr[i])
-            {
-                romanNumeral += romanNr[i];
-                number -= arabicNr[i];
-            }
         }
     }
 }
