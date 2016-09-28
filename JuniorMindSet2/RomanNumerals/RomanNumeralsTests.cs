@@ -31,6 +31,16 @@ namespace RomanNumerals
         {
             Assert.AreEqual("C", ConvertNumberToRomanNumeral(100));
         }
+        [TestMethod]
+        public void ConvertToRomanThousands()
+        {
+            Assert.AreEqual("MMCI", ConvertNumberToRomanNumeral(2101));
+        }
+        [TestMethod]
+        public void ConvertToRomanMax()
+        {
+            Assert.AreEqual("MMMCMXCIX", ConvertNumberToRomanNumeral(3999));
+        }
         string ConvertNumberToRomanNumeral(int number)
         {
             string romanNumeral = string.Empty;
