@@ -11,6 +11,11 @@ namespace ExcelColumns
         {
             Assert.AreEqual("C", GetColumnCharacterCombination(3));
         }
+        [TestMethod]
+        public void TwoLetter()
+        {
+            Assert.AreEqual("CV", GetColumnCharacterCombination(100));
+        }
         string GetColumnCharacterCombination(int columnNumber)
         {
             string columnLetters = string.Empty;
