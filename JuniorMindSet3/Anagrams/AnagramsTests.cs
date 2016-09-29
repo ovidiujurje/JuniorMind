@@ -26,19 +26,25 @@ namespace Anagrams
         {
             char[] alphabet = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
             int[] counter = new int[26];
-            int permutations = factorial(word.Length);
             for (int i = 0; i < word.Length; i++)
-                {
+            {
                 if (word[i] == alphabet[word[i] - 'a'])
-                    counter[word[i] - 'a'] = counter[word[i] - 'a'] +1;
-                }
+                    counter[word[i] - 'a'] = counter[word[i] - 'a'] + 1;
+            }
+            return factorial(word.Length) / Multiplication(counter);
+        }
+
+        private int Multiplication(int[] counter)
+        {
             int produce = 1;
             foreach (int nr in counter)
             {
                 produce *= factorial(nr);
             }
-            return permutations / produce;
+
+            return produce;
         }
+
         int factorial(int n)
         {
             int m;
