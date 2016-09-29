@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Panagram", "UnitTestProject
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelColumns", "ExcelColumns\ExcelColumns.csproj", "{DAD4083E-1C55-4D52-A267-D89A5677DF81}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lottery", "Lottery\Lottery.csproj", "{691B9994-0167-45AE-BE3C-1670A1CA9D15}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{DAD4083E-1C55-4D52-A267-D89A5677DF81}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DAD4083E-1C55-4D52-A267-D89A5677DF81}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DAD4083E-1C55-4D52-A267-D89A5677DF81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{691B9994-0167-45AE-BE3C-1670A1CA9D15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{691B9994-0167-45AE-BE3C-1670A1CA9D15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{691B9994-0167-45AE-BE3C-1670A1CA9D15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{691B9994-0167-45AE-BE3C-1670A1CA9D15}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
