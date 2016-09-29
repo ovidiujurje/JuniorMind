@@ -24,12 +24,11 @@ namespace ExcelColumns
         string GetColumnCharacterCombination(int columnNumber)
         {
             string columnLetters = string.Empty;
-            char[] alphabet = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
             int i = 0;
             while (columnNumber > 0)
             {
                 i = (columnNumber - 1) % 26;
-                columnLetters = alphabet[i] + columnLetters;
+                columnLetters = (char)(65 + i) + columnLetters;
                 columnNumber = ((columnNumber - i) / 26);
             }
             return columnLetters;
