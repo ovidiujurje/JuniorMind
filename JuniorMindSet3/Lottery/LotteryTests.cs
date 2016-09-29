@@ -16,6 +16,16 @@ namespace Lottery
         {
             Assert.AreEqual(0.0000005244157484146911925424m, CalculateProbabilityToWin(5, 49));
         }
+        [TestMethod]
+        public void FourOutOfFourtyNine()
+        {
+            Assert.AreEqual(0.0000047197417357322207328815m, CalculateProbabilityToWin(4, 49));
+        }
+        [TestMethod]
+        public void FiveOutOfFourty()
+        {
+            Assert.AreEqual(0.0000015197383618436250015197m, CalculateProbabilityToWin(5, 40));
+        }
         decimal CalculateProbabilityToWin(int pickedSet, int totalSet)
         {
             decimal probability = 1;
@@ -24,7 +34,6 @@ namespace Lottery
                 probability = probability * (i / totalSet);
                 totalSet = totalSet - 1;
             }
-            decimal q = probability + 1;
             return probability;
         }
 
