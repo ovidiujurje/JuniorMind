@@ -11,6 +11,11 @@ namespace Cube
         {
             Assert.AreEqual(192, GetCubeEndingInEightEightEight(1));
         }
+        [TestMethod]
+        public void CalculateSecondNumber()
+        {
+            Assert.AreEqual(442, GetCubeEndingInEightEightEight(2));
+        }
         decimal GetCubeEndingInEightEightEight(int k)
         {
             decimal sum = 0;
