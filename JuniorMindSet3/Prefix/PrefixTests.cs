@@ -21,10 +21,11 @@ namespace Prefix
             string prefix = string.Empty;
             for (int i = 1; i <= firstWord.Length && i <= secondWord.Length; i++)
             {
-            if (firstWord.Substring(0, i) == secondWord.Substring(0, i))
-            continue;
-            prefix += firstWord.Substring(0, i - 1);
-            break;
+                if (firstWord.Substring(0, i) != secondWord.Substring(0, i))
+                {
+                    prefix += firstWord.Substring(0, i - 1);
+                    break;
+                }
             }
             return prefix;
         }
