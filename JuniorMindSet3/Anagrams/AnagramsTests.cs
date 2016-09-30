@@ -28,7 +28,7 @@ namespace Anagrams
             int[] counter = new int[26];
             for (int i = 0; i < word.Length; i++)
             {
-                if (word[i] == alphabet[word[i] - 'a'])
+                if (word[i] - 'a' >= 0 && word[i] - 'a' <= 26)
                     counter[word[i] - 'a'] = counter[word[i] - 'a'] + 1;
             }
             return factorial(word.Length) / Multiplication(counter);
