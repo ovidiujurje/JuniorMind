@@ -9,27 +9,26 @@ namespace UnitTestProject1
         [TestMethod]
         public void CheckPanagram()
         {
-            Assert.AreEqual("The phrase is a panagram", DetermineIfPhraseIsPanagram("The quick brown fox jumps over the lazy dog"));
+            Assert.AreEqual(true, DetermineIfPhraseIsPanagram("The quick brown fox jumps over the lazy dog"));
         }
         [TestMethod]
         public void CheckNonPanagram()
         {
-            Assert.AreEqual("The phrase is not a panagram", DetermineIfPhraseIsPanagram("Anna has apples"));
+            Assert.AreEqual(false, DetermineIfPhraseIsPanagram("Anna has apples"));
         }
-        string DetermineIfPhraseIsPanagram(string phrase)
+        bool DetermineIfPhraseIsPanagram(string phrase)
         {
-            bool notAPanagram = false;
-            char[] alphabet = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
-            foreach (char letter in alphabet)
+            bool isItAPanagram = true;
+            for (char i = 'a'; i <= 'z'; i++)
             {
-                int este = phrase.IndexOf(letter);
-                if (este == -1)
+                int positionOfLetterInWord = phrase.IndexOf(i);
+                if (positionOfLetterInWord == -1)
                 {
-                    notAPanagram = true;
+                    isItAPanagram = false;
                     break;
                 }
             }
-            return notAPanagram == false ? "The phrase is a panagram" : "The phrase is not a panagram";
+            return isItAPanagram;
         }
     }
 }
