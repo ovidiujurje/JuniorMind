@@ -28,7 +28,7 @@ namespace ExcelColumns
             while (columnNumber > 0)
             {
                 i = (columnNumber - 1) % 26;
-                columnLetters = (char)(65 + i) + columnLetters;
+                columnLetters = (char)('A' + i) + columnLetters;
                 columnNumber = ((columnNumber - i) / 26);
             }
             return columnLetters;
