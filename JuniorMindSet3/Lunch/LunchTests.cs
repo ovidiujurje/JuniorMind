@@ -13,16 +13,17 @@ namespace Lunch
         }
         int CalculateInHowManyDaysYouWillMeetYourFriendAgain (int myFrequency, int hisFrequency)
         {
-            int numberOfDaysuntilWeMeet = 1;
-            while (numberOfDaysuntilWeMeet >= 1)
+            return (myFrequency / GreatestCommonDivisor(myFrequency, hisFrequency)) * hisFrequency;
+        }
+        int GreatestCommonDivisor(int firstNumber, int secondNumber)
+        {
+            while (secondNumber != 0)
             {
-                if (numberOfDaysuntilWeMeet % myFrequency == 0 && numberOfDaysuntilWeMeet % hisFrequency == 0)
-                {
-                    break;
-                }
-                numberOfDaysuntilWeMeet = numberOfDaysuntilWeMeet + 1;
+                int third = secondNumber;
+                secondNumber = firstNumber % secondNumber;
+                firstNumber = third;
             }
-            return numberOfDaysuntilWeMeet;
+            return firstNumber;
         }
     }
 }
