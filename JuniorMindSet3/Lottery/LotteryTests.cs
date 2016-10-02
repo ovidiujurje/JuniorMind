@@ -41,26 +41,20 @@ namespace Lottery
             decimal denominator = 1;
             decimal numeratorOne = 1;
             decimal numeratorTwo = 1;
-            decimal totalMinusPicked = totalSet - pickedSet;
-            decimal pickedMinusGuessed = pickedSet - guessedSet;
-            for (decimal i = 1; i <= pickedSet; i++)
-            {
-                denominator *= (totalSet / i);
-                totalSet -= 1;
-            }
-
-            for (decimal j = 1; j <= guessedSet; j++)
-            {
-                numeratorOne *= (pickedSet / j);
-                pickedSet -= 1;
-            }
-            for (decimal k = 1; k <= pickedMinusGuessed; k++)
-            {
-                numeratorTwo *= ((totalMinusPicked) / k);
-                totalMinusPicked -= 1;
-            }
+            int totalMinusPicked = totalSet - pickedSet;
+            int pickedMinusGuessed = pickedSet - guessedSet;
+            CalculateFractionComponents(pickedSet, ref totalSet, ref denominator);
+            CalculateFractionComponents(guessedSet, ref pickedSet, ref numeratorOne);
+            CalculateFractionComponents(pickedMinusGuessed, ref totalMinusPicked, ref numeratorTwo);
             return numeratorOne * numeratorTwo / denominator;
         }
-
+        private static void CalculateFractionComponents(int smallSet, ref int largeSet, ref decimal fractionComponent)
+        {
+            for (decimal i = 1; i <= smallSet; i++)
+            {
+                fractionComponent *= (largeSet / i);
+                largeSet -= 1;
+            }
+        }
     }
 }
