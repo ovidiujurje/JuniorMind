@@ -7,34 +7,59 @@ namespace Lottery
     public class LotteryTests
     {
         [TestMethod]
-        public void SixOutOfFourtyNine()
+        public void SixOutOfFourtyNineCategoryOne()
         {
-            Assert.AreEqual(0.0000000715112384201851626194m, CalculateProbabilityToWin(6, 49));
+            Assert.AreEqual(0.0000000715112384201851626194m, CalculateProbabilityToWin(6, 6, 49));
         }
         [TestMethod]
-        public void FiveOutOfFourtyNine()
+        public void SixOutOfFourtyNineCategoryTwo()
         {
-            Assert.AreEqual(0.0000005244157484146911925424m, CalculateProbabilityToWin(5, 49));
+            Assert.AreEqual(0.0000184498995124077719558095m, CalculateProbabilityToWin(5, 6, 49));
         }
         [TestMethod]
-        public void FourOutOfFourtyNine()
+        public void SixOutOfFourtyNineCategoryThree()
         {
-            Assert.AreEqual(0.0000047197417357322207328815m, CalculateProbabilityToWin(4, 49));
+            Assert.AreEqual(0.0009686197244014080276799981m, CalculateProbabilityToWin(4, 6, 49));
         }
         [TestMethod]
-        public void FiveOutOfFourty()
+        public void FiveOutOfFourtyCategoryOne()
         {
-            Assert.AreEqual(0.0000015197383618436250015197m, CalculateProbabilityToWin(5, 40));
+            Assert.AreEqual(0.0000015197383618436250015197m, CalculateProbabilityToWin(5, 5, 40));
         }
-        decimal CalculateProbabilityToWin(int pickedSet, int totalSet)
+        [TestMethod]
+        public void FiveOutOfFourtyCategoryTwo()
         {
-            decimal probability = 1;
+            Assert.AreEqual(0.0002659542133226343752659542m, CalculateProbabilityToWin(4, 5, 40));
+        }
+        [TestMethod]
+        public void FiveOutOfFourtyCategoryThree()
+        {
+            Assert.AreEqual(0.0090424432529695687590424433m, CalculateProbabilityToWin(3, 5, 40));
+        }
+        decimal CalculateProbabilityToWin(int guessedSet, int pickedSet, int totalSet)
+        {
+            decimal denominator = 1;
+            decimal numeratorOne = 1;
+            decimal numeratorTwo = 1;
+            decimal totalMinusPicked = totalSet - pickedSet;
+            decimal pickedMinusGuessed = pickedSet - guessedSet;
             for (decimal i = 1; i <= pickedSet; i++)
             {
-                probability = probability * (i / totalSet);
-                totalSet = totalSet - 1;
+                denominator *= (totalSet / i);
+                totalSet -= 1;
             }
-            return probability;
+
+            for (decimal j = 1; j <= guessedSet; j++)
+            {
+                numeratorOne *= (pickedSet / j);
+                pickedSet -= 1;
+            }
+            for (decimal k = 1; k <= pickedMinusGuessed; k++)
+            {
+                numeratorTwo *= ((totalMinusPicked) / k);
+                totalMinusPicked -= 1;
+            }
+            return numeratorOne * numeratorTwo / denominator;
         }
 
     }
