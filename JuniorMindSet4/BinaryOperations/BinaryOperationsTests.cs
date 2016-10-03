@@ -9,28 +9,28 @@ namespace BinaryOperations
         [TestMethod]
         public void TestMethod1()
         {
-            CollectionAssert.AreEqual(new byte[] { 1, 1 }, ConvertNumberFromDecimalToBinary(3));
+            CollectionAssert.AreEqual(new byte[] { 1, 1 }, ConvertNumberFromDecimalToBinary(3, 2));
         }
         [TestMethod]
         public void TestMethod2()
         {
-            CollectionAssert.AreEqual(new byte[] { 1, 0, 1 }, ConvertNumberFromDecimalToBinary(5));
+            CollectionAssert.AreEqual(new byte[] { 1, 0, 1 }, ConvertNumberFromDecimalToBinary(5, 2));
         }
         [TestMethod]
         public void TestMethod3()
         {
-            CollectionAssert.AreEqual(new byte[] { 1, 1, 0, 0, 0, 1 }, ConvertNumberFromDecimalToBinary(49));
+            CollectionAssert.AreEqual(new byte[] { 1, 1, 0, 0, 0, 1 }, ConvertNumberFromDecimalToBinary(49, 2));
         }
-        byte[] ConvertNumberFromDecimalToBinary(byte number)
+        byte[] ConvertNumberFromDecimalToBinary(byte number, byte baseNumber)
         {
             byte[] binaryRepresenationOfNumber = new byte[0];
             byte numberCopy = number;
             while (number > 0)
             {
-                byte remainder = (byte)(numberCopy % 2);
+                byte remainder = (byte)(numberCopy % baseNumber);
                 Array.Resize(ref binaryRepresenationOfNumber, binaryRepresenationOfNumber.Length + 1);
                 binaryRepresenationOfNumber[binaryRepresenationOfNumber.Length - 1] = remainder;
-                numberCopy /= 2;
+                numberCopy /= baseNumber;
                 if (numberCopy == 0)
                 {
                     break;
