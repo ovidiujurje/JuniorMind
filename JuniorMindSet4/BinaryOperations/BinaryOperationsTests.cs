@@ -37,6 +37,14 @@ namespace BinaryOperations
                 }
             }
             Array.Reverse(binaryRepresenationOfNumber);
+            byte operationsOne = (byte)(~(~number & 3) | 5 ^ 3);
+            byte operationsTwo = (byte)(number >> 2 << 1);
+            bool operationsThree = number < 100;
+            byte operationsFour = (byte)(number + 5 - 3);
+            byte operationsFive = (byte)(number * 3 / 2);
+            bool operationsSix = number > 0;
+            bool operationsSeven = number == 5;
+            bool operationsEight = number != 6;
             return binaryRepresenationOfNumber;
         }
     }
