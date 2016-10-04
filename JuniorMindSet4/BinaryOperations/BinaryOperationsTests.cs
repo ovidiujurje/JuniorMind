@@ -41,6 +41,16 @@ namespace BinaryOperations
         {
             CollectionAssert.AreEqual(new byte[] { 1, 1, 0, 0, 1, 0 }, XOr(49, 3));
         }
+        [TestMethod]
+        public void ImplementShiftLeft()
+        {
+            CollectionAssert.AreEqual(new byte[] { 0, 0, 1, 0, 0, 0 }, ShiftLeft(49, 3));
+        }
+        [TestMethod]
+        public void ImplementShiftRight()
+        {
+            CollectionAssert.AreEqual(new byte[] { 0, 0, 0, 1, 1, 0 }, ShiftRight(49, 3));
+        }
         byte[] ConvertNumberFromDecimalToBinary(byte number, byte baseNumber)
         {
             byte[] binaryRepresenationOfNumber = new byte[0];
@@ -118,6 +128,26 @@ namespace BinaryOperations
                 {
                     binaryNumber[i] = 0;
                 }
+            }
+            return binaryNumber;
+        }
+        byte[] ShiftLeft(byte number, byte numberOfSpaces)
+        {
+            byte[] binaryNumber = ConvertNumberFromDecimalToBinary(number, 2);
+            for (int i = 0; i < binaryNumber.Length - numberOfSpaces; i++)
+            {
+                binaryNumber[i] = binaryNumber[i + numberOfSpaces];
+                binaryNumber[i + numberOfSpaces] = 0;
+            }
+            return binaryNumber;
+        }
+        byte[] ShiftRight(byte number, byte numberOfSpaces)
+        {
+            byte[] binaryNumber = ConvertNumberFromDecimalToBinary(number, 2);
+            for (int i = 0; i < binaryNumber.Length - numberOfSpaces; i++)
+            {
+                binaryNumber[i + numberOfSpaces] = binaryNumber[i];
+                binaryNumber[i] = 0;
             }
             return binaryNumber;
         }
