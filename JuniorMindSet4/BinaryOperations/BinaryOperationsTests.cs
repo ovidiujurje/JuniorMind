@@ -51,6 +51,26 @@ namespace BinaryOperations
         {
             CollectionAssert.AreEqual(new byte[] { 0, 0, 0, 1, 1, 0 }, ShiftRight(49, 3));
         }
+        [TestMethod]
+        public void ImplementLessThan1()
+        {
+            Assert.AreEqual(true, LessThan(48, 49));
+        }
+        [TestMethod]
+        public void ImplementLessThan2()
+        {
+            Assert.AreEqual(false, LessThan(49, 47));
+        }
+        [TestMethod]
+        public void ImplementLessThan3()
+        {
+            Assert.AreEqual(true, LessThan(5, 49));
+        }
+        [TestMethod]
+        public void ImplementLessThan4()
+        {
+            Assert.AreEqual(false, LessThan(49, 3));
+        }
         byte[] ConvertNumberFromDecimalToBinary(byte number, byte baseNumber)
         {
             byte[] binaryRepresenationOfNumber = new byte[0];
@@ -150,6 +170,23 @@ namespace BinaryOperations
                 binaryNumber[i] = 0;
             }
             return binaryNumber;
+        }
+        bool LessThan(byte firstNumber, byte secondNumber)
+        {
+            byte[] firstBinary = ConvertNumberFromDecimalToBinary(firstNumber, 2);
+            byte[] secondBinary = ConvertNumberFromDecimalToBinary(secondNumber, 2);
+            if (firstBinary.Length < secondBinary.Length)
+                return true;
+            if (firstBinary.Length > secondBinary.Length)
+                return false;
+            for (int i = 0; i < firstBinary.Length; i++)
+            {
+                if (firstBinary[i] < secondBinary[i])
+                    return true;
+                if (firstBinary[i] > secondBinary[i])
+                    return false;
+            }
+            return false;
         }
         private byte[] GeenrateBinaryOfSameLengthforOtherNumber(ref byte[] binaryNumber, byte otherNumber)
         {
