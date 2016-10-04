@@ -71,6 +71,11 @@ namespace BinaryOperations
         {
             Assert.AreEqual(false, LessThan(49, 3));
         }
+        [TestMethod]
+        public void ImplementAddition()
+        {
+            CollectionAssert.AreEqual(new byte[] { 1, 0, 0, 1, 1 }, Addition(12, 7));
+        }
         byte[] ConvertNumberFromDecimalToBinary(byte number, byte baseNumber)
         {
             byte[] binaryRepresenationOfNumber = new byte[0];
@@ -187,6 +192,25 @@ namespace BinaryOperations
                     return false;
             }
             return false;
+        }
+        byte[] Addition(byte number, byte otherNumber)
+        {
+            byte[] binaryNumber = ConvertNumberFromDecimalToBinary(number, 2);
+            byte[] factor = GeenrateBinaryOfSameLengthforOtherNumber(ref binaryNumber, otherNumber);
+            byte[] sum = new byte[binaryNumber.Length + 1];
+            byte hold = 0;
+            for (int i = 0; i < sum.Length; i++)
+            {
+                if (i == sum.Length - 1)
+                {
+                    sum[i] = hold;
+                    break;
+                }
+                sum[i] = (byte)((binaryNumber[binaryNumber.Length - i - 1] + factor[factor.Length - i - 1] + hold) % 2);
+                hold = (byte)((binaryNumber[binaryNumber.Length - i - 1] + factor[factor.Length - i - 1] + hold) / 2);
+            }
+            Array.Reverse(sum);
+            return sum;
         }
         private byte[] GeenrateBinaryOfSameLengthforOtherNumber(ref byte[] binaryNumber, byte otherNumber)
         {
