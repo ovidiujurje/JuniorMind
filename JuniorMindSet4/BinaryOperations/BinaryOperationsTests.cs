@@ -107,14 +107,24 @@ namespace BinaryOperations
             CollectionAssert.AreEqual(new byte[] { 1, 0, 0, 1, 1 }, Addition(new byte[] { 1, 1, 0, 0 }, new byte[] { 1, 1, 1 }, 2));
         }
         [TestMethod]
+        public void ImplementAdditionBaseThree()
+        {
+            CollectionAssert.AreEqual(new byte[] { 2, 0, 1 }, Addition(new byte[] { 1, 1, 0 }, new byte[] { 2, 1 }, 3));
+        }
+        [TestMethod]
         public void ImplementSubtraction1()
         {
-            CollectionAssert.AreEqual(new byte[] { 1, 0 }, Subtraction(new byte[] { 1, 0, 1 }, new byte[] { 1, 1 }));
+            CollectionAssert.AreEqual(new byte[] { 1, 0 }, Subtraction(new byte[] { 1, 0, 1 }, new byte[] { 1, 1 }, 2));
         }
         [TestMethod]
         public void ImplementSubtraction2()
         {
-            CollectionAssert.AreEqual(new byte[] { 1, 0, 1, 1, 1, 0 }, Subtraction(new byte[] { 1, 1, 0, 0, 0, 1 }, new byte[] { 1, 1 }));
+            CollectionAssert.AreEqual(new byte[] { 1, 0, 1, 1, 1, 0 }, Subtraction(new byte[] { 1, 1, 0, 0, 0, 1 }, new byte[] { 1, 1 }, 2));
+        }
+        [TestMethod]
+        public void ImplementSubtractionBase3()
+        {
+            CollectionAssert.AreEqual(new byte[] { 1, 1, 0 }, Subtraction(new byte[] { 2, 0, 1 }, new byte[] { 2, 1 }, 3));
         }
         [TestMethod]
         public void ImplementMultiplication1()
@@ -295,18 +305,31 @@ namespace BinaryOperations
                 hold = (byte)((binaryNumber[binaryNumber.Length - i - 1] + otherBinaryNumber[otherBinaryNumber.Length - i - 1] + hold) / baseNumber);
             }
             Array.Reverse(sum);
+            sum = TrimZerosFromBeginning(sum);
             return sum;
         }
-        byte[] Subtraction(byte[] binaryNumber, byte[] otherBinaryNumber)
+        byte[] Subtraction(byte[] binaryNumber, byte[] otherBinaryNumber, byte baseNumber)
         {
             otherBinaryNumber = GeenrateBinaryOfSameLengthforOtherNumber(ref binaryNumber, ref otherBinaryNumber);
-            otherBinaryNumber = Not(otherBinaryNumber);
-            otherBinaryNumber = Addition(otherBinaryNumber,new byte[] { 1 }, 2);
-            binaryNumber = GeenrateBinaryOfSameLengthforOtherNumber(ref otherBinaryNumber, ref binaryNumber);
             byte[] difference = new byte[binaryNumber.Length];
-            difference = Addition(binaryNumber, otherBinaryNumber, 2);
-            difference[0] = 0;
-            difference[1] = 0;
+            byte[] binaryNumberClone = binaryNumber;
+            for (int i = binaryNumber.Length - 1; i >= 0; i--)
+            {
+                if (binaryNumber[i] < otherBinaryNumber[i])
+                {
+                    binaryNumber[i] += baseNumber;
+                    for (int j = i - 1; j >= 0; j--)
+                    {
+                        if (binaryNumber[j] != 0)
+                        {
+                            binaryNumber[j] -= 1;
+                            break;
+                        }
+                        binaryNumber[j] += (byte)(baseNumber - 1);
+                    }
+                }
+                difference[i] = (byte)(binaryNumber[i] - otherBinaryNumber[i]);
+            }
             difference = TrimZerosFromBeginning(difference);
             return difference;
         }
@@ -334,7 +357,7 @@ namespace BinaryOperations
             {
                 if (LessThan(binaryNumber, otherBinaryNumber) == true)
                     break;
-                binaryNumber = Subtraction(binaryNumber, otherBinaryNumber);
+                binaryNumber = Subtraction(binaryNumber, otherBinaryNumber, 2);
                 quotient = Addition(quotient, new byte[] { 1 }, 2);
             }
             quotient = TrimZerosFromBeginning(quotient);
@@ -345,7 +368,7 @@ namespace BinaryOperations
             byte[] trimmedBinary = new byte[0];
             for (int i = 0; i < binary.Length; i++)
             {
-                if (binary[i] == 1)
+                if (binary[i] > 0)
                 {
                     Array.Resize(ref trimmedBinary, binary.Length - i);
                     for (int j = 0; j < trimmedBinary.Length; j++)
