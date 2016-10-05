@@ -24,57 +24,57 @@ namespace BinaryOperations
         [TestMethod]
         public void ImplementNot()
         {
-            CollectionAssert.AreEqual(new byte[] { 0, 0, 1, 1, 1, 0 }, Not(49));
+            CollectionAssert.AreEqual(new byte[] { 0, 0, 1, 1, 1, 0 }, Not(new byte[] { 1, 1, 0, 0, 0, 1 }));
         }
         [TestMethod]
         public void ImplementAnd()
         {
-            CollectionAssert.AreEqual(new byte[] { 0, 0, 0, 0, 0, 1 }, And(49, 3));
+            CollectionAssert.AreEqual(new byte[] { 0, 0, 0, 0, 0, 1 }, And(new byte[] { 1, 1, 0, 0, 0, 1 }, new byte[] { 1, 1}));
         }
         [TestMethod]
         public void ImplementOr()
         {
-            CollectionAssert.AreEqual(new byte[] { 1, 1, 0, 0, 1, 1 }, Or(49, 3));
+            CollectionAssert.AreEqual(new byte[] { 1, 1, 0, 0, 1, 1 }, Or(new byte[] { 1, 1, 0, 0, 0, 1 }, new byte[] { 1, 1 }));
         }
         [TestMethod]
         public void ImplementXOr()
         {
-            CollectionAssert.AreEqual(new byte[] { 1, 1, 0, 0, 1, 0 }, XOr(49, 3));
+            CollectionAssert.AreEqual(new byte[] { 1, 1, 0, 0, 1, 0 }, XOr(new byte[] { 1, 1, 0, 0, 0, 1 }, new byte[] { 1, 1 }));
         }
         [TestMethod]
         public void ImplementShiftLeft()
         {
-            CollectionAssert.AreEqual(new byte[] { 0, 0, 1, 0, 0, 0 }, ShiftLeft(49, 3));
+            CollectionAssert.AreEqual(new byte[] { 0, 0, 1, 0, 0, 0 }, ShiftLeft(new byte[] { 1, 1, 0, 0, 0, 1 }, 3));
         }
         [TestMethod]
         public void ImplementShiftRight()
         {
-            CollectionAssert.AreEqual(new byte[] { 0, 0, 0, 1, 1, 0 }, ShiftRight(49, 3));
+            CollectionAssert.AreEqual(new byte[] { 0, 0, 0, 1, 1, 0 }, ShiftRight(new byte[] { 1, 1, 0, 0, 0, 1 }, 3));
         }
         [TestMethod]
         public void ImplementLessThan1()
         {
-            Assert.AreEqual(true, LessThan(48, 49));
+            Assert.AreEqual(true, LessThan(new byte[] { 1, 1, 0, 0, 0, 0 }, new byte[] { 1, 1, 0, 0, 0, 1 }));
         }
         [TestMethod]
         public void ImplementLessThan2()
         {
-            Assert.AreEqual(false, LessThan(49, 47));
+            Assert.AreEqual(false, LessThan(new byte[] { 1, 1, 0, 0, 0, 1 }, new byte[] { 1, 0, 1, 1, 1, 1 }));
         }
         [TestMethod]
         public void ImplementLessThan3()
         {
-            Assert.AreEqual(true, LessThan(5, 49));
+            Assert.AreEqual(true, LessThan(new byte[] { 0, 0, 0, 1, 0, 1 }, new byte[] { 1, 1, 0, 0, 0, 1 }));
         }
         [TestMethod]
         public void ImplementLessThan4()
         {
-            Assert.AreEqual(false, LessThan(49, 3));
+            Assert.AreEqual(false, LessThan(new byte[] { 1, 1, 0, 0, 0, 1 }, new byte[] { 1, 1 }));
         }
         [TestMethod]
         public void ImplementAddition()
         {
-            CollectionAssert.AreEqual(new byte[] { 1, 0, 0, 1, 1 }, Addition(12, 7));
+            CollectionAssert.AreEqual(new byte[] { 1, 0, 0, 1, 1 }, Addition(new byte[] { 1, 1, 0, 0 }, new byte[] { 1, 1, 1 }));
         }
         byte[] ConvertNumberFromDecimalToBinary(byte number, byte baseNumber)
         {
@@ -89,9 +89,8 @@ namespace BinaryOperations
             Array.Reverse(binaryRepresenationOfNumber);
             return binaryRepresenationOfNumber;
         }
-        byte[] Not(byte number)
+        byte[] Not(byte[] binaryNumber)
         {
-            byte[] binaryNumber = ConvertNumberFromDecimalToBinary(number, 2);
             for (int i = 0; i < binaryNumber.Length; i++)
             {
                 if (binaryNumber[i] == 0)
@@ -105,10 +104,9 @@ namespace BinaryOperations
             }
             return binaryNumber;
         }
-        byte[] And(byte number, byte otherNumber)
+        byte[] And(byte[] binaryNumber, byte[] otherBinaryNumber)
         {
-            byte[] binaryNumber = ConvertNumberFromDecimalToBinary(number, 2);
-            byte[] factor = GeenrateBinaryOfSameLengthforOtherNumber(ref binaryNumber, otherNumber);
+            byte[] factor = GeenrateBinaryOfSameLengthforOtherNumber(ref binaryNumber, ref otherBinaryNumber);
             for (int i = 0; i < binaryNumber.Length; i++)
             {
                 if (binaryNumber[i] == 1 && factor[i] == 1)
@@ -122,10 +120,9 @@ namespace BinaryOperations
             }
             return binaryNumber;
         }
-        byte[] Or(byte number, byte otherNumber)
+        byte[] Or(byte[] binaryNumber, byte[] otherBinaryNumber)
         {
-            byte[] binaryNumber = ConvertNumberFromDecimalToBinary(number, 2);
-            byte[] factor = GeenrateBinaryOfSameLengthforOtherNumber(ref binaryNumber, otherNumber);
+            byte[] factor = GeenrateBinaryOfSameLengthforOtherNumber(ref binaryNumber, ref otherBinaryNumber);
             for (int i = 0; i < binaryNumber.Length; i++)
             {
                 if (binaryNumber[i] == 0 && factor[i] == 0)
@@ -139,10 +136,9 @@ namespace BinaryOperations
             }
             return binaryNumber;
         }
-        byte[] XOr(byte number, byte otherNumber)
+        byte[] XOr(byte[] binaryNumber, byte[] otherBinaryNumber)
         {
-            byte[] binaryNumber = ConvertNumberFromDecimalToBinary(number, 2);
-            byte[] factor = GeenrateBinaryOfSameLengthforOtherNumber(ref binaryNumber, otherNumber);
+            byte[] factor = GeenrateBinaryOfSameLengthforOtherNumber(ref binaryNumber, ref otherBinaryNumber);
             for (int i = 0; i < binaryNumber.Length; i++)
             {
                 if (binaryNumber[i] != factor[i])
@@ -156,9 +152,8 @@ namespace BinaryOperations
             }
             return binaryNumber;
         }
-        byte[] ShiftLeft(byte number, byte numberOfSpaces)
+        byte[] ShiftLeft(byte[] binaryNumber, byte numberOfSpaces)
         {
-            byte[] binaryNumber = ConvertNumberFromDecimalToBinary(number, 2);
             for (int i = 0; i < binaryNumber.Length - numberOfSpaces; i++)
             {
                 binaryNumber[i] = binaryNumber[i + numberOfSpaces];
@@ -166,9 +161,8 @@ namespace BinaryOperations
             }
             return binaryNumber;
         }
-        byte[] ShiftRight(byte number, byte numberOfSpaces)
+        byte[] ShiftRight(byte[] binaryNumber, byte numberOfSpaces)
         {
-            byte[] binaryNumber = ConvertNumberFromDecimalToBinary(number, 2);
             for (int i = 0; i < binaryNumber.Length - numberOfSpaces; i++)
             {
                 binaryNumber[i + numberOfSpaces] = binaryNumber[i];
@@ -176,10 +170,8 @@ namespace BinaryOperations
             }
             return binaryNumber;
         }
-        bool LessThan(byte firstNumber, byte secondNumber)
+        bool LessThan(byte[] firstBinary, byte[] secondBinary)
         {
-            byte[] firstBinary = ConvertNumberFromDecimalToBinary(firstNumber, 2);
-            byte[] secondBinary = ConvertNumberFromDecimalToBinary(secondNumber, 2);
             if (firstBinary.Length < secondBinary.Length)
                 return true;
             if (firstBinary.Length > secondBinary.Length)
@@ -193,10 +185,9 @@ namespace BinaryOperations
             }
             return false;
         }
-        byte[] Addition(byte number, byte otherNumber)
+        byte[] Addition(byte[] binaryNumber, byte[] otherBinaryNumber)
         {
-            byte[] binaryNumber = ConvertNumberFromDecimalToBinary(number, 2);
-            byte[] factor = GeenrateBinaryOfSameLengthforOtherNumber(ref binaryNumber, otherNumber);
+            otherBinaryNumber = GeenrateBinaryOfSameLengthforOtherNumber(ref binaryNumber, ref otherBinaryNumber);
             byte[] sum = new byte[binaryNumber.Length + 1];
             byte hold = 0;
             for (int i = 0; i < sum.Length; i++)
@@ -206,15 +197,14 @@ namespace BinaryOperations
                     sum[i] = hold;
                     break;
                 }
-                sum[i] = (byte)((binaryNumber[binaryNumber.Length - i - 1] + factor[factor.Length - i - 1] + hold) % 2);
-                hold = (byte)((binaryNumber[binaryNumber.Length - i - 1] + factor[factor.Length - i - 1] + hold) / 2);
+                sum[i] = (byte)((binaryNumber[binaryNumber.Length - i - 1] + otherBinaryNumber[otherBinaryNumber.Length - i - 1] + hold) % 2);
+                hold = (byte)((binaryNumber[binaryNumber.Length - i - 1] + otherBinaryNumber[otherBinaryNumber.Length - i - 1] + hold) / 2);
             }
             Array.Reverse(sum);
             return sum;
         }
-        private byte[] GeenrateBinaryOfSameLengthforOtherNumber(ref byte[] binaryNumber, byte otherNumber)
+        private byte[] GeenrateBinaryOfSameLengthforOtherNumber(ref byte[] binaryNumber, ref byte[] otherBinaryNumber)
         {
-            byte[] otherBinaryNumber = ConvertNumberFromDecimalToBinary(otherNumber, 2);
             if (binaryNumber.Length < otherBinaryNumber.Length)
             {
                 Swap(ref binaryNumber, ref otherBinaryNumber);
