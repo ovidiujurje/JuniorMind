@@ -72,6 +72,36 @@ namespace BinaryOperations
             Assert.AreEqual(false, LessThan(new byte[] { 1, 1, 0, 0, 0, 1 }, new byte[] { 1, 1 }));
         }
         [TestMethod]
+        public void ImplementGreaterThan1()
+        {
+            Assert.AreEqual(false, GreaterThan(new byte[] { 1, 1, 0, 0, 0, 0 }, new byte[] { 1, 1, 0, 0, 0, 1 }));
+        }
+        [TestMethod]
+        public void ImplementGreaterThan2()
+        {
+            Assert.AreEqual(true, GreaterThan(new byte[] { 1, 1, 0, 0, 0, 1 }, new byte[] { 1, 1 }));
+        }
+        [TestMethod]
+        public void ImplementEqual1()
+        {
+            Assert.AreEqual(true, Equal(new byte[] { 1, 1, 0, 0, 0, 1 }, new byte[] { 1, 1, 0, 0, 0, 1 }));
+        }
+        [TestMethod]
+        public void ImplementEqual2()
+        {
+            Assert.AreEqual(false, Equal(new byte[] { 1, 1, 0, 0, 0, 1 }, new byte[] { 1, 1, 0, 0, 0, 0 }));
+        }
+        [TestMethod]
+        public void ImplementNotEqual1()
+        {
+            Assert.AreEqual(false, NotEqual(new byte[] { 1, 1, 0, 0, 0, 1 }, new byte[] { 1, 1, 0, 0, 0, 1 }));
+        }
+        [TestMethod]
+        public void ImplementNotEqual2()
+        {
+            Assert.AreEqual(true, NotEqual(new byte[] { 1, 1, 0, 0, 0, 1 }, new byte[] { 1, 1, 0, 0, 0, 0 }));
+        }
+        [TestMethod]
         public void ImplementAddition()
         {
             CollectionAssert.AreEqual(new byte[] { 1, 0, 0, 1, 1 }, Addition(new byte[] { 1, 1, 0, 0 }, new byte[] { 1, 1, 1 }));
@@ -200,19 +230,53 @@ namespace BinaryOperations
             }
             return binaryNumber;
         }
-        bool LessThan(byte[] firstBinary, byte[] secondBinary)
+        bool LessThan(byte[] binaryNumber, byte[] otherBinaryNumber)
         {
-            if (firstBinary.Length < secondBinary.Length)
+            if (binaryNumber.Length < otherBinaryNumber.Length)
                 return true;
-            if (firstBinary.Length > secondBinary.Length)
+            if (binaryNumber.Length > otherBinaryNumber.Length)
                 return false;
-            for (int i = 0; i < firstBinary.Length; i++)
+            for (int i = 0; i < binaryNumber.Length; i++)
             {
-                if (firstBinary[i] < secondBinary[i])
+                if (binaryNumber[i] < otherBinaryNumber[i])
                     return true;
-                if (firstBinary[i] > secondBinary[i])
+                if (binaryNumber[i] > otherBinaryNumber[i])
                     return false;
             }
+            return false;
+        }
+        bool GreaterThan(byte[] binaryNumber, byte[] otherBinaryNumber)
+        {
+            if (binaryNumber.Length > otherBinaryNumber.Length)
+                return true;
+            if (binaryNumber.Length < otherBinaryNumber.Length)
+                return false;
+            for (int i = 0; i < binaryNumber.Length; i++)
+            {
+                if (binaryNumber[i] > otherBinaryNumber[i])
+                    return true;
+                if (binaryNumber[i] < otherBinaryNumber[i])
+                    return false;
+            }
+            return false;
+        }
+        bool Equal(byte[] binaryNumber, byte[] otherBinaryNumber)
+        {
+            if (binaryNumber.Length != otherBinaryNumber.Length)
+                return false;
+            for (int i = 0; i < binaryNumber.Length; i++)
+            {
+                if (binaryNumber[i] != otherBinaryNumber[i])
+                    return false;
+            }
+            return true;
+        }
+        bool NotEqual(byte[] binaryNumber, byte[] otherBinaryNumber)
+        {
+            if (binaryNumber.Length != otherBinaryNumber.Length)
+                return true;
+            if (Equal(binaryNumber, otherBinaryNumber) == false)
+                return true;
             return false;
         }
         byte[] Addition(byte[] binaryNumber, byte[] otherBinaryNumber)
