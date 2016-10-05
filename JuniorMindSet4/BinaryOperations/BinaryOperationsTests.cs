@@ -76,6 +76,16 @@ namespace BinaryOperations
         {
             CollectionAssert.AreEqual(new byte[] { 1, 0, 0, 1, 1 }, Addition(new byte[] { 1, 1, 0, 0 }, new byte[] { 1, 1, 1 }));
         }
+        [TestMethod]
+        public void ImplementSubtraction1()
+        {
+            CollectionAssert.AreEqual(new byte[] { 0, 0, 0, 1, 0 }, Subtraction(new byte[] { 1, 0, 1 }, new byte[] { 1, 1 }));
+        }
+        [TestMethod]
+        public void ImplementSubtraction2()
+        {
+            CollectionAssert.AreEqual(new byte[] { 0, 0, 1, 0, 1, 1, 1, 0 }, Subtraction(new byte[] { 1, 1, 0, 0, 0, 1 }, new byte[] { 1, 1 }));
+        }
         byte[] ConvertNumberFromDecimalToBinary(byte number, byte baseNumber)
         {
             byte[] binaryRepresenationOfNumber = new byte[0];
@@ -202,6 +212,18 @@ namespace BinaryOperations
             }
             Array.Reverse(sum);
             return sum;
+        }
+        byte[] Subtraction(byte[] binaryNumber, byte[] otherBinaryNumber)
+        {
+            otherBinaryNumber = GeenrateBinaryOfSameLengthforOtherNumber(ref binaryNumber, ref otherBinaryNumber);
+            otherBinaryNumber = Not(otherBinaryNumber);
+            otherBinaryNumber = Addition(otherBinaryNumber,new byte[] { 1 });
+            binaryNumber = GeenrateBinaryOfSameLengthforOtherNumber(ref otherBinaryNumber, ref binaryNumber);
+            byte[] difference = new byte[binaryNumber.Length];
+            difference = Addition(binaryNumber, otherBinaryNumber);
+            difference[0] = 0;
+            difference[1] = 0;
+            return difference;
         }
         private byte[] GeenrateBinaryOfSameLengthforOtherNumber(ref byte[] binaryNumber, ref byte[] otherBinaryNumber)
         {
