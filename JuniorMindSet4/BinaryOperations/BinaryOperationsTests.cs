@@ -96,6 +96,16 @@ namespace BinaryOperations
         {
             CollectionAssert.AreEqual(new byte[] { 1, 1, 1, 1 }, Multiplication(new byte[] { 1, 0, 1 }, new byte[] { 1, 1 }));
         }
+        [TestMethod]
+        public void ImplementDivision1()
+        {
+            CollectionAssert.AreEqual(new byte[] { 1, 0 }, Division(new byte[] { 1, 1, 0 }, new byte[] { 1, 1 }));
+        }
+        [TestMethod]
+        public void ImplementDivision2()
+        {
+            CollectionAssert.AreEqual(new byte[] { 1, 0, 1, 1 }, Division(new byte[] { 1, 0, 0, 0, 0, 1 }, new byte[] { 1, 1 }));
+        }
         byte[] ConvertNumberFromDecimalToBinary(byte number, byte baseNumber)
         {
             byte[] binaryRepresenationOfNumber = new byte[0];
@@ -250,6 +260,21 @@ namespace BinaryOperations
             }
             result = TrimZerosFromBeginning(result);
             return result;
+        }
+        byte[] Division(byte[] binaryNumber, byte[] otherBinaryNumber)
+        {
+            byte[] zero = { 0 };
+            byte[] quotient = { 0 };
+            zero = GeenrateBinaryOfSameLengthforOtherNumber(ref binaryNumber, ref zero);
+            while (otherBinaryNumber != zero)
+            {
+                if (LessThan(binaryNumber, otherBinaryNumber) == true)
+                    break;
+                binaryNumber = Subtraction(binaryNumber, otherBinaryNumber);
+                quotient = Addition(quotient, new byte[] { 1 });
+            }
+            quotient = TrimZerosFromBeginning(quotient);
+            return quotient;
         }
         byte[] TrimZerosFromBeginning(byte[] binary)
         {
