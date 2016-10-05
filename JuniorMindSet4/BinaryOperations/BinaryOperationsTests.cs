@@ -104,7 +104,7 @@ namespace BinaryOperations
         [TestMethod]
         public void ImplementAddition()
         {
-            CollectionAssert.AreEqual(new byte[] { 1, 0, 0, 1, 1 }, Addition(new byte[] { 1, 1, 0, 0 }, new byte[] { 1, 1, 1 }));
+            CollectionAssert.AreEqual(new byte[] { 1, 0, 0, 1, 1 }, Addition(new byte[] { 1, 1, 0, 0 }, new byte[] { 1, 1, 1 }, 2));
         }
         [TestMethod]
         public void ImplementSubtraction1()
@@ -279,7 +279,7 @@ namespace BinaryOperations
                 return true;
             return false;
         }
-        byte[] Addition(byte[] binaryNumber, byte[] otherBinaryNumber)
+        byte[] Addition(byte[] binaryNumber, byte[] otherBinaryNumber, byte baseNumber)
         {
             otherBinaryNumber = GeenrateBinaryOfSameLengthforOtherNumber(ref binaryNumber, ref otherBinaryNumber);
             byte[] sum = new byte[binaryNumber.Length + 1];
@@ -291,8 +291,8 @@ namespace BinaryOperations
                     sum[i] = hold;
                     break;
                 }
-                sum[i] = (byte)((binaryNumber[binaryNumber.Length - i - 1] + otherBinaryNumber[otherBinaryNumber.Length - i - 1] + hold) % 2);
-                hold = (byte)((binaryNumber[binaryNumber.Length - i - 1] + otherBinaryNumber[otherBinaryNumber.Length - i - 1] + hold) / 2);
+                sum[i] = (byte)((binaryNumber[binaryNumber.Length - i - 1] + otherBinaryNumber[otherBinaryNumber.Length - i - 1] + hold) % baseNumber);
+                hold = (byte)((binaryNumber[binaryNumber.Length - i - 1] + otherBinaryNumber[otherBinaryNumber.Length - i - 1] + hold) / baseNumber);
             }
             Array.Reverse(sum);
             return sum;
@@ -301,10 +301,10 @@ namespace BinaryOperations
         {
             otherBinaryNumber = GeenrateBinaryOfSameLengthforOtherNumber(ref binaryNumber, ref otherBinaryNumber);
             otherBinaryNumber = Not(otherBinaryNumber);
-            otherBinaryNumber = Addition(otherBinaryNumber,new byte[] { 1 });
+            otherBinaryNumber = Addition(otherBinaryNumber,new byte[] { 1 }, 2);
             binaryNumber = GeenrateBinaryOfSameLengthforOtherNumber(ref otherBinaryNumber, ref binaryNumber);
             byte[] difference = new byte[binaryNumber.Length];
-            difference = Addition(binaryNumber, otherBinaryNumber);
+            difference = Addition(binaryNumber, otherBinaryNumber, 2);
             difference[0] = 0;
             difference[1] = 0;
             difference = TrimZerosFromBeginning(difference);
@@ -317,9 +317,9 @@ namespace BinaryOperations
             for (int i = otherBinaryNumber.Length - 1; i >= 0; i--)
             {
                 if (otherBinaryNumber[i] == 1)
-                    result = Addition(result, binaryNumber);
+                    result = Addition(result, binaryNumber, 2);
                 if (otherBinaryNumber[i] == 0)
-                    result = Addition(result, new byte[result.Length]);
+                    result = Addition(result, new byte[result.Length], 2);
                 binaryNumber = ShiftLeft(binaryNumber, 1);
             }
             result = TrimZerosFromBeginning(result);
@@ -335,7 +335,7 @@ namespace BinaryOperations
                 if (LessThan(binaryNumber, otherBinaryNumber) == true)
                     break;
                 binaryNumber = Subtraction(binaryNumber, otherBinaryNumber);
-                quotient = Addition(quotient, new byte[] { 1 });
+                quotient = Addition(quotient, new byte[] { 1 }, 2);
             }
             quotient = TrimZerosFromBeginning(quotient);
             return quotient;
