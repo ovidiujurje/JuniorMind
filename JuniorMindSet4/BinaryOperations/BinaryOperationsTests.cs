@@ -112,6 +112,11 @@ namespace BinaryOperations
             CollectionAssert.AreEqual(new byte[] { 2, 0, 1 }, Addition(new byte[] { 1, 1, 0 }, new byte[] { 2, 1 }, 3));
         }
         [TestMethod]
+        public void ImplementAdditionBaseFour()
+        {
+            CollectionAssert.AreEqual(new byte[] { 1, 2, 3, 2 }, Addition(new byte[] { 1, 0, 0, 2 }, new byte[] { 2, 3, 0 }, 4));
+        }
+        [TestMethod]
         public void ImplementSubtraction1()
         {
             CollectionAssert.AreEqual(new byte[] { 1, 0 }, Subtraction(new byte[] { 1, 0, 1 }, new byte[] { 1, 1 }, 2));
@@ -125,6 +130,11 @@ namespace BinaryOperations
         public void ImplementSubtractionBaseThree()
         {
             CollectionAssert.AreEqual(new byte[] { 1, 1, 0 }, Subtraction(new byte[] { 2, 0, 1 }, new byte[] { 2, 1 }, 3));
+        }
+        [TestMethod]
+        public void ImplementSubtractionBaseFour()
+        {
+            CollectionAssert.AreEqual(new byte[] { 1, 1, 2 }, Subtraction(new byte[] { 1, 0, 0, 2 }, new byte[] { 2, 3, 0 }, 4));
         }
         [TestMethod]
         public void ImplementMultiplication1()
@@ -142,9 +152,9 @@ namespace BinaryOperations
             CollectionAssert.AreEqual(new byte[] { 1, 0, 1, 0 }, Multiplication(new byte[] { 2, 0 }, new byte[] { 1, 2 }, 3));
         }
         [TestMethod]
-        public void ImplementMultiplicationBaseThree2()
+        public void ImplementMultiplicationBaseFour()
         {
-            CollectionAssert.AreEqual(new byte[] { 2, 0, 0, 1 }, Multiplication(new byte[] { 1, 0, 2 }, new byte[] { 1, 2 }, 3));
+            CollectionAssert.AreEqual(new byte[] { 3, 1, 3 }, Multiplication(new byte[] { 2, 3 }, new byte[] { 1, 1 }, 4));
         }
         [TestMethod]
         public void ImplementDivision1()
@@ -165,6 +175,11 @@ namespace BinaryOperations
         public void ImplementDivisionBaseThree2()
         {
             CollectionAssert.AreEqual(new byte[] { 2, 0 }, Division(new byte[] { 1, 1, 2, 0 }, new byte[] { 2, 1 }, 3));
+        }
+        [TestMethod]
+        public void ImplementDivisionBaseFour()
+        {
+            CollectionAssert.AreEqual(new byte[] { 3 }, Division(new byte[] { 1, 0, 0, 2 }, new byte[] { 1, 1, 2 }, 4));
         }
         byte[] ConvertNumberFromDecimalToBinary(byte number, byte baseNumber)
         {
