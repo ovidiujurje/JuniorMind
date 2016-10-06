@@ -122,19 +122,29 @@ namespace BinaryOperations
             CollectionAssert.AreEqual(new byte[] { 1, 0, 1, 1, 1, 0 }, Subtraction(new byte[] { 1, 1, 0, 0, 0, 1 }, new byte[] { 1, 1 }, 2));
         }
         [TestMethod]
-        public void ImplementSubtractionBase3()
+        public void ImplementSubtractionBaseThree()
         {
             CollectionAssert.AreEqual(new byte[] { 1, 1, 0 }, Subtraction(new byte[] { 2, 0, 1 }, new byte[] { 2, 1 }, 3));
         }
         [TestMethod]
         public void ImplementMultiplication1()
         {
-            CollectionAssert.AreEqual(new byte[] { 1, 0, 0, 0, 1, 1 }, Multiplication(new byte[] { 0, 1, 1, 1 }, new byte[] { 1, 0, 1 }));
+            CollectionAssert.AreEqual(new byte[] { 1, 0, 0, 0, 1, 1 }, Multiplication(new byte[] { 0, 1, 1, 1 }, new byte[] { 1, 0, 1 }, 2));
         }
         [TestMethod]
         public void ImplementMultiplication2()
         {
-            CollectionAssert.AreEqual(new byte[] { 1, 1, 1, 1 }, Multiplication(new byte[] { 1, 0, 1 }, new byte[] { 1, 1 }));
+            CollectionAssert.AreEqual(new byte[] { 1, 1, 1, 1 }, Multiplication(new byte[] { 1, 0, 1 }, new byte[] { 1, 1 }, 2));
+        }
+        [TestMethod]
+        public void ImplementMultiplicationBaseThree()
+        {
+            CollectionAssert.AreEqual(new byte[] { 1, 0, 1, 0 }, Multiplication(new byte[] { 2, 0 }, new byte[] { 1, 2 }, 3));
+        }
+        [TestMethod]
+        public void ImplementMultiplicationBaseThree2()
+        {
+            CollectionAssert.AreEqual(new byte[] { 2, 0, 0, 1 }, Multiplication(new byte[] { 1, 0, 2 }, new byte[] { 1, 2 }, 3));
         }
         [TestMethod]
         public void ImplementDivision1()
@@ -149,6 +159,8 @@ namespace BinaryOperations
         byte[] ConvertNumberFromDecimalToBinary(byte number, byte baseNumber)
         {
             byte[] binaryRepresenationOfNumber = new byte[0];
+            if (number ==0)
+                binaryRepresenationOfNumber = new byte[] { 0 };
             while (number > 0)
             {
                 byte remainder = (byte)(number % baseNumber);
@@ -333,17 +345,35 @@ namespace BinaryOperations
             difference = TrimZerosFromBeginning(difference);
             return difference;
         }
-        byte[] Multiplication(byte[] binaryNumber, byte[] otherBinaryNumber)
+        byte[] Multiplication(byte[] binaryNumber, byte[] otherBinaryNumber, byte baseNumber)
         {
-            byte[] result = new byte[binaryNumber.Length + otherBinaryNumber.Length -1];
+            byte[] result = new byte[binaryNumber.Length + otherBinaryNumber.Length + baseNumber - 1];
             binaryNumber = GeenrateBinaryOfSameLengthforOtherNumber(ref result, ref binaryNumber);
+            byte[] tempBinaryNumber = new byte[binaryNumber.Length];
             for (int i = otherBinaryNumber.Length - 1; i >= 0; i--)
             {
-                if (otherBinaryNumber[i] == 1)
-                    result = Addition(result, binaryNumber, 2);
-                if (otherBinaryNumber[i] == 0)
-                    result = Addition(result, new byte[result.Length], 2);
+                byte hold = 0;
+                for (int j = tempBinaryNumber.Length - 1; j >= 0; j--)
+                {
+                    if (j == 0)
+                    {
+                        binaryNumber[j] = hold;
+                        break;
+                    }
+                    byte[] convertedProduce = ConvertNumberFromDecimalToBinary((byte)(binaryNumber[j] * otherBinaryNumber[i] + hold), baseNumber);
+                    hold = 0;
+                    tempBinaryNumber[j] = convertedProduce[convertedProduce.Length - 1];
+                    for (int k = 0; k < convertedProduce.Length; k++)
+                    {
+                        if (k == convertedProduce.Length)
+                            break;
+                        hold += (byte)(convertedProduce[k] * Math.Pow(10, convertedProduce.Length - k - 2));
+                    }
+                }
+                result = Addition(result, tempBinaryNumber, baseNumber);
+                result = GeenrateBinaryOfSameLengthforOtherNumber(ref binaryNumber, ref result);
                 binaryNumber = ShiftLeft(binaryNumber, 1);
+                Array.Clear(tempBinaryNumber, 0, tempBinaryNumber.Length);
             }
             result = TrimZerosFromBeginning(result);
             return result;
