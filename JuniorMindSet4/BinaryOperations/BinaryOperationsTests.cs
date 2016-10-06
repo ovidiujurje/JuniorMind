@@ -149,12 +149,22 @@ namespace BinaryOperations
         [TestMethod]
         public void ImplementDivision1()
         {
-            CollectionAssert.AreEqual(new byte[] { 1, 0 }, Division(new byte[] { 1, 1, 0 }, new byte[] { 1, 1 }));
+            CollectionAssert.AreEqual(new byte[] { 1, 0 }, Division(new byte[] { 1, 1, 0 }, new byte[] { 1, 1 }, 2));
         }
         [TestMethod]
         public void ImplementDivision2()
         {
-            CollectionAssert.AreEqual(new byte[] { 1, 0, 1, 1 }, Division(new byte[] { 1, 0, 0, 0, 0, 1 }, new byte[] { 1, 1 }));
+            CollectionAssert.AreEqual(new byte[] { 1, 0, 1, 1 }, Division(new byte[] { 1, 0, 0, 0, 0, 1 }, new byte[] { 1, 1 }, 2));
+        }
+        [TestMethod]
+        public void ImplementDivisionBaseThree1()
+        {
+            CollectionAssert.AreEqual(new byte[] { 1, 1 }, Division(new byte[] { 2, 0, 2 }, new byte[] { 1, 2 }, 3));
+        }
+        [TestMethod]
+        public void ImplementDivisionBaseThree2()
+        {
+            CollectionAssert.AreEqual(new byte[] { 2, 0 }, Division(new byte[] { 1, 1, 2, 0 }, new byte[] { 2, 1 }, 3));
         }
         byte[] ConvertNumberFromDecimalToBinary(byte number, byte baseNumber)
         {
@@ -378,7 +388,7 @@ namespace BinaryOperations
             result = TrimZerosFromBeginning(result);
             return result;
         }
-        byte[] Division(byte[] binaryNumber, byte[] otherBinaryNumber)
+        byte[] Division(byte[] binaryNumber, byte[] otherBinaryNumber, byte baseNumber)
         {
             byte[] zero = { 0 };
             byte[] quotient = { 0 };
@@ -387,8 +397,8 @@ namespace BinaryOperations
             {
                 if (LessThan(binaryNumber, otherBinaryNumber) == true)
                     break;
-                binaryNumber = Subtraction(binaryNumber, otherBinaryNumber, 2);
-                quotient = Addition(quotient, new byte[] { 1 }, 2);
+                binaryNumber = Subtraction(binaryNumber, otherBinaryNumber, baseNumber);
+                quotient = Addition(quotient, new byte[] { 1 }, baseNumber);
             }
             quotient = TrimZerosFromBeginning(quotient);
             return quotient;
