@@ -214,50 +214,36 @@ namespace BinaryOperations
         byte[] And(byte[] binaryNumber, byte[] otherBinaryNumber)
         {
             byte[] factor = GeenrateBinaryOfSameLengthforOtherNumber(ref binaryNumber, ref otherBinaryNumber);
-            for (int i = 0; i < binaryNumber.Length; i++)
-            {
-                if (binaryNumber[i] == 1 && factor[i] == 1)
-                {
-                    binaryNumber[i] = 1;
-                }
-                else
-                {
-                    binaryNumber[i] = 0;
-                }
-            }
-            return binaryNumber;
+            byte[] and = AndOrFunction(binaryNumber, factor, 1, 0);
+            return and;
         }
         byte[] Or(byte[] binaryNumber, byte[] otherBinaryNumber)
         {
             byte[] factor = GeenrateBinaryOfSameLengthforOtherNumber(ref binaryNumber, ref otherBinaryNumber);
+            byte[] or = AndOrFunction(binaryNumber, factor, 0, 1);
+            return or;
+        }
+        private static byte[] AndOrFunction(byte[] binaryNumber, byte[] factor, byte firstNumber, byte secondNumber)
+        {
+            byte[] andOr = new byte[binaryNumber.Length];
             for (int i = 0; i < binaryNumber.Length; i++)
             {
-                if (binaryNumber[i] == 0 && factor[i] == 0)
+                if (binaryNumber[i] == firstNumber && factor[i] == firstNumber)
                 {
-                    binaryNumber[i] = 0;
+                    andOr[i] = firstNumber;
                 }
                 else
                 {
-                    binaryNumber[i] = 1;
+                    andOr[i] = secondNumber;
                 }
             }
-            return binaryNumber;
+            return andOr;
         }
         byte[] XOr(byte[] binaryNumber, byte[] otherBinaryNumber)
         {
             byte[] factor = GeenrateBinaryOfSameLengthforOtherNumber(ref binaryNumber, ref otherBinaryNumber);
-            for (int i = 0; i < binaryNumber.Length; i++)
-            {
-                if (binaryNumber[i] != factor[i])
-                {
-                    binaryNumber[i] = 1;
-                }
-                else
-                {
-                    binaryNumber[i] = 0;
-                }
-            }
-            return binaryNumber;
+            byte[] xor = Not(And(Not(And(binaryNumber, Not(And(binaryNumber, otherBinaryNumber)))), Not(And(otherBinaryNumber, Not(And(binaryNumber, otherBinaryNumber))))));
+            return xor;
         }
         byte[] ShiftLeft(byte[] binaryNumber, byte numberOfSpaces)
         {
