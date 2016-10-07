@@ -241,8 +241,7 @@ namespace BinaryOperations
         }
         byte[] XOr(byte[] binaryNumber, byte[] otherBinaryNumber)
         {
-            byte[] xor = Not(And(Not(And(binaryNumber, Not(And(binaryNumber, otherBinaryNumber)))), Not(And(otherBinaryNumber, Not(And(binaryNumber, otherBinaryNumber))))));
-            return xor;
+            return Not(And(Not(And(binaryNumber, Not(And(binaryNumber, otherBinaryNumber)))), Not(And(otherBinaryNumber, Not(And(binaryNumber, otherBinaryNumber))))));
         }
         byte[] ShiftLeft(byte[] binaryNumber, byte numberOfSpaces)
         {
