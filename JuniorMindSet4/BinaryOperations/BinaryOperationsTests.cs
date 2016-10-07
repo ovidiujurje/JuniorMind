@@ -241,7 +241,6 @@ namespace BinaryOperations
         }
         byte[] XOr(byte[] binaryNumber, byte[] otherBinaryNumber)
         {
-            byte[] factor = GeenrateBinaryOfSameLengthforOtherNumber(ref binaryNumber, ref otherBinaryNumber);
             byte[] xor = Not(And(Not(And(binaryNumber, Not(And(binaryNumber, otherBinaryNumber)))), Not(And(otherBinaryNumber, Not(And(binaryNumber, otherBinaryNumber))))));
             return xor;
         }
