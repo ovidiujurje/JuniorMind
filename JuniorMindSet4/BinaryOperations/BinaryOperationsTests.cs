@@ -214,47 +214,54 @@ namespace BinaryOperations
         byte[] And(byte[] binaryNumber, byte[] otherBinaryNumber)
         {
             byte[] factor = GeenrateBinaryOfSameLengthforOtherNumber(ref binaryNumber, ref otherBinaryNumber);
-            byte[] and = AndOrFunction(binaryNumber, factor, 1, 0);
+            byte[] and = AndOrXOrFunction(binaryNumber, factor, 1, 1, 0);
             return TrimZerosFromBeginning(and);
         }
         byte[] Or(byte[] binaryNumber, byte[] otherBinaryNumber)
         {
             byte[] factor = GeenrateBinaryOfSameLengthforOtherNumber(ref binaryNumber, ref otherBinaryNumber);
-            byte[] or = AndOrFunction(binaryNumber, factor, 0, 1);
+            byte[] or = AndOrXOrFunction(binaryNumber, factor, 1, 0, 1);
             return TrimZerosFromBeginning(or);
-        }
-        private static byte[] AndOrFunction(byte[] binaryNumber, byte[] factor, byte firstNumber, byte secondNumber)
-        {
-            byte[] andOr = new byte[binaryNumber.Length];
-            for (int i = 0; i < binaryNumber.Length; i++)
-            {
-                if (binaryNumber[i] == firstNumber && factor[i] == firstNumber)
-                {
-                    andOr[i] = firstNumber;
-                }
-                else
-                {
-                    andOr[i] = secondNumber;
-                }
-            }
-            return andOr;
         }
         byte[] XOr(byte[] binaryNumber, byte[] otherBinaryNumber)
         {
             byte[] factor = GeenrateBinaryOfSameLengthforOtherNumber(ref binaryNumber, ref otherBinaryNumber);
-            byte[] XOr = new byte[binaryNumber.Length];
-            for (int i = 0; i < binaryNumber.Length; i++)
+            byte[] xOr = AndOrXOrFunction(binaryNumber, factor, 2, 0, 1);
+            return TrimZerosFromBeginning(xOr);
+        }
+        private static byte[] AndOrXOrFunction(byte[] binaryNumber, byte[] factor, byte caseNumber, byte firstNumber, byte secondNumber)
+        {
+            byte[] andOrXOr = new byte[binaryNumber.Length];
+            switch (caseNumber)
             {
-                if (binaryNumber[i] == factor[i])
-                {
-                    XOr[i] = 0;
-                }
-                else
-                {
-                    XOr[i] = 1;
-                }
+                case 1:
+                    for (int i = 0; i < binaryNumber.Length; i++)
+                    {
+                        if (binaryNumber[i] == firstNumber && factor[i] == firstNumber)
+                        {
+                            andOrXOr[i] = firstNumber;
+                        }
+                        else
+                        {
+                            andOrXOr[i] = secondNumber;
+                        }
+                    }
+                    break;
+                case 2:
+                    for (int i = 0; i < binaryNumber.Length; i++)
+                    {
+                        if (binaryNumber[i] == factor[i])
+                        {
+                            andOrXOr[i] = firstNumber;
+                        }
+                        else
+                        {
+                            andOrXOr[i] = secondNumber;
+                        }
+                    }
+                    break;
             }
-            return TrimZerosFromBeginning(XOr);
+            return andOrXOr;
         }
         byte[] ShiftLeft(byte[] binaryNumber, byte numberOfSpaces)
         {
