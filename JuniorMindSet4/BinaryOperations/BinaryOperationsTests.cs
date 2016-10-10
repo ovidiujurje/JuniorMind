@@ -24,162 +24,162 @@ namespace BinaryOperations
         [TestMethod]
         public void ImplementNot()
         {
-            CollectionAssert.AreEqual(new byte[] { 0, 0, 1, 1, 1, 0 }, Not(new byte[] { 1, 1, 0, 0, 0, 1 }));
+            CollectionAssert.AreEqual(ConvertNumberFromDecimalToBinary(14, 2), Not(ConvertNumberFromDecimalToBinary(49, 2)));
         }
         [TestMethod]
         public void ImplementAnd()
         {
-            CollectionAssert.AreEqual(new byte[] { 0, 0, 0, 0, 0, 1 }, And(new byte[] { 1, 1, 0, 0, 0, 1 }, new byte[] { 1, 1}));
+            CollectionAssert.AreEqual(ConvertNumberFromDecimalToBinary(1, 2), And(ConvertNumberFromDecimalToBinary(49, 2), ConvertNumberFromDecimalToBinary(3, 2)));
         }
         [TestMethod]
         public void ImplementOr()
         {
-            CollectionAssert.AreEqual(new byte[] { 1, 1, 0, 0, 1, 1 }, Or(new byte[] { 1, 1, 0, 0, 0, 1 }, new byte[] { 1, 1 }));
+            CollectionAssert.AreEqual(ConvertNumberFromDecimalToBinary(51, 2), Or(ConvertNumberFromDecimalToBinary(49, 2), ConvertNumberFromDecimalToBinary(3, 2)));
         }
         [TestMethod]
         public void ImplementXOr()
         {
-            CollectionAssert.AreEqual(new byte[] { 1, 1, 0, 0, 1, 0 }, XOr(new byte[] { 1, 1, 0, 0, 0, 1 }, new byte[] { 1, 1 }));
+            CollectionAssert.AreEqual(ConvertNumberFromDecimalToBinary(50, 2), XOr(ConvertNumberFromDecimalToBinary(49, 2), ConvertNumberFromDecimalToBinary(3, 2)));
         }
         [TestMethod]
         public void ImplementShiftLeft()
         {
-            CollectionAssert.AreEqual(new byte[] { 0, 0, 1, 0, 0, 0 }, ShiftLeft(new byte[] { 1, 1, 0, 0, 0, 1 }, 3));
+            CollectionAssert.AreEqual(ConvertNumberFromDecimalToBinary (8, 2), TrimZerosFromBeginning(ShiftLeft(ConvertNumberFromDecimalToBinary(49, 2), 3)));
         }
         [TestMethod]
         public void ImplementShiftRight()
         {
-            CollectionAssert.AreEqual(new byte[] { 0, 0, 0, 1, 1, 0 }, ShiftRight(new byte[] { 1, 1, 0, 0, 0, 1 }, 3));
+            CollectionAssert.AreEqual(ConvertNumberFromDecimalToBinary(6, 2), TrimZerosFromBeginning(ShiftRight(ConvertNumberFromDecimalToBinary(49, 2), 3)));
         }
         [TestMethod]
         public void ImplementLessThan1()
         {
-            Assert.AreEqual(true, LessThan(new byte[] { 1, 1, 0, 0, 0, 0 }, new byte[] { 1, 1, 0, 0, 0, 1 }));
+            Assert.AreEqual(true, LessThan(ConvertNumberFromDecimalToBinary(48, 2), ConvertNumberFromDecimalToBinary(49, 2)));
         }
         [TestMethod]
         public void ImplementLessThan2()
         {
-            Assert.AreEqual(false, LessThan(new byte[] { 1, 1, 0, 0, 0, 1 }, new byte[] { 1, 0, 1, 1, 1, 1 }));
+            Assert.AreEqual(false, LessThan(ConvertNumberFromDecimalToBinary(49, 2), ConvertNumberFromDecimalToBinary(47, 2)));
         }
         [TestMethod]
         public void ImplementLessThan3()
         {
-            Assert.AreEqual(true, LessThan(new byte[] { 0, 0, 0, 1, 0, 1 }, new byte[] { 1, 1, 0, 0, 0, 1 }));
+            Assert.AreEqual(true, LessThan(ConvertNumberFromDecimalToBinary(5, 2), ConvertNumberFromDecimalToBinary(49, 2)));
         }
         [TestMethod]
         public void ImplementLessThan4()
         {
-            Assert.AreEqual(false, LessThan(new byte[] { 1, 1, 0, 0, 0, 1 }, new byte[] { 1, 1 }));
+            Assert.AreEqual(false, LessThan(ConvertNumberFromDecimalToBinary(49, 2), ConvertNumberFromDecimalToBinary(3, 2)));
         }
         [TestMethod]
         public void ImplementGreaterThan1()
         {
-            Assert.AreEqual(false, GreaterThan(new byte[] { 1, 1, 0, 0, 0, 0 }, new byte[] { 1, 1, 0, 0, 0, 1 }));
+            Assert.AreEqual(false, GreaterThan(ConvertNumberFromDecimalToBinary(48, 2), ConvertNumberFromDecimalToBinary(49, 2)));
         }
         [TestMethod]
         public void ImplementGreaterThan2()
         {
-            Assert.AreEqual(true, GreaterThan(new byte[] { 1, 1, 0, 0, 0, 1 }, new byte[] { 1, 1 }));
+            Assert.AreEqual(true, GreaterThan(ConvertNumberFromDecimalToBinary(49, 2), ConvertNumberFromDecimalToBinary(3, 2)));
         }
         [TestMethod]
         public void ImplementEqual1()
         {
-            Assert.AreEqual(true, Equal(new byte[] { 1, 1, 0, 0, 0, 1 }, new byte[] { 1, 1, 0, 0, 0, 1 }));
+            Assert.AreEqual(true, Equal(ConvertNumberFromDecimalToBinary(49, 2), ConvertNumberFromDecimalToBinary(49, 2)));
         }
         [TestMethod]
         public void ImplementEqual2()
         {
-            Assert.AreEqual(false, Equal(new byte[] { 1, 1, 0, 0, 0, 1 }, new byte[] { 1, 1, 0, 0, 0, 0 }));
+            Assert.AreEqual(false, Equal(ConvertNumberFromDecimalToBinary(49, 2), ConvertNumberFromDecimalToBinary(48, 2)));
         }
         [TestMethod]
         public void ImplementNotEqual1()
         {
-            Assert.AreEqual(false, NotEqual(new byte[] { 1, 1, 0, 0, 0, 1 }, new byte[] { 1, 1, 0, 0, 0, 1 }));
+            Assert.AreEqual(false, NotEqual(ConvertNumberFromDecimalToBinary(49, 2), ConvertNumberFromDecimalToBinary(49, 2)));
         }
         [TestMethod]
         public void ImplementNotEqual2()
         {
-            Assert.AreEqual(true, NotEqual(new byte[] { 1, 1, 0, 0, 0, 1 }, new byte[] { 1, 1, 0, 0, 0, 0 }));
+            Assert.AreEqual(true, NotEqual(ConvertNumberFromDecimalToBinary(49, 2), ConvertNumberFromDecimalToBinary(48, 2)));
         }
         [TestMethod]
         public void ImplementAddition()
         {
-            CollectionAssert.AreEqual(new byte[] { 1, 0, 0, 1, 1 }, Addition(new byte[] { 1, 1, 0, 0 }, new byte[] { 1, 1, 1 }, 2));
+            CollectionAssert.AreEqual(ConvertNumberFromDecimalToBinary(19, 2), Addition(ConvertNumberFromDecimalToBinary(12, 2), ConvertNumberFromDecimalToBinary(7, 2), 2));
         }
         [TestMethod]
         public void ImplementAdditionBaseThree()
         {
-            CollectionAssert.AreEqual(new byte[] { 2, 0, 1 }, Addition(new byte[] { 1, 1, 0 }, new byte[] { 2, 1 }, 3));
+            CollectionAssert.AreEqual(ConvertNumberFromDecimalToBinary(19, 3), Addition(ConvertNumberFromDecimalToBinary(12, 3), ConvertNumberFromDecimalToBinary(7, 3), 3));
         }
         [TestMethod]
         public void ImplementAdditionBaseFour()
         {
-            CollectionAssert.AreEqual(new byte[] { 1, 2, 3, 2 }, Addition(new byte[] { 1, 0, 0, 2 }, new byte[] { 2, 3, 0 }, 4));
+            CollectionAssert.AreEqual(ConvertNumberFromDecimalToBinary(110, 4), Addition(ConvertNumberFromDecimalToBinary(66, 4), ConvertNumberFromDecimalToBinary(44, 4), 4));
         }
         [TestMethod]
         public void ImplementSubtraction1()
         {
-            CollectionAssert.AreEqual(new byte[] { 1, 0 }, Subtraction(new byte[] { 1, 0, 1 }, new byte[] { 1, 1 }, 2));
+            CollectionAssert.AreEqual(ConvertNumberFromDecimalToBinary(2, 2), Subtraction(ConvertNumberFromDecimalToBinary(5, 2), ConvertNumberFromDecimalToBinary(3, 2), 2));
         }
         [TestMethod]
         public void ImplementSubtraction2()
         {
-            CollectionAssert.AreEqual(new byte[] { 1, 0, 1, 1, 1, 0 }, Subtraction(new byte[] { 1, 1, 0, 0, 0, 1 }, new byte[] { 1, 1 }, 2));
+            CollectionAssert.AreEqual(ConvertNumberFromDecimalToBinary(46, 2), Subtraction(ConvertNumberFromDecimalToBinary(49, 2), ConvertNumberFromDecimalToBinary(3, 2), 2));
         }
         [TestMethod]
         public void ImplementSubtractionBaseThree()
         {
-            CollectionAssert.AreEqual(new byte[] { 1, 1, 0 }, Subtraction(new byte[] { 2, 0, 1 }, new byte[] { 2, 1 }, 3));
+            CollectionAssert.AreEqual(ConvertNumberFromDecimalToBinary(12, 3), Subtraction(ConvertNumberFromDecimalToBinary(19, 3), ConvertNumberFromDecimalToBinary(7, 3), 3));
         }
         [TestMethod]
         public void ImplementSubtractionBaseFour()
         {
-            CollectionAssert.AreEqual(new byte[] { 1, 1, 2 }, Subtraction(new byte[] { 1, 0, 0, 2 }, new byte[] { 2, 3, 0 }, 4));
+            CollectionAssert.AreEqual(ConvertNumberFromDecimalToBinary(22, 4), Subtraction(ConvertNumberFromDecimalToBinary(66, 4), ConvertNumberFromDecimalToBinary(44, 4), 4));
         }
         [TestMethod]
         public void ImplementMultiplication1()
         {
-            CollectionAssert.AreEqual(new byte[] { 1, 0, 0, 0, 1, 1 }, Multiplication(new byte[] { 0, 1, 1, 1 }, new byte[] { 1, 0, 1 }, 2));
+            CollectionAssert.AreEqual(ConvertNumberFromDecimalToBinary(35, 2), Multiplication(ConvertNumberFromDecimalToBinary(7, 2), ConvertNumberFromDecimalToBinary(5, 2), 2));
         }
         [TestMethod]
         public void ImplementMultiplication2()
         {
-            CollectionAssert.AreEqual(new byte[] { 1, 1, 1, 1 }, Multiplication(new byte[] { 1, 0, 1 }, new byte[] { 1, 1 }, 2));
+            CollectionAssert.AreEqual(ConvertNumberFromDecimalToBinary(15, 2), Multiplication(ConvertNumberFromDecimalToBinary(5, 2), ConvertNumberFromDecimalToBinary(3, 2), 2));
         }
         [TestMethod]
         public void ImplementMultiplicationBaseThree()
         {
-            CollectionAssert.AreEqual(new byte[] { 1, 0, 1, 0 }, Multiplication(new byte[] { 2, 0 }, new byte[] { 1, 2 }, 3));
+            CollectionAssert.AreEqual(ConvertNumberFromDecimalToBinary(30, 3), Multiplication(ConvertNumberFromDecimalToBinary(6, 3), ConvertNumberFromDecimalToBinary(5, 3), 3));
         }
         [TestMethod]
         public void ImplementMultiplicationBaseFour()
         {
-            CollectionAssert.AreEqual(new byte[] { 3, 1, 3 }, Multiplication(new byte[] { 2, 3 }, new byte[] { 1, 1 }, 4));
+            CollectionAssert.AreEqual(ConvertNumberFromDecimalToBinary(55, 4), Multiplication(ConvertNumberFromDecimalToBinary(11, 4), ConvertNumberFromDecimalToBinary(5, 4), 4));
         }
         [TestMethod]
         public void ImplementDivision1()
         {
-            CollectionAssert.AreEqual(new byte[] { 1, 0 }, Division(new byte[] { 1, 1, 0 }, new byte[] { 1, 1 }, 2));
+            CollectionAssert.AreEqual(ConvertNumberFromDecimalToBinary(2, 2), Division(ConvertNumberFromDecimalToBinary(6, 2), ConvertNumberFromDecimalToBinary(3, 2), 2));
         }
         [TestMethod]
         public void ImplementDivision2()
         {
-            CollectionAssert.AreEqual(new byte[] { 1, 0, 1, 1 }, Division(new byte[] { 1, 0, 0, 0, 0, 1 }, new byte[] { 1, 1 }, 2));
+            CollectionAssert.AreEqual(ConvertNumberFromDecimalToBinary(11, 2), Division(ConvertNumberFromDecimalToBinary(33, 2), ConvertNumberFromDecimalToBinary(3, 2), 2));
         }
         [TestMethod]
         public void ImplementDivisionBaseThree1()
         {
-            CollectionAssert.AreEqual(new byte[] { 1, 1 }, Division(new byte[] { 2, 0, 2 }, new byte[] { 1, 2 }, 3));
+            CollectionAssert.AreEqual(ConvertNumberFromDecimalToBinary(4, 3), Division(ConvertNumberFromDecimalToBinary(20, 3), ConvertNumberFromDecimalToBinary(5, 3), 3));
         }
         [TestMethod]
         public void ImplementDivisionBaseThree2()
         {
-            CollectionAssert.AreEqual(new byte[] { 2, 0 }, Division(new byte[] { 1, 1, 2, 0 }, new byte[] { 2, 1 }, 3));
+            CollectionAssert.AreEqual(ConvertNumberFromDecimalToBinary(6, 3), Division(ConvertNumberFromDecimalToBinary(42, 3), ConvertNumberFromDecimalToBinary(7, 3), 3));
         }
         [TestMethod]
         public void ImplementDivisionBaseFour()
         {
-            CollectionAssert.AreEqual(new byte[] { 3 }, Division(new byte[] { 1, 0, 0, 2 }, new byte[] { 1, 1, 2 }, 4));
+            CollectionAssert.AreEqual(ConvertNumberFromDecimalToBinary(3, 4), Division(ConvertNumberFromDecimalToBinary(66, 4), ConvertNumberFromDecimalToBinary(22, 4), 4));
         }
         byte[] ConvertNumberFromDecimalToBinary(byte number, byte baseNumber)
         {
@@ -209,19 +209,19 @@ namespace BinaryOperations
                     binaryNumber[i] = 0;
                 }
             }
-            return binaryNumber;
+            return TrimZerosFromBeginning(binaryNumber);
         }
         byte[] And(byte[] binaryNumber, byte[] otherBinaryNumber)
         {
             byte[] factor = GeenrateBinaryOfSameLengthforOtherNumber(ref binaryNumber, ref otherBinaryNumber);
             byte[] and = AndOrFunction(binaryNumber, factor, 1, 0);
-            return and;
+            return TrimZerosFromBeginning(and);
         }
         byte[] Or(byte[] binaryNumber, byte[] otherBinaryNumber)
         {
             byte[] factor = GeenrateBinaryOfSameLengthforOtherNumber(ref binaryNumber, ref otherBinaryNumber);
             byte[] or = AndOrFunction(binaryNumber, factor, 0, 1);
-            return or;
+            return TrimZerosFromBeginning(or);
         }
         private static byte[] AndOrFunction(byte[] binaryNumber, byte[] factor, byte firstNumber, byte secondNumber)
         {
@@ -241,7 +241,20 @@ namespace BinaryOperations
         }
         byte[] XOr(byte[] binaryNumber, byte[] otherBinaryNumber)
         {
-            return Not(And(Not(And(binaryNumber, Not(And(binaryNumber, otherBinaryNumber)))), Not(And(otherBinaryNumber, Not(And(binaryNumber, otherBinaryNumber))))));
+            byte[] factor = GeenrateBinaryOfSameLengthforOtherNumber(ref binaryNumber, ref otherBinaryNumber);
+            byte[] XOr = new byte[binaryNumber.Length];
+            for (int i = 0; i < binaryNumber.Length; i++)
+            {
+                if (binaryNumber[i] == factor[i])
+                {
+                    XOr[i] = 0;
+                }
+                else
+                {
+                    XOr[i] = 1;
+                }
+            }
+            return TrimZerosFromBeginning(XOr);
         }
         byte[] ShiftLeft(byte[] binaryNumber, byte numberOfSpaces)
         {
