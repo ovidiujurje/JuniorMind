@@ -24,7 +24,7 @@ namespace BinaryOperations
         [TestMethod]
         public void ImplementNot()
         {
-            CollectionAssert.AreEqual(ConvertNumberFromDecimalToBinary(14, 2), Not(ConvertNumberFromDecimalToBinary(49, 2)));
+            CollectionAssert.AreEqual(ConvertNumberFromDecimalToBinary(14, 2), Not(ConvertNumberFromDecimalToBinary(49, 2), 2));
         }
         [TestMethod]
         public void ImplementAnd()
@@ -196,18 +196,11 @@ namespace BinaryOperations
             Array.Reverse(binaryRepresenationOfNumber);
             return binaryRepresenationOfNumber;
         }
-        byte[] Not(byte[] binaryNumber)
+        byte[] Not(byte[] binaryNumber, byte baseNumber)
         {
             for (int i = 0; i < binaryNumber.Length; i++)
             {
-                if (binaryNumber[i] == 0)
-                {
-                    binaryNumber[i] = 1;
-                }
-                else
-                {
-                    binaryNumber[i] = 0;
-                }
+                binaryNumber[i] =(byte)(baseNumber - 1 - binaryNumber[i]);
             }
             return TrimZerosFromBeginning(binaryNumber);
         }
@@ -283,6 +276,8 @@ namespace BinaryOperations
         }
         bool LessThan(byte[] binaryNumber, byte[] otherBinaryNumber)
         {
+            TrimZerosFromBeginning(binaryNumber);
+            TrimZerosFromBeginning(otherBinaryNumber);
             if (binaryNumber.Length < otherBinaryNumber.Length)
                 return true;
             if (binaryNumber.Length > otherBinaryNumber.Length)
@@ -298,10 +293,12 @@ namespace BinaryOperations
         }
         bool GreaterThan(byte[] binaryNumber, byte[] otherBinaryNumber)
         {
+            TrimZerosFromBeginning(binaryNumber);
+            TrimZerosFromBeginning(otherBinaryNumber);
+            if (LessThan(binaryNumber, otherBinaryNumber) == true)
+                return false;
             if (binaryNumber.Length > otherBinaryNumber.Length)
                 return true;
-            if (binaryNumber.Length < otherBinaryNumber.Length)
-                return false;
             for (int i = 0; i < binaryNumber.Length; i++)
             {
                 if (binaryNumber[i] > otherBinaryNumber[i])
@@ -313,20 +310,13 @@ namespace BinaryOperations
         }
         bool Equal(byte[] binaryNumber, byte[] otherBinaryNumber)
         {
-            if (binaryNumber.Length != otherBinaryNumber.Length)
-                return false;
-            for (int i = 0; i < binaryNumber.Length; i++)
-            {
-                if (binaryNumber[i] != otherBinaryNumber[i])
-                    return false;
-            }
-            return true;
+            if (LessThan(binaryNumber, otherBinaryNumber) == false && GreaterThan(binaryNumber, otherBinaryNumber) == false)
+                return true;
+            return false;
         }
         bool NotEqual(byte[] binaryNumber, byte[] otherBinaryNumber)
         {
-            if (binaryNumber.Length != otherBinaryNumber.Length)
-                return true;
-            if (Equal(binaryNumber, otherBinaryNumber) == false)
+            if (LessThan(binaryNumber, otherBinaryNumber) == true || GreaterThan(binaryNumber, otherBinaryNumber) == true)
                 return true;
             return false;
         }
@@ -342,8 +332,9 @@ namespace BinaryOperations
                     sum[i] = hold;
                     break;
                 }
-                sum[i] = (byte)((binaryNumber[binaryNumber.Length - i - 1] + otherBinaryNumber[otherBinaryNumber.Length - i - 1] + hold) % baseNumber);
-                hold = (byte)((binaryNumber[binaryNumber.Length - i - 1] + otherBinaryNumber[otherBinaryNumber.Length - i - 1] + hold) / baseNumber);
+                int temp = binaryNumber[binaryNumber.Length - i - 1] + otherBinaryNumber[otherBinaryNumber.Length - i - 1] + hold;
+                sum[i] = (byte)(temp % baseNumber);
+                hold = (byte)(temp / baseNumber);
             }
             Array.Reverse(sum);
             sum = TrimZerosFromBeginning(sum);
@@ -352,27 +343,11 @@ namespace BinaryOperations
         byte[] Subtraction(byte[] binaryNumber, byte[] otherBinaryNumber, byte baseNumber)
         {
             otherBinaryNumber = GeenrateBinaryOfSameLengthforOtherNumber(ref binaryNumber, ref otherBinaryNumber);
-            byte[] difference = new byte[binaryNumber.Length];
-            byte[] binaryNumberClone = binaryNumber;
-            for (int i = binaryNumber.Length - 1; i >= 0; i--)
-            {
-                if (binaryNumber[i] < otherBinaryNumber[i])
-                {
-                    binaryNumber[i] += baseNumber;
-                    for (int j = i - 1; j >= 0; j--)
-                    {
-                        if (binaryNumber[j] != 0)
-                        {
-                            binaryNumber[j] -= 1;
-                            break;
-                        }
-                        binaryNumber[j] += (byte)(baseNumber - 1);
-                    }
-                }
-                difference[i] = (byte)(binaryNumber[i] - otherBinaryNumber[i]);
-            }
-            difference = TrimZerosFromBeginning(difference);
-            return difference;
+            byte[] difference = new byte[binaryNumber.Length + 1];
+            otherBinaryNumber = Addition(Not(otherBinaryNumber, baseNumber), ConvertNumberFromDecimalToBinary(1, baseNumber), baseNumber);
+            difference = Addition(binaryNumber, otherBinaryNumber, baseNumber);
+            difference[0] = 0;
+            return TrimZerosFromBeginning(difference);
         }
         byte[] Multiplication(byte[] binaryNumber, byte[] otherBinaryNumber, byte baseNumber)
         {
