@@ -295,16 +295,14 @@ namespace BinaryOperations
         {
             TrimZerosFromBeginning(binaryNumber);
             TrimZerosFromBeginning(otherBinaryNumber);
-            if (LessThan(binaryNumber, otherBinaryNumber) == true)
-                return false;
             if (binaryNumber.Length > otherBinaryNumber.Length)
                 return true;
+            if (LessThan(binaryNumber, otherBinaryNumber) == true)
+                return false;
             for (int i = 0; i < binaryNumber.Length; i++)
             {
-                if (binaryNumber[i] > otherBinaryNumber[i])
+                if (binaryNumber[i] != otherBinaryNumber[i])
                     return true;
-                if (binaryNumber[i] < otherBinaryNumber[i])
-                    return false;
             }
             return false;
         }
