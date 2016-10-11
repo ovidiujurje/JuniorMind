@@ -351,51 +351,25 @@ namespace BinaryOperations
         }
         byte[] Multiplication(byte[] binaryNumber, byte[] otherBinaryNumber, byte baseNumber)
         {
-            byte[] result = new byte[binaryNumber.Length + otherBinaryNumber.Length + baseNumber - 1];
-            binaryNumber = GeenrateBinaryOfSameLengthforOtherNumber(ref result, ref binaryNumber);
-            byte[] tempBinaryNumber = new byte[binaryNumber.Length];
-            for (int i = otherBinaryNumber.Length - 1; i >= 0; i--)
+            byte[] result = { 0 };
+            byte[] count = { 0 };
+            while (LessThan(count, otherBinaryNumber) == true)
             {
-                byte hold = 0;
-                for (int j = tempBinaryNumber.Length - 1; j >= 0; j--)
-                {
-                    if (j == 0)
-                    {
-                        binaryNumber[j] = hold;
-                        break;
-                    }
-                    byte[] convertedProduce = ConvertNumberFromDecimalToBinary((byte)(binaryNumber[j] * otherBinaryNumber[i] + hold), baseNumber);
-                    hold = 0;
-                    tempBinaryNumber[j] = convertedProduce[convertedProduce.Length - 1];
-                    for (int k = 0; k < convertedProduce.Length; k++)
-                    {
-                        if (k == convertedProduce.Length)
-                            break;
-                        hold += (byte)(convertedProduce[k] * Math.Pow(10, convertedProduce.Length - k - 2));
-                    }
-                }
-                result = Addition(result, tempBinaryNumber, baseNumber);
-                result = GeenrateBinaryOfSameLengthforOtherNumber(ref binaryNumber, ref result);
-                binaryNumber = ShiftLeft(binaryNumber, 1);
-                Array.Clear(tempBinaryNumber, 0, tempBinaryNumber.Length);
+                result = Addition(result, binaryNumber, baseNumber);
+                count = Addition(count, new byte[] { 1 }, baseNumber);
             }
-            result = TrimZerosFromBeginning(result);
             return result;
         }
         byte[] Division(byte[] binaryNumber, byte[] otherBinaryNumber, byte baseNumber)
         {
             byte[] zero = { 0 };
-            byte[] quotient = { 0 };
-            zero = GeenrateBinaryOfSameLengthforOtherNumber(ref binaryNumber, ref zero);
-            while (otherBinaryNumber != zero)
+            byte result = 0;
+            while (GreaterThan(binaryNumber, zero))
             {
-                if (LessThan(binaryNumber, otherBinaryNumber) == true)
-                    break;
                 binaryNumber = Subtraction(binaryNumber, otherBinaryNumber, baseNumber);
-                quotient = Addition(quotient, new byte[] { 1 }, baseNumber);
+                result += 1;
             }
-            quotient = TrimZerosFromBeginning(quotient);
-            return quotient;
+            return ConvertNumberFromDecimalToBinary(result, baseNumber);
         }
         byte[] TrimZerosFromBeginning(byte[] binary)
         {
