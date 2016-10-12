@@ -16,7 +16,13 @@ namespace Shopping
         public void ShouldGetCheapest()
         {
             var cart = new Product[] { new Product("Milk", 6), new Product("Eggs", 10), new Product("Butter", 4) };
-            Assert.AreEqual("Butter", GetCheapestProduct(cart));
+            Assert.AreEqual(new Product("Butter", 4), GetCheapestProduct(cart));
+        }
+        [TestMethod]
+        public void ShouldRemoveMostExpensive()
+        {
+            var cart = new Product[] { new Product("Milk", 6), new Product("Eggs", 10), new Product("Butter", 4) };
+            CollectionAssert.AreEqual(new Product[] { new Product("Milk", 6), new Product("Butter", 4) }, RemoveMostExpensiveProduct(cart));
         }
         public struct Product
         {
@@ -35,13 +41,31 @@ namespace Shopping
                 total += cart[i].price;
             return total;
         }
-        string GetCheapestProduct(Product[] cart)
+        Product GetCheapestProduct(Product[] cart)
         {
-            string cheapest = cart[0].name;
+            Product cheapest = cart[0];
             for (int i = 1; i < cart.Length; i++)
                 if (cart[i].price <= cart[i - 1].price)
-                    cheapest = cart[i].name;
+                    cheapest = cart[i];
             return cheapest;
+        }
+        Product[] RemoveMostExpensiveProduct(Product[] cart)
+        {
+            Product[] newCart = new Product[cart.Length - 1];
+            Product mostExpensive = cart[0];
+            for (int i = 1; i < cart.Length; i++)
+                if (cart[i].price >= cart[i - 1].price)
+                    mostExpensive = cart[i];
+            int place = 0;
+            for (int i = 0; i < cart.Length; i++)
+            {
+                if (cart[i].name != mostExpensive.name)
+                {
+                    newCart[place] = cart[i];
+                    place += 1;
+                }
+            }
+            return newCart;
         }
     }
 }
