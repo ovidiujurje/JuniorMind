@@ -258,20 +258,15 @@ namespace BinaryOperations
         }
         byte[] ShiftLeft(byte[] binaryNumber, byte numberOfSpaces)
         {
-            for (int i = 0; i < binaryNumber.Length - numberOfSpaces; i++)
-            {
-                binaryNumber[i] = binaryNumber[i + numberOfSpaces];
-                binaryNumber[i + numberOfSpaces] = 0;
-            }
+            Array.Reverse(binaryNumber);
+            Array.Resize(ref binaryNumber, binaryNumber.Length - numberOfSpaces);
+            Array.Reverse(binaryNumber);
+            Array.Resize(ref binaryNumber, binaryNumber.Length + numberOfSpaces);
             return binaryNumber;
         }
         byte[] ShiftRight(byte[] binaryNumber, byte numberOfSpaces)
         {
-            for (int i = 0; i < binaryNumber.Length - numberOfSpaces; i++)
-            {
-                binaryNumber[i + numberOfSpaces] = binaryNumber[i];
-                binaryNumber[i] = 0;
-            }
+            Array.Resize(ref binaryNumber, binaryNumber.Length - numberOfSpaces);
             return binaryNumber;
         }
         bool LessThan(byte[] binaryNumber, byte[] otherBinaryNumber)
