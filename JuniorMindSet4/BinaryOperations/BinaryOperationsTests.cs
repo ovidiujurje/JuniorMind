@@ -292,7 +292,7 @@ namespace BinaryOperations
             TrimZerosFromBeginning(otherBinaryNumber);
             if (binaryNumber.Length > otherBinaryNumber.Length)
                 return true;
-            if (LessThan(binaryNumber, otherBinaryNumber) == true)
+            if (LessThan(binaryNumber, otherBinaryNumber))
                 return false;
             for (int i = 0; i < binaryNumber.Length; i++)
             {
@@ -303,15 +303,11 @@ namespace BinaryOperations
         }
         bool Equal(byte[] binaryNumber, byte[] otherBinaryNumber)
         {
-            if (LessThan(binaryNumber, otherBinaryNumber) == false && GreaterThan(binaryNumber, otherBinaryNumber) == false)
-                return true;
-            return false;
+            return !LessThan(binaryNumber, otherBinaryNumber) && !GreaterThan(binaryNumber, otherBinaryNumber);
         }
         bool NotEqual(byte[] binaryNumber, byte[] otherBinaryNumber)
         {
-            if (LessThan(binaryNumber, otherBinaryNumber) == true || GreaterThan(binaryNumber, otherBinaryNumber) == true)
-                return true;
-            return false;
+            return LessThan(binaryNumber, otherBinaryNumber) || GreaterThan(binaryNumber, otherBinaryNumber);
         }
         byte[] Addition(byte[] binaryNumber, byte[] otherBinaryNumber, byte baseNumber)
         {
