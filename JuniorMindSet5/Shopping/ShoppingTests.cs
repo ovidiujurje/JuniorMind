@@ -46,6 +46,7 @@ namespace Shopping
                 this.price = price;
             }
         }
+        public enum PriceType { Cheapest, MostExpensive }
         double CalculateTotalCost(Product[] cart)
         {
             double total = 0;
@@ -55,19 +56,13 @@ namespace Shopping
         }
         Product GetCheapestProduct(Product[] cart)
         {
-            Product cheapest = cart[0];
-            for (int i = 1; i < cart.Length; i++)
-                if (cart[i].price <= cart[i - 1].price)
-                    cheapest = cart[i];
+            Product cheapest = GetCheapestOrMostExpensive(cart, PriceType.Cheapest);
             return cheapest;
         }
         Product[] RemoveMostExpensiveProduct(Product[] cart)
         {
             Product[] newCart = new Product[cart.Length - 1];
-            Product mostExpensive = cart[0];
-            for (int i = 1; i < cart.Length; i++)
-                if (cart[i].price >= cart[i - 1].price)
-                    mostExpensive = cart[i];
+            Product mostExpensive = GetCheapestOrMostExpensive(cart, PriceType.MostExpensive);
             int place = 0;
             for (int i = 0; i < cart.Length; i++)
             {
@@ -78,6 +73,23 @@ namespace Shopping
                 }
             }
             return newCart;
+        }
+        private static Product GetCheapestOrMostExpensive(Product[] cart, PriceType cheapestOrMostExpensive)
+        {
+            Product result = cart[0];
+            for (int i = 1; i < cart.Length; i++)
+                switch (cheapestOrMostExpensive)
+                {
+                    case PriceType.Cheapest:
+                        if (cart[i].price <= cart[i - 1].price)
+                            result = cart[i];
+                        break;
+                    case PriceType.MostExpensive:
+                        if (cart[i].price >= cart[i - 1].price)
+                            result = cart[i];
+                        break;
+                }
+            return result;
         }
         Product[] AddProduct(Product[] cart, Product newProduct)
         {
