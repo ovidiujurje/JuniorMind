@@ -30,6 +30,12 @@ namespace Shopping
             var cart = new Product[] { new Product("Milk", 6), new Product("Eggs", 10), new Product("Butter", 4) };
             CollectionAssert.AreEqual(new Product[] { new Product("Milk", 6), new Product("Eggs", 10), new Product("Butter", 4), new Product("Bread", 2) }, AddProduct(cart, new Product("Bread", 2) ));
         }
+        [TestMethod]
+        public void ShouldCalculateMean()
+        {
+            var cart = new Product[] { new Product("Milk", 6), new Product("Eggs", 10), new Product("Butter", 5) };
+            Assert.AreEqual(7, CalculateMeanPrice(cart));
+        }
         public struct Product
         {
             public string name;
@@ -78,6 +84,10 @@ namespace Shopping
             Array.Resize(ref cart, cart.Length + 1);
             cart[cart.Length - 1] = newProduct;
             return cart;
+        }
+        double CalculateMeanPrice(Product[] cart)
+        {
+            return CalculateTotalCost(cart) / cart.Length;
         }
     }
 }
