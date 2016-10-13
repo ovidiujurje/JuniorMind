@@ -24,6 +24,12 @@ namespace Shopping
             var cart = new Product[] { new Product("Milk", 6), new Product("Eggs", 10), new Product("Butter", 4) };
             CollectionAssert.AreEqual(new Product[] { new Product("Milk", 6), new Product("Butter", 4) }, RemoveMostExpensiveProduct(cart));
         }
+        [TestMethod]
+        public void ShouldAddProduct()
+        {
+            var cart = new Product[] { new Product("Milk", 6), new Product("Eggs", 10), new Product("Butter", 4) };
+            CollectionAssert.AreEqual(new Product[] { new Product("Milk", 6), new Product("Eggs", 10), new Product("Butter", 4), new Product("Bread", 2) }, AddProduct(cart, new Product("Bread", 2) ));
+        }
         public struct Product
         {
             public string name;
@@ -66,6 +72,12 @@ namespace Shopping
                 }
             }
             return newCart;
+        }
+        Product[] AddProduct(Product[] cart, Product newProduct)
+        {
+            Array.Resize(ref cart, cart.Length + 1);
+            cart[cart.Length - 1] = newProduct;
+            return cart;
         }
     }
 }
