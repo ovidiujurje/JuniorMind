@@ -9,28 +9,33 @@ namespace Password
         [TestMethod]
         public void GenerateRandomPasswordContainingLowerCaseLetters()
         {
-            Assert.AreNotEqual("abcde", GeneratePassword(7, 2, 3));
+            Assert.AreNotEqual("abcdefghij", GeneratePassword(10, 2, 3, 1));
         }
-        string GeneratePassword(int passwordLength, int numberOfUpperCaseLetters, int numberOfDigits)
+        string GeneratePassword(int passwordLength, int numberOfUpperCaseLetters, int numberOfDigits, int numberOfSymbols)
         {
             char[] lowerCaseLetters = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
             char[] upperCaseLetters = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
             char[] digits = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+            char[] symbols = { '`', '-', '=', '!', '@', '#', '$', '%', '^', '&', '*', '_', '+', ':', '?'};
             string password = string.Empty;
             char[] passwordCharacters = new char[passwordLength];
             int[] randomIndexes = new int[passwordLength];
             Random randomNumber = new Random();
-            for (int i = 0; i < passwordLength - numberOfUpperCaseLetters - numberOfDigits; i++)
+            for (int i = 0; i < passwordLength - numberOfUpperCaseLetters - numberOfDigits - numberOfSymbols; i++)
             {
                 passwordCharacters[i] = lowerCaseLetters[randomNumber.Next(lowerCaseLetters.Length)];
             }
-            for (int i = passwordLength - numberOfUpperCaseLetters - numberOfDigits; i < passwordLength - numberOfDigits; i++)
+            for (int i = passwordLength - numberOfUpperCaseLetters - numberOfDigits - numberOfSymbols; i < passwordLength - numberOfDigits - numberOfSymbols; i++)
             {
                 passwordCharacters[i] = upperCaseLetters[randomNumber.Next(upperCaseLetters.Length)];
             }
-            for (int i = passwordLength - numberOfDigits; i < passwordLength; i++)
+            for (int i = passwordLength - numberOfDigits - numberOfSymbols; i < passwordLength - numberOfSymbols; i++)
             {
                 passwordCharacters[i] = digits[randomNumber.Next(digits.Length)];
+            }
+            for (int i = passwordLength - numberOfSymbols; i < passwordLength; i++)
+            {
+                passwordCharacters[i] = symbols[randomNumber.Next(symbols.Length)];
             }
             for (int i = 0; i < passwordLength; i++)
             {
