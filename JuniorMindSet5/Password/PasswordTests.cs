@@ -21,21 +21,17 @@ namespace Password
             char[] passwordCharacters = new char[passwordLength];
             int[] randomIndexes = new int[passwordLength];
             Random randomNumber = new Random();
-            for (int i = 0; i < passwordLength - numberOfUpperCaseLetters - numberOfDigits - numberOfSymbols; i++)
+            int[] characterCountArray = { passwordLength, numberOfSymbols, numberOfDigits, numberOfUpperCaseLetters };
+            for (int i = 0; i < passwordLength; i++)
             {
-                passwordCharacters[i] = lowerCaseLetters[randomNumber.Next(lowerCaseLetters.Length)];
-            }
-            for (int i = passwordLength - numberOfUpperCaseLetters - numberOfDigits - numberOfSymbols; i < passwordLength - numberOfDigits - numberOfSymbols; i++)
-            {
-                passwordCharacters[i] = upperCaseLetters[randomNumber.Next(upperCaseLetters.Length)];
-            }
-            for (int i = passwordLength - numberOfDigits - numberOfSymbols; i < passwordLength - numberOfSymbols; i++)
-            {
-                passwordCharacters[i] = digits[randomNumber.Next(digits.Length)];
-            }
-            for (int i = passwordLength - numberOfSymbols; i < passwordLength; i++)
-            {
-                passwordCharacters[i] = symbols[randomNumber.Next(symbols.Length)];
+                if (i < GetLimit(characterCountArray, 1))
+                    passwordCharacters[i] = lowerCaseLetters[randomNumber.Next(lowerCaseLetters.Length)];
+                if (i >= GetLimit(characterCountArray, 1) && i < GetLimit(characterCountArray, 2))
+                    passwordCharacters[i] = upperCaseLetters[randomNumber.Next(upperCaseLetters.Length)];
+                if (i >= GetLimit(characterCountArray, 2) && i < GetLimit(characterCountArray, 3))
+                    passwordCharacters[i] = digits[randomNumber.Next(digits.Length)];
+                if (i >= GetLimit(characterCountArray, 3))
+                    passwordCharacters[i] = symbols[randomNumber.Next(symbols.Length)];
             }
             for (int i = 0; i < passwordLength; i++)
             {
@@ -54,6 +50,15 @@ namespace Password
                 password += passwordCharacters[randomIndexes[i] - 1];
             }
             return password;
+        }
+        int GetLimit(int[] array, int number)
+        {
+            int limit = array[0];
+            for (int i = 1; i <= 4 - number; i++)
+            {
+                limit -= array[i];
+            }
+            return limit;
         }
         bool DoesItContain(int[] givenArray, int givenNumber)
         {
