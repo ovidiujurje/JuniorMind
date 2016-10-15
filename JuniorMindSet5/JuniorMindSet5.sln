@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopping", "Shopping\Shoppi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Password", "Password\Password.csproj", "{8DB2345F-10FA-4024-9C5C-51B214432804}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alarm", "Alarm\Alarm.csproj", "{A74A061C-26C3-49A2-B128-E5806ED26467}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{8DB2345F-10FA-4024-9C5C-51B214432804}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8DB2345F-10FA-4024-9C5C-51B214432804}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8DB2345F-10FA-4024-9C5C-51B214432804}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A74A061C-26C3-49A2-B128-E5806ED26467}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A74A061C-26C3-49A2-B128-E5806ED26467}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A74A061C-26C3-49A2-B128-E5806ED26467}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A74A061C-26C3-49A2-B128-E5806ED26467}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
