@@ -10,7 +10,7 @@ namespace Cyclometer
         public void ShouldCalculateTotalDistanceCovered()
         {
             var cyclists = new Cyclist[] { new Cyclist("Walter White", 0.6, new double[] { 1, 2, 3, 4, 5 }), new Cyclist("Thomas Thatch", 0.7, new double[] { 1, 2, 5, 5, 7 }), new Cyclist("Franklin Fane", 0.8, new double[] { 1, 2, 2, 8, 6 }) };
-            Assert.AreEqual(38.2, CalculateTotalDistanceCovered(cyclists));
+            Assert.AreEqual(120.00883936713009, CalculateTotalDistanceCovered(cyclists));
         }
         [TestMethod]
         public void ShouldGetFastestNameAndSecond()
@@ -34,15 +34,15 @@ namespace Cyclometer
             this.name = name;
             this.diameter = diameter;
             this.rotationsEachSecond = rotationsEachSecond;
+            }
         }
-        }
-
         double CalculateTotalDistanceCovered(Cyclist[] cyclists)
         {
             double totalDistance = 0;
             foreach (Cyclist cyclist in cyclists)
             {
-                totalDistance += cyclist.diameter * CalculateSum(cyclist);
+                double circumference = Math.PI * cyclist.diameter;
+                totalDistance += circumference * CalculateSum(cyclist);
             }
             return totalDistance;
         }
@@ -69,7 +69,8 @@ namespace Cyclometer
             int i = 0;
             foreach (Cyclist cyclist in cyclists)
             {
-                double sumSpeed = CalculateSum(cyclist) * cyclist.diameter;
+                double circumference = cyclist.diameter * Math.PI;
+                double sumSpeed = CalculateSum(cyclist) * circumference;
                 meanSpeed[i] = sumSpeed / cyclist.rotationsEachSecond.Length;
                 i++;
             }
