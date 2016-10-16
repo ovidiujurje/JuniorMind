@@ -39,17 +39,12 @@ namespace Cyclometer
 
         double CalculateTotalDistanceCovered(Cyclist[] cyclists)
         {
-            double result = 0;
+            double totalDistance = 0;
             foreach (Cyclist cyclist in cyclists)
             {
-                double sum = 0;
-                foreach (double rotation in cyclist.rotationsEachSecond)
-                {
-                    sum += rotation;
-                }
-                result += cyclist.diameter * sum;
+                totalDistance += cyclist.diameter * CalculateSum(cyclist);
             }
-            return result;
+            return totalDistance;
         }
         string GetFastestSecondAndCyclistName(Cyclist[] cyclists)
         {
@@ -74,11 +69,7 @@ namespace Cyclometer
             int i = 0;
             foreach (Cyclist cyclist in cyclists)
             {
-                double sumSpeed = 0;
-                foreach (double rotation in cyclist.rotationsEachSecond)
-                {
-                    sumSpeed += rotation * cyclist.diameter;
-                }
+                double sumSpeed = CalculateSum(cyclist) * cyclist.diameter;
                 meanSpeed[i] = sumSpeed / cyclist.rotationsEachSecond.Length;
                 i++;
             }
@@ -91,6 +82,16 @@ namespace Cyclometer
                 }
             }
             return cyclists[resultPosition].name;
+        }
+        private static double CalculateSum(Cyclist cyclist)
+        {
+            double sum = 0;
+            foreach (double rotation in cyclist.rotationsEachSecond)
+            {
+                sum += rotation;
+            }
+
+            return sum;
         }
     }
 }
