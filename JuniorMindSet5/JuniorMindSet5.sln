@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Password", "Password\Passwo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alarm", "Alarm\Alarm.csproj", "{A74A061C-26C3-49A2-B128-E5806ED26467}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cyclometer", "Cyclometer\Cyclometer.csproj", "{1C73272D-DD64-483C-A37F-B8E6B1558366}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{A74A061C-26C3-49A2-B128-E5806ED26467}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A74A061C-26C3-49A2-B128-E5806ED26467}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A74A061C-26C3-49A2-B128-E5806ED26467}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C73272D-DD64-483C-A37F-B8E6B1558366}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C73272D-DD64-483C-A37F-B8E6B1558366}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C73272D-DD64-483C-A37F-B8E6B1558366}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C73272D-DD64-483C-A37F-B8E6B1558366}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
