@@ -44,7 +44,7 @@ namespace BinaryOperations
         [TestMethod]
         public void ImplementShiftLeft()
         {
-            CollectionAssert.AreEqual(ConvertNumberFromDecimalToBinary (8, 2), TrimZerosFromBeginning(ShiftLeft(ConvertNumberFromDecimalToBinary(49, 2), 3)));
+            CollectionAssert.AreEqual(ConvertNumberFromDecimalToBinary (88, 2), TrimZerosFromBeginning(ShiftLeft(ConvertNumberFromDecimalToBinary(11, 2), 3)));
         }
         [TestMethod]
         public void ImplementShiftRight()
@@ -207,60 +207,69 @@ namespace BinaryOperations
         byte[] And(byte[] binaryNumber, byte[] otherBinaryNumber)
         {
             byte[] factor = GeenrateBinaryOfSameLengthforOtherNumber(ref binaryNumber, ref otherBinaryNumber);
-            byte[] and = AndOrXOrFunction(binaryNumber, factor, OperationType.AndOr, 1, 0);
+            byte[] and = AndOrXOrFunction(binaryNumber, factor, OperationType.And);
             return TrimZerosFromBeginning(and);
         }
         byte[] Or(byte[] binaryNumber, byte[] otherBinaryNumber)
         {
             byte[] factor = GeenrateBinaryOfSameLengthforOtherNumber(ref binaryNumber, ref otherBinaryNumber);
-            byte[] or = AndOrXOrFunction(binaryNumber, factor, OperationType.AndOr, 0, 1);
+            byte[] or = AndOrXOrFunction(binaryNumber, factor, OperationType.Or);
             return TrimZerosFromBeginning(or);
         }
         byte[] XOr(byte[] binaryNumber, byte[] otherBinaryNumber)
         {
             byte[] factor = GeenrateBinaryOfSameLengthforOtherNumber(ref binaryNumber, ref otherBinaryNumber);
-            byte[] xOr = AndOrXOrFunction(binaryNumber, factor, OperationType.XOr, 0, 1);
+            byte[] xOr = AndOrXOrFunction(binaryNumber, factor, OperationType.XOr);
             return TrimZerosFromBeginning(xOr);
         }
-        public enum OperationType { AndOr, XOr }
-        private static byte[] AndOrXOrFunction(byte[] binaryNumber, byte[] factor, OperationType operation, byte firstNumber, byte secondNumber)
+        public enum OperationType { And, Or, XOr }
+        private static byte[] AndOrXOrFunction(byte[] binaryNumber, byte[] factor, OperationType operation)
         {
             byte[] andOrXOr = new byte[binaryNumber.Length];
             for (int i = 0; i < binaryNumber.Length; i++)
-                switch (operation)
-                {
-                    case OperationType.AndOr:
-                        {
-                            if (binaryNumber[i] == firstNumber && factor[i] == firstNumber)
-                            {
-                                andOrXOr[i] = firstNumber;
-                            }
-                            else
-                            {
-                                andOrXOr[i] = secondNumber;
-                            }
-                        }
-                        break;
-                    case OperationType.XOr:
-                        {
-                            if (binaryNumber[i] == factor[i])
-                            {
-                                andOrXOr[i] = firstNumber;
-                            }
-                            else
-                            {
-                                andOrXOr[i] = secondNumber;
-                            }
-                        }
-                        break;
-                }
+                andOrXOr[i] = ExecuteOperation(binaryNumber[i], factor[i], operation);
             return andOrXOr;
         }
+
+        private static byte ExecuteOperation(byte binaryNumber, byte factor, OperationType operation)
+        {
+            switch (operation)
+            {
+                case OperationType.And:
+                    {
+                        if (binaryNumber == 1 && factor == 1)
+                        {
+                            return 1;
+                        }
+                        else
+                        {
+                            return 0;
+                        }
+                    }
+                case OperationType.Or:
+                    {
+                        if (binaryNumber == 0 && factor == 0)
+                        {
+                            return 0;
+                        }
+                        else
+                        {
+                            return 1;
+                        }
+                    }
+            }
+            if (binaryNumber == factor)
+            {
+                return 0;
+            }
+            else
+            {
+                return 1;
+            }
+        }
+
         byte[] ShiftLeft(byte[] binaryNumber, byte numberOfSpaces)
         {
-            Array.Reverse(binaryNumber);
-            Array.Resize(ref binaryNumber, binaryNumber.Length - numberOfSpaces);
-            Array.Reverse(binaryNumber);
             Array.Resize(ref binaryNumber, binaryNumber.Length + numberOfSpaces);
             return binaryNumber;
         }
