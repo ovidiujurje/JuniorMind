@@ -16,7 +16,11 @@ namespace Cyclometer
         public void ShouldGetFastestNameAndSecond()
         {
             var cyclists = new Cyclist[] { new Cyclist("Walter White", 0.6, new double[] { 1, 2, 3, 4, 5 }), new Cyclist("Thomas Thatch", 0.7, new double[] { 1, 2, 5, 5, 7 }), new Cyclist("Franklin Fane", 0.8, new double[] { 1, 2, 2, 8, 6 }) };
-            Assert.AreEqual("The fastest cyclist was Franklin Fane in the 4th second", GetFastestSecondAndCyclistName(cyclists));
+            double second;
+            GetFastestSecondAndCyclistName(cyclists, out second);
+            Assert.AreEqual("Franklin Fane", GetFastestSecondAndCyclistName(cyclists, out second));
+            Assert.AreEqual(4, second);
+
         }
         [TestMethod]
         public void ShouldGetCyclistWithBestMeanSpeed()
@@ -46,10 +50,10 @@ namespace Cyclometer
             }
             return totalDistance;
         }
-        string GetFastestSecondAndCyclistName(Cyclist[] cyclists)
+        string GetFastestSecondAndCyclistName(Cyclist[] cyclists, out double resultSecond)
         {
-            double resultSecond = 0;
-            Cyclist resultCyclist = cyclists[0];
+            resultSecond = 0;
+            string resultCyclist = string.Empty;
             foreach (Cyclist cyclist in cyclists)
             {
                 for (int i = 1; i < cyclist.rotationsEachSecond.Length; i++)
@@ -57,11 +61,11 @@ namespace Cyclometer
                     if (cyclist.rotationsEachSecond[i] >= cyclist.rotationsEachSecond[i - 1])
                     {
                         resultSecond = i + 1;
-                        resultCyclist = cyclist;
+                        resultCyclist = cyclist.name;
                     }
                 }
             }
-            return "The fastest cyclist was " + resultCyclist.name + " in the " + resultSecond + "th second";
+            return resultCyclist;
         }
         string GetCyclistWithBestMeanSpeed(Cyclist[] cyclists)
         {
