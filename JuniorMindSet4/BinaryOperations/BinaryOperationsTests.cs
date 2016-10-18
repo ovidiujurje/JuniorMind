@@ -284,11 +284,9 @@ namespace BinaryOperations
             int maxLength = Math.Max(binaryNumber.Length,otherBinaryNumber.Length);
             for (int i = 0; i < maxLength; i++)
             {
-                byte bitBinaryNumber, bitOtherBinaryNumber;
-                PlaceZeroBeyondLength(binaryNumber, otherBinaryNumber, i, out bitBinaryNumber, out bitOtherBinaryNumber);
-                if (bitBinaryNumber < bitOtherBinaryNumber) less = true;
+                if (UseZeroForPositionsGreaterThanLast(binaryNumber, i) < UseZeroForPositionsGreaterThanLast(otherBinaryNumber, i)) less = true;
                 else
-                if (bitBinaryNumber > bitOtherBinaryNumber) less = false;
+                if (UseZeroForPositionsGreaterThanLast(binaryNumber, i) > UseZeroForPositionsGreaterThanLast(otherBinaryNumber, i)) less = false;
             }
             return less;
         }
@@ -299,19 +297,16 @@ namespace BinaryOperations
                 return false;
             for (int i = 0; i < maxLength; i++)
             {
-                byte bitBinaryNumber, bitOtherBinaryNumber;
-                PlaceZeroBeyondLength(binaryNumber, otherBinaryNumber, i, out bitBinaryNumber, out bitOtherBinaryNumber);
-                if (bitBinaryNumber != bitOtherBinaryNumber) return true;
+                if (UseZeroForPositionsGreaterThanLast(binaryNumber, i) != UseZeroForPositionsGreaterThanLast(otherBinaryNumber, i)) return true;
             }
             return false;
         }
 
-        private static void PlaceZeroBeyondLength(byte[] binaryNumber, byte[] otherBinaryNumber, int i, out byte bitBinaryNumber, out byte bitOtherBinaryNumber)
+        private static int UseZeroForPositionsGreaterThanLast(byte[] binary, int position)
         {
-            bitBinaryNumber = 0;
-            bitOtherBinaryNumber = 0;
-            if (i < binaryNumber.Length) bitBinaryNumber = binaryNumber[binaryNumber.Length - i - 1];
-            if (i < otherBinaryNumber.Length) bitOtherBinaryNumber = otherBinaryNumber[otherBinaryNumber.Length - i - 1];
+            int bit = 0;
+            if (position < binary.Length) bit = binary[binary.Length - position - 1];
+            return bit;
         }
 
         bool Equal(byte[] binaryNumber, byte[] otherBinaryNumber)
