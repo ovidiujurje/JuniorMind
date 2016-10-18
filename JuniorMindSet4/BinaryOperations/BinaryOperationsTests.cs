@@ -280,36 +280,40 @@ namespace BinaryOperations
         }
         bool LessThan(byte[] binaryNumber, byte[] otherBinaryNumber)
         {
-            TrimZerosFromBeginning(binaryNumber);
-            TrimZerosFromBeginning(otherBinaryNumber);
-            if (binaryNumber.Length < otherBinaryNumber.Length)
-                return true;
-            if (binaryNumber.Length > otherBinaryNumber.Length)
-                return false;
-            for (int i = 0; i < binaryNumber.Length; i++)
+            bool less = false;
+            int maxLength = Math.Max(binaryNumber.Length,otherBinaryNumber.Length);
+            for (int i = 0; i < maxLength; i++)
             {
-                if (binaryNumber[i] < otherBinaryNumber[i])
-                    return true;
-                if (binaryNumber[i] > otherBinaryNumber[i])
-                    return false;
+                byte bitBinaryNumber, bitOtherBinaryNumber;
+                PlaceZeroBeyondLength(binaryNumber, otherBinaryNumber, i, out bitBinaryNumber, out bitOtherBinaryNumber);
+                if (bitBinaryNumber < bitOtherBinaryNumber) less = true;
+                else
+                if (bitBinaryNumber > bitOtherBinaryNumber) less = false;
             }
-            return false;
+            return less;
         }
         bool GreaterThan(byte[] binaryNumber, byte[] otherBinaryNumber)
         {
-            TrimZerosFromBeginning(binaryNumber);
-            TrimZerosFromBeginning(otherBinaryNumber);
-            if (binaryNumber.Length > otherBinaryNumber.Length)
-                return true;
+            int maxLength = Math.Max(binaryNumber.Length, otherBinaryNumber.Length);
             if (LessThan(binaryNumber, otherBinaryNumber))
                 return false;
-            for (int i = 0; i < binaryNumber.Length; i++)
+            for (int i = 0; i < maxLength; i++)
             {
-                if (binaryNumber[i] != otherBinaryNumber[i])
-                    return true;
+                byte bitBinaryNumber, bitOtherBinaryNumber;
+                PlaceZeroBeyondLength(binaryNumber, otherBinaryNumber, i, out bitBinaryNumber, out bitOtherBinaryNumber);
+                if (bitBinaryNumber != bitOtherBinaryNumber) return true;
             }
             return false;
         }
+
+        private static void PlaceZeroBeyondLength(byte[] binaryNumber, byte[] otherBinaryNumber, int i, out byte bitBinaryNumber, out byte bitOtherBinaryNumber)
+        {
+            bitBinaryNumber = 0;
+            bitOtherBinaryNumber = 0;
+            if (i < binaryNumber.Length) bitBinaryNumber = binaryNumber[binaryNumber.Length - i - 1];
+            if (i < otherBinaryNumber.Length) bitOtherBinaryNumber = otherBinaryNumber[otherBinaryNumber.Length - i - 1];
+        }
+
         bool Equal(byte[] binaryNumber, byte[] otherBinaryNumber)
         {
             return !LessThan(binaryNumber, otherBinaryNumber) && !GreaterThan(binaryNumber, otherBinaryNumber);
