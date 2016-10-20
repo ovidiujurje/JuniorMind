@@ -9,22 +9,52 @@ namespace Alarm
         [TestMethod]
         public void ShouldSetOffAlarm1()
         {
-            Assert.AreEqual(true, DetermineIfAlarmShouldBeSetOff(6, 8, Days.Tuesday, 6));
+            Days weekdays = Days.Monday | Days.Tuesday;
+            weekdays = weekdays | Days.Wednesday;
+            weekdays = weekdays | Days.Thursday;
+            weekdays = weekdays | Days.Friday;
+            Days weekend = Days.Saturday | Days.Sunday;
+            Assert.AreEqual(true, DetermineIfAlarmShouldBeSetOff(weekdays, weekend, 6, 8, Days.Tuesday, 6));
         }
         [TestMethod]
         public void ShouldSetOffAlarm2()
         {
-            Assert.AreEqual(true, DetermineIfAlarmShouldBeSetOff(6, 8, Days.Saturday, 8));
+            Days weekdays = Days.Monday | Days.Tuesday;
+            weekdays = weekdays | Days.Wednesday;
+            weekdays = weekdays | Days.Thursday;
+            weekdays = weekdays | Days.Friday;
+            Days weekend = Days.Saturday | Days.Sunday;
+            Assert.AreEqual(true, DetermineIfAlarmShouldBeSetOff(weekdays, weekend, 6, 8, Days.Saturday, 8));
+        }
+        [TestMethod]
+        public void ShouldSetOffAlarm3()
+        {
+            Assert.AreEqual(true, DetermineIfAlarmShouldBeSetOff(Days.Monday, Days.Sunday, 7, 10, Days.Monday, 7));
         }
         [TestMethod]
         public void ShouldNotSetOffAlarm1()
         {
-            Assert.AreEqual(false, DetermineIfAlarmShouldBeSetOff(6, 8, Days.Friday, 11));
+            Days weekdays = Days.Monday | Days.Tuesday;
+            weekdays = weekdays | Days.Wednesday;
+            weekdays = weekdays | Days.Thursday;
+            weekdays = weekdays | Days.Friday;
+            Days weekend = Days.Saturday | Days.Sunday;
+            Assert.AreEqual(false, DetermineIfAlarmShouldBeSetOff(weekdays, weekend, 6, 8, Days.Friday, 11));
         }
         [TestMethod]
         public void ShouldNotSetOffAlarm2()
         {
-            Assert.AreEqual(false, DetermineIfAlarmShouldBeSetOff(6, 8, Days.Sunday, 3));
+            Days weekdays = Days.Monday | Days.Tuesday;
+            weekdays = weekdays | Days.Wednesday;
+            weekdays = weekdays | Days.Thursday;
+            weekdays = weekdays | Days.Friday;
+            Days weekend = Days.Saturday | Days.Sunday;
+            Assert.AreEqual(false, DetermineIfAlarmShouldBeSetOff(weekdays, weekend, 6, 8, Days.Sunday, 3));
+        }
+        [TestMethod]
+        public void ShouldNotSetOffAlarm3()
+        {
+            Assert.AreEqual(false, DetermineIfAlarmShouldBeSetOff(Days.Monday, Days.Sunday, 7, 10, Days.Saturday, 7));
         }
         [Flags]
         enum Days
@@ -38,16 +68,10 @@ namespace Alarm
             Friday = 0x20,
             Saturday = 0x40
         }
-        bool DetermineIfAlarmShouldBeSetOff( int weekdayAlarmHour, int weekendAlarmHour,Days currentDay, int currentHour)
+        bool DetermineIfAlarmShouldBeSetOff( Days weekdayAlarm, Days weekendAlarm, int weekdayAlarmHour, int weekendAlarmHour,Days currentDay, int currentHour)
         {
-
-            Days weekdays = Days.Monday | Days.Tuesday;
-            weekdays = weekdays | Days.Wednesday;
-            weekdays = weekdays | Days.Thursday;
-            weekdays = weekdays | Days.Friday;
-            Days weekend = Days.Saturday | Days.Sunday;
-            if ((weekdays & currentDay) == currentDay && (currentHour == weekdayAlarmHour)) return true;
-            if ((weekend & currentDay) == currentDay && (currentHour == weekendAlarmHour)) return true;
+            if ((weekdayAlarm & currentDay) == currentDay && (currentHour == weekdayAlarmHour)) return true;
+            if ((weekendAlarm & currentDay) == currentDay && (currentHour == weekendAlarmHour)) return true;
             return false;
         }
     }
