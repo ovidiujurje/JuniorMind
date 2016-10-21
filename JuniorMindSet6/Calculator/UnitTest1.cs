@@ -25,29 +25,29 @@ namespace Calculator
                 {
                     case "+":
                         result = double.Parse(operation[operation.Length - i]) + double.Parse(operation[operation.Length - i + 1]);
-                        ReplaceLastOperandsWithTheirResult(ref operation, result, i);
+                        ReplaceOperationWithResult(ref operation, result, i);
                         i = 0;
                         break;
                     case "-":
                         result = double.Parse(operation[operation.Length - i]) - double.Parse(operation[operation.Length - i + 1]);
-                        ReplaceLastOperandsWithTheirResult(ref operation, result, i);
+                        ReplaceOperationWithResult(ref operation, result, i);
                         i = 0;
                         break;
                     case "*":
                         result = double.Parse(operation[operation.Length - i]) * double.Parse(operation[operation.Length - i + 1]);
-                        ReplaceLastOperandsWithTheirResult(ref operation, result, i);
+                        ReplaceOperationWithResult(ref operation, result, i);
                         i = 0;
                         break;
                     case "/":
                         result = double.Parse(operation[operation.Length - i]) / double.Parse(operation[operation.Length - i + 1]);
-                        ReplaceLastOperandsWithTheirResult(ref operation, result, i);
+                        ReplaceOperationWithResult(ref operation, result, i);
                         i = 0;
                         break;
                 }
             }
             return operation[0];
         }
-        void ReplaceLastOperandsWithTheirResult(ref string[] operation, double result, int i)
+        void ReplaceOperationWithResult(ref string[] operation, double result, int i)
         {
             string[] newOperation = operation;
             Array.Resize(ref newOperation, newOperation.Length - 2);
@@ -61,19 +61,6 @@ namespace Calculator
                 newOperation[j - (operation.Length - newOperation.Length)] = operation[j];
             }
             operation = newOperation;
-        }
-        bool IsItAnOperator(string theString)
-        {
-            char[] operators = { '+', '-', '*', '/' };
-            foreach (char op in operators)
-                if (theString[0] == op) return true;
-            return false;
-        }
-        double DoOperations(string str, double operandOne, double operandTwo)
-        {
-            double result = 0;
-
-            return result;
         }
     }
 }
