@@ -36,6 +36,16 @@ namespace Catalogue
             CalculateGeneralMeans(ref students);
             CollectionAssert.AreEqual(students, SortStudentsByGeneralMeanDescendingSelectionSort(new Student[] { two, one, three }));
         }
+        [TestMethod]
+        public void FindStudentWirhSpecificGeneralMean()
+        {
+            Student three = new Student("Chereches Voicu", 0, new int[] { 10 }, new int[] { 10, 9 }, new int[] { 10 }, new int[] { 9, 10 }, new int[] { 10 }, new int[] { 10 }, new int[] { 10 }, new int[] { 10 }, new int[] { 10 }, new int[] { 10 }, new int[] { 10 }, new int[] { 10 });
+            Student two = new Student("Brete Origen", 0, new int[] { 5 }, new int[] { 6 }, new int[] { 5 }, new int[] { 5 }, new int[] { 6 }, new int[] { 6, 5 }, new int[] { 7 }, new int[] { 6 }, new int[] { 6 }, new int[] { 5 }, new int[] { 9 }, new int[] { 7 });
+            Student one = new Student("Chira Iulia", 0, new int[] { 10 }, new int[] { 10, 9 }, new int[] { 10 }, new int[] { 10 }, new int[] { 10 }, new int[] { 10 }, new int[] { 10 }, new int[] { 10 }, new int[] { 9, 10 }, new int[] { 10 }, new int[] { 10 }, new int[] { 10 });
+            Student[] students = { one, three };
+            CalculateGeneralMeans(ref students);
+            CollectionAssert.AreEqual(students, FindStudentsWithSpecificGeneralMean(new Student[] { two, one, three }, 9.9166666666666661));
+        }
         public struct Student
         {
             public string name;
@@ -97,6 +107,20 @@ namespace Catalogue
                 Swap(ref catalogue[i], ref catalogue[MaxValueIndex(catalogue, i)]);
             }
             return catalogue;
+        }
+        Student[] FindStudentsWithSpecificGeneralMean(Student[] catalogue, double targetMean)
+        {
+            CalculateGeneralMeans(ref catalogue);
+            Student[] students = new Student[0];
+            foreach (Student student in catalogue)
+            {
+                if (student.mean == targetMean)
+                {
+                    Array.Resize(ref students, students.Length + 1);
+                    students[students.Length - 1] = student;
+                }
+            }
+            return students;
         }
         void CalculateGeneralMeans(ref Student[] catalogue)
         {
