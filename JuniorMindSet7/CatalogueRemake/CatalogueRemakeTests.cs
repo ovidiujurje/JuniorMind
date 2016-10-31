@@ -39,6 +39,14 @@ namespace CatalogueRemake
             Student one = new Student("Chira Iulia", new Discipline[] { new Discipline("Math", new int[] { 9, 10 }), new Discipline("English", new int[] { 9 }), new Discipline("Chemistry", new int[] { 10 }) });
             CollectionAssert.AreEqual(new Student[] { one, three }, GetStudentsWithGreatestNumberOfASpecificGrade(new Student[] { one, three, two }, 10));
         }
+        [TestMethod]
+        public void GetStudentsWithLowestGeneralMean()
+        {
+            Student three = new Student("Chereches Voicu", new Discipline[] { new Discipline("Math", new int[] { 10 }), new Discipline("English", new int[] { 10, 9 }), new Discipline("Chemistry", new int[] { 9 }) });
+            Student two = new Student("Brete Origen", new Discipline[] { new Discipline("Math", new int[] { 5 }), new Discipline("English", new int[] { 5 }), new Discipline("Chemistry", new int[] { 8, 6 }) });
+            Student one = new Student("Chira Iulia", new Discipline[] { new Discipline("Math", new int[] { 9, 10 }), new Discipline("English", new int[] { 9 }), new Discipline("Chemistry", new int[] { 10 }) });
+            CollectionAssert.AreEqual(new Student[] { two }, GetStudentsWithLowestGeneralMean(new Student[] { one, three, two }));
+        }
         public class Discipline
         {
             public string id;
