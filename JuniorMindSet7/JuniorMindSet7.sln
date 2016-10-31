@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elections", "Elections\Elec
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catalogue", "Catalogue\Catalogue.csproj", "{A936B21A-3FC2-4834-841A-14179B0F510B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatalogueRemake", "CatalogueRemake\CatalogueRemake.csproj", "{2A1FF157-E31D-49E1-A515-E56B95EAE2A3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{A936B21A-3FC2-4834-841A-14179B0F510B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A936B21A-3FC2-4834-841A-14179B0F510B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A936B21A-3FC2-4834-841A-14179B0F510B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A1FF157-E31D-49E1-A515-E56B95EAE2A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A1FF157-E31D-49E1-A515-E56B95EAE2A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A1FF157-E31D-49E1-A515-E56B95EAE2A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A1FF157-E31D-49E1-A515-E56B95EAE2A3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
