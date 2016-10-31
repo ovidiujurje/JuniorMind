@@ -110,6 +110,19 @@ namespace CatalogueRemake
             return catalogue;
         }
 
+        private void OrderCurrentAndPreviousStudentAlphabetically(Student[] catalogue, int i)
+        {
+            for (int j = 0; j < catalogue[i].name.Length; j++)
+            {
+                if (catalogue[i].name[j] < catalogue[i - 1].name[j])
+                {
+                    Swap(ref catalogue[i], ref catalogue[i - 1]);
+                    break;
+                }
+                if (catalogue[i].name[j] > catalogue[i - 1].name[j]) break;
+            }
+        }
+
         Student[] SortStudentsByGeneralMeanDescendingSelectionSort(Student[] catalogue)
         {
             for (int i = 0; i < catalogue.Length; i++)
@@ -124,12 +137,19 @@ namespace CatalogueRemake
             Student[] students = new Student[0];
             foreach (Student student in catalogue)
             {
-                if (student.GeneralMean() == targetMean)
-                {
-                    Array.Resize(ref students, students.Length + 1);
-                    students[students.Length - 1] = student;
-                }
+                students = AddStudentToResultsIfGeneralMeanIsEqualToTargetMean(targetMean, students, student);
             }
+            return students;
+        }
+
+        private static Student[] AddStudentToResultsIfGeneralMeanIsEqualToTargetMean(double targetMean, Student[] students, Student student)
+        {
+            if (student.GeneralMean() == targetMean)
+            {
+                Array.Resize(ref students, students.Length + 1);
+                students[students.Length - 1] = student;
+            }
+
             return students;
         }
 
@@ -138,12 +158,19 @@ namespace CatalogueRemake
             Student[] students = new Student[0];
             foreach (Student student in catalogue)
             {
-                if (student.Count(inputGrade) == MaxNumberOfSpecificGrade(catalogue, inputGrade))
-                {
-                    Array.Resize(ref students, students.Length + 1);
-                    students[students.Length - 1] = student;
-                }
+                students = AddStudentToResultsIfNumberOfSpecificGradeIsTheHighest(catalogue, inputGrade, students, student);
             }
+            return students;
+        }
+
+        private Student[] AddStudentToResultsIfNumberOfSpecificGradeIsTheHighest(Student[] catalogue, int inputGrade, Student[] students, Student student)
+        {
+            if (student.Count(inputGrade) == MaxNumberOfSpecificGrade(catalogue, inputGrade))
+            {
+                Array.Resize(ref students, students.Length + 1);
+                students[students.Length - 1] = student;
+            }
+
             return students;
         }
 
@@ -152,26 +179,20 @@ namespace CatalogueRemake
             Student[] students = new Student[0];
             foreach (Student student in catalogue)
             {
-                if (student.GeneralMean() == MinValue(catalogue))
-                {
-                    Array.Resize(ref students, students.Length + 1);
-                    students[students.Length - 1] = student;
-                }
+                students = AddStudentToResultsIfGeneralMeanIsTheLowest(catalogue, students, student);
             }
             return students;
         }
 
-        private void OrderCurrentAndPreviousStudentAlphabetically(Student[] catalogue, int i)
+        private Student[] AddStudentToResultsIfGeneralMeanIsTheLowest(Student[] catalogue, Student[] students, Student student)
         {
-            for (int j = 0; j < catalogue[i].name.Length; j++)
+            if (student.GeneralMean() == MinValue(catalogue))
             {
-                if (catalogue[i].name[j] < catalogue[i - 1].name[j])
-                {
-                    Swap(ref catalogue[i], ref catalogue[i - 1]);
-                    break;
-                }
-                if (catalogue[i].name[j] > catalogue[i - 1].name[j]) break;
+                Array.Resize(ref students, students.Length + 1);
+                students[students.Length - 1] = student;
             }
+
+            return students;
         }
 
         public int MaxValueIndex(Student[] array, int startIndex)
