@@ -22,7 +22,14 @@ namespace CatalogueRemake
             Student two = new Student("Brete Origen", new Discipline[] { new Discipline("Math", new int[] { 5 }), new Discipline("English", new int[] { 5 }), new Discipline("Chemistry", new int[] { 8, 6 }) });
             Student one = new Student("Chira Iulia", new Discipline[] { new Discipline("Math", new int[] { 7, 10 }), new Discipline("English", new int[] { 9 }), new Discipline("Chemistry", new int[] { 8 }) });
             CollectionAssert.AreEqual(new Student[] { three, one, two }, SortStudentsByGeneralMeanDescendingSelectionSort(new Student[] { one, three, two }));
-
+        }
+        [TestMethod]
+        public void GetStudentsWithSpecificGeneralMean()
+        {
+            Student three = new Student("Chereches Voicu", new Discipline[] { new Discipline("Math", new int[] { 10 }), new Discipline("English", new int[] { 10, 9 }), new Discipline("Chemistry", new int[] { 9 }) });
+            Student two = new Student("Brete Origen", new Discipline[] { new Discipline("Math", new int[] { 5 }), new Discipline("English", new int[] { 5 }), new Discipline("Chemistry", new int[] { 8, 6 }) });
+            Student one = new Student("Chira Iulia", new Discipline[] { new Discipline("Math", new int[] { 9, 10 }), new Discipline("English", new int[] { 9 }), new Discipline("Chemistry", new int[] { 10 }) });
+            CollectionAssert.AreEqual(new Student[] { one, three }, GetStudentsWithSpecificGeneralMean(new Student[] { one, three, two }, 9.5));
         }
         public class Discipline
         {
@@ -30,9 +37,10 @@ namespace CatalogueRemake
             public int[] grades;
             public double Mean()
             {
-                double mean = 0;
+                double sum = 0;
                 foreach (int grade in grades)
-                    mean += grade / grades.Length;
+                    sum += grade;
+                double mean = sum / grades.Length;
                 return mean;
             }
             public int Count (int inputGrade)
@@ -54,9 +62,10 @@ namespace CatalogueRemake
             public Discipline[] disciplines;
             public Double GeneralMean ()
             {
-                double generalMean = 0;
+                double sum = 0;
                 foreach (Discipline discipline in disciplines)
-                    generalMean += discipline.Mean() / disciplines.Length;
+                    sum += discipline.Mean();
+                double generalMean = sum / disciplines.Length;
                 return generalMean;
             }
             public int Count (int inputGrade)
