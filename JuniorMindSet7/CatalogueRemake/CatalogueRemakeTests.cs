@@ -13,7 +13,6 @@ namespace CatalogueRemake
             Student two = new Student("Brete Origen", new Discipline[] { new Discipline("Math", new int[] { 5 }), new Discipline("English", new int[] { 5 }), new Discipline("Chemistry", new int[] { 8, 6 }) });
             Student one = new Student("Chira Iulia", new Discipline[] { new Discipline("Math", new int[] { 7, 10 }), new Discipline("English", new int[] { 9 }), new Discipline("Chemistry", new int[] { 8 }) });
             CollectionAssert.AreEqual(new Student[] { two, three, one }, SortStudentsAlphabeticallyBubble(new Student[] { one, three, two }));
-
         }
         [TestMethod]
         public void SortStudentsbyGeneralMeanDescending()
@@ -47,56 +46,6 @@ namespace CatalogueRemake
             Student one = new Student("Chira Iulia", new Discipline[] { new Discipline("Math", new int[] { 9, 10 }), new Discipline("English", new int[] { 9 }), new Discipline("Chemistry", new int[] { 10 }) });
             CollectionAssert.AreEqual(new Student[] { two }, GetStudentsWithLowestGeneralMean(new Student[] { one, three, two }));
         }
-        public class Discipline
-        {
-            public string id;
-            public int[] grades;
-            public double Mean()
-            {
-                double sum = 0;
-                foreach (int grade in grades)
-                    sum += grade;
-                double mean = sum / grades.Length;
-                return mean;
-            }
-            public int Count (int inputGrade)
-            {
-                int count = 0;
-                foreach (int grade in grades)
-                    if (grade == inputGrade) count++;
-                return count;
-            }
-            public Discipline(string inputId, int[] inputGrades)
-            {
-                id = inputId;
-                grades = inputGrades;
-            }
-        }
-        public class Student
-        {
-            public string name;
-            public Discipline[] disciplines;
-            public Double GeneralMean ()
-            {
-                double sum = 0;
-                foreach (Discipline discipline in disciplines)
-                    sum += discipline.Mean();
-                double generalMean = sum / disciplines.Length;
-                return generalMean;
-            }
-            public int Count (int inputGrade)
-            {
-                int count = 0;
-                foreach (Discipline discipline in disciplines)
-                    count += discipline.Count(inputGrade);
-                return count;
-            }
-            public Student(string inputName, Discipline[] inputDisciplines)
-            {
-                name = inputName;
-                disciplines = inputDisciplines;
-            }
-        }
 
         Student[] SortStudentsAlphabeticallyBubble(Student[] catalogue)
         {
@@ -112,14 +61,14 @@ namespace CatalogueRemake
 
         private void OrderCurrentAndPreviousStudentAlphabetically(Student[] catalogue, int i)
         {
-            for (int j = 0; j < catalogue[i].name.Length; j++)
+            for (int j = 0; j < catalogue[i].Name.Length; j++)
             {
-                if (catalogue[i].name[j] < catalogue[i - 1].name[j])
+                if (catalogue[i].Name[j] < catalogue[i - 1].Name[j])
                 {
                     Swap(ref catalogue[i], ref catalogue[i - 1]);
                     break;
                 }
-                if (catalogue[i].name[j] > catalogue[i - 1].name[j]) break;
+                if (catalogue[i].Name[j] > catalogue[i - 1].Name[j]) break;
             }
         }
 
