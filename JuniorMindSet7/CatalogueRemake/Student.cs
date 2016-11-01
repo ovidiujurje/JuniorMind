@@ -3,20 +3,15 @@
 public class Student
 {
     private string name;
-    public string Name
-    {
-        get
-        {
-            return name;
-        }
-    }
     private Discipline[] disciplines;
-    public Discipline[] Disciplines
+    public bool CheckIfShouldSwapWith(Student student)
     {
-        get
+        for (int i = 0; i < name.Length; i++)
         {
-            return disciplines;
+            if (name[i] < student.name[i]) return true;
+            if (name[i] > student.name[i]) return false;
         }
+        return false;
     }
     public Double GeneralMean()
     {

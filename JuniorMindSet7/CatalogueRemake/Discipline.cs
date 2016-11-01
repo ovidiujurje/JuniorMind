@@ -3,21 +3,7 @@
 public class Discipline
 {
     private string id;
-    public string Id
-    {
-        get
-        {
-            return id;
-        }
-    }
     private int[] grades;
-    public int[] Grades
-    {
-        get
-        {
-            return grades;
-        }
-    }
     public double Mean()
     {
         double sum = 0;

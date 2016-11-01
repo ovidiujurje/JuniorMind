@@ -61,15 +61,8 @@ namespace CatalogueRemake
 
         private void OrderCurrentAndPreviousStudentAlphabetically(Student[] catalogue, int i)
         {
-            for (int j = 0; j < catalogue[i].Name.Length; j++)
-            {
-                if (catalogue[i].Name[j] < catalogue[i - 1].Name[j])
-                {
+                if (catalogue[i].CheckIfShouldSwapWith(catalogue[i - 1]))
                     Swap(ref catalogue[i], ref catalogue[i - 1]);
-                    break;
-                }
-                if (catalogue[i].Name[j] > catalogue[i - 1].Name[j]) break;
-            }
         }
 
         Student[] SortStudentsByGeneralMeanDescendingSelectionSort(Student[] catalogue)
