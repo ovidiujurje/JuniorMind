@@ -12,7 +12,8 @@ namespace CatalogueRemake
             Student three = new Student("Chereches Voicu", new Discipline[] { new Discipline("Math", new int[] { 10 }), new Discipline("English", new int[] { 10, 9 }), new Discipline("Chemistry", new int[] { 9 }) });
             Student two = new Student("Brete Origen", new Discipline[] { new Discipline("Math", new int[] { 5 }), new Discipline("English", new int[] { 5 }), new Discipline("Chemistry", new int[] { 8, 6 }) });
             Student one = new Student("Chira Iulia", new Discipline[] { new Discipline("Math", new int[] { 7, 10 }), new Discipline("English", new int[] { 9 }), new Discipline("Chemistry", new int[] { 8 }) });
-            CollectionAssert.AreEqual(new Student[] { two, three, one }, SortStudentsAlphabeticallyBubble(new Student[] { one, three, two }));
+            Catalog catalogue = new Catalog (new Student[] { one, two, three });
+            CollectionAssert.AreEqual(new Student[] { two, three, one }, catalogue.SortAlphabetically());
         }
         [TestMethod]
         public void SortStudentsbyGeneralMeanDescending()
@@ -20,7 +21,8 @@ namespace CatalogueRemake
             Student three = new Student("Chereches Voicu", new Discipline[] { new Discipline("Math", new int[] { 10 }), new Discipline("English", new int[] { 10, 9 }), new Discipline("Chemistry", new int[] { 9 }) });
             Student two = new Student("Brete Origen", new Discipline[] { new Discipline("Math", new int[] { 5 }), new Discipline("English", new int[] { 5 }), new Discipline("Chemistry", new int[] { 8, 6 }) });
             Student one = new Student("Chira Iulia", new Discipline[] { new Discipline("Math", new int[] { 7, 10 }), new Discipline("English", new int[] { 9 }), new Discipline("Chemistry", new int[] { 8 }) });
-            CollectionAssert.AreEqual(new Student[] { three, one, two }, SortStudentsByGeneralMeanDescendingSelectionSort(new Student[] { one, three, two }));
+            Catalog catalogue = new Catalog(new Student[] { one, two, three });
+            CollectionAssert.AreEqual(new Student[] { three, one, two }, catalogue.SortByGeneralMeanDescending());
         }
         [TestMethod]
         public void GetStudentsWithSpecificGeneralMean()
@@ -28,7 +30,8 @@ namespace CatalogueRemake
             Student three = new Student("Chereches Voicu", new Discipline[] { new Discipline("Math", new int[] { 10 }), new Discipline("English", new int[] { 10, 9 }), new Discipline("Chemistry", new int[] { 9 }) });
             Student two = new Student("Brete Origen", new Discipline[] { new Discipline("Math", new int[] { 5 }), new Discipline("English", new int[] { 5 }), new Discipline("Chemistry", new int[] { 8, 6 }) });
             Student one = new Student("Chira Iulia", new Discipline[] { new Discipline("Math", new int[] { 9, 10 }), new Discipline("English", new int[] { 9 }), new Discipline("Chemistry", new int[] { 10 }) });
-            CollectionAssert.AreEqual(new Student[] { one, three }, GetStudentsWithSpecificGeneralMean(new Student[] { one, three, two }, 9.5));
+            Catalog catalogue = new Catalog(new Student[] { one, two, three });
+            CollectionAssert.AreEqual(new Student[] { one, three }, catalogue.GetStudentsWithSpecificGeneralMean(9.5));
         }
         [TestMethod]
         public void GetStudentsWithGreatestNumberOfTens()
@@ -36,7 +39,8 @@ namespace CatalogueRemake
             Student three = new Student("Chereches Voicu", new Discipline[] { new Discipline("Math", new int[] { 10 }), new Discipline("English", new int[] { 10, 9 }), new Discipline("Chemistry", new int[] { 9 }) });
             Student two = new Student("Brete Origen", new Discipline[] { new Discipline("Math", new int[] { 5 }), new Discipline("English", new int[] { 5 }), new Discipline("Chemistry", new int[] { 8, 6 }) });
             Student one = new Student("Chira Iulia", new Discipline[] { new Discipline("Math", new int[] { 9, 10 }), new Discipline("English", new int[] { 9 }), new Discipline("Chemistry", new int[] { 10 }) });
-            CollectionAssert.AreEqual(new Student[] { one, three }, GetStudentsWithGreatestNumberOfASpecificGrade(new Student[] { one, three, two }, 10));
+            Catalog catalogue = new Catalog(new Student[] { one, two, three });
+            CollectionAssert.AreEqual(new Student[] { one, three }, catalogue.GetStudentsWithGreatestNumberOfASpecificGrade(10));
         }
         [TestMethod]
         public void GetStudentsWithLowestGeneralMean()
@@ -44,138 +48,8 @@ namespace CatalogueRemake
             Student three = new Student("Chereches Voicu", new Discipline[] { new Discipline("Math", new int[] { 10 }), new Discipline("English", new int[] { 10, 9 }), new Discipline("Chemistry", new int[] { 9 }) });
             Student two = new Student("Brete Origen", new Discipline[] { new Discipline("Math", new int[] { 5 }), new Discipline("English", new int[] { 5 }), new Discipline("Chemistry", new int[] { 8, 6 }) });
             Student one = new Student("Chira Iulia", new Discipline[] { new Discipline("Math", new int[] { 9, 10 }), new Discipline("English", new int[] { 9 }), new Discipline("Chemistry", new int[] { 10 }) });
-            CollectionAssert.AreEqual(new Student[] { two }, GetStudentsWithLowestGeneralMean(new Student[] { one, three, two }));
-        }
-
-        Student[] SortStudentsAlphabeticallyBubble(Student[] catalogue)
-        {
-            for (int k = 1; k < catalogue.Length; k++)
-            {
-                for (int i = 1; i < catalogue.Length; i++)
-                {
-                    OrderCurrentAndPreviousStudentAlphabetically(catalogue, i);
-                }
-            }
-            return catalogue;
-        }
-
-        private void OrderCurrentAndPreviousStudentAlphabetically(Student[] catalogue, int i)
-        {
-                if (catalogue[i].CheckIfShouldSwapWith(catalogue[i - 1]))
-                    Swap(ref catalogue[i], ref catalogue[i - 1]);
-        }
-
-        Student[] SortStudentsByGeneralMeanDescendingSelectionSort(Student[] catalogue)
-        {
-            for (int i = 0; i < catalogue.Length; i++)
-            {
-                Swap(ref catalogue[i], ref catalogue[MaxValueIndex(catalogue, i)]);
-            }
-            return catalogue;
-        }
-
-        Student[] GetStudentsWithSpecificGeneralMean(Student[] catalogue, double targetMean)
-        {
-            Student[] students = new Student[0];
-            foreach (Student student in catalogue)
-            {
-                students = AddStudentToResultsIfGeneralMeanIsEqualToTargetMean(targetMean, students, student);
-            }
-            return students;
-        }
-
-        private static Student[] AddStudentToResultsIfGeneralMeanIsEqualToTargetMean(double targetMean, Student[] students, Student student)
-        {
-            if (student.GeneralMean() == targetMean)
-            {
-                Array.Resize(ref students, students.Length + 1);
-                students[students.Length - 1] = student;
-            }
-
-            return students;
-        }
-
-        Student[] GetStudentsWithGreatestNumberOfASpecificGrade(Student[] catalogue, int inputGrade)
-        {
-            Student[] students = new Student[0];
-            foreach (Student student in catalogue)
-            {
-                students = AddStudentToResultsIfNumberOfSpecificGradeIsTheHighest(catalogue, inputGrade, students, student);
-            }
-            return students;
-        }
-
-        private Student[] AddStudentToResultsIfNumberOfSpecificGradeIsTheHighest(Student[] catalogue, int inputGrade, Student[] students, Student student)
-        {
-            if (student.Count(inputGrade) == MaxNumberOfSpecificGrade(catalogue, inputGrade))
-            {
-                Array.Resize(ref students, students.Length + 1);
-                students[students.Length - 1] = student;
-            }
-
-            return students;
-        }
-
-        Student[] GetStudentsWithLowestGeneralMean(Student[] catalogue)
-        {
-            Student[] students = new Student[0];
-            foreach (Student student in catalogue)
-            {
-                students = AddStudentToResultsIfGeneralMeanIsTheLowest(catalogue, students, student);
-            }
-            return students;
-        }
-
-        private Student[] AddStudentToResultsIfGeneralMeanIsTheLowest(Student[] catalogue, Student[] students, Student student)
-        {
-            if (student.GeneralMean() == MinValue(catalogue))
-            {
-                Array.Resize(ref students, students.Length + 1);
-                students[students.Length - 1] = student;
-            }
-
-            return students;
-        }
-
-        public int MaxValueIndex(Student[] array, int startIndex)
-        {
-            int maxIndex = startIndex;
-            double max = array[startIndex].GeneralMean();
-            for (int i = startIndex + 1; i < array.Length; i++)
-            {
-                if (array[i].GeneralMean() > max)
-                    maxIndex = i;
-            }
-            return maxIndex;
-        }
-
-        int MaxNumberOfSpecificGrade(Student[] array, int grade)
-        {
-            int max = 0;
-            for (int i = 0; i < array.Length; i++)
-            {
-                if (array[i].Count(grade) > max)
-                    max = array[i].Count(grade);
-            }
-            return max;
-        }
-
-        double MinValue(Student[] array)
-        {
-            double min = 10;
-            for (int i = 0; i < array.Length; i++)
-            {
-                if (array[i].GeneralMean() < min)
-                    min = array[i].GeneralMean();
-            }
-            return min;
-        }
-
-        void Swap(ref Student first, ref Student second)
-        {
-            Student temp = first;
-            first = second;
-            second = temp;
+            Catalog catalogue = new Catalog(new Student[] { one, two, three });
+            CollectionAssert.AreEqual(new Student[] { two }, catalogue.GetStudentsWithLowestGeneralMean());
         }
     }
 }

@@ -4,7 +4,7 @@ public class Student
 {
     private string name;
     private Discipline[] disciplines;
-    public bool CheckIfShouldSwapWith(Student student)
+    public bool DetermineIfAlphabeticallyPrecedes(Student student)
     {
         for (int i = 0; i < name.Length; i++)
         {
