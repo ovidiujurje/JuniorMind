@@ -13,13 +13,13 @@ public class Catalog
         {
             for (int i = 1; i < catalogue.Length; i++)
             {
-                OrderCurrentAndPreviousStudentAlphabetically(catalogue, i);
+                OrderCurrentAndPreviousStudentAlphabetically(i);
             }
         }
         return catalogue;
     }
 
-    private void OrderCurrentAndPreviousStudentAlphabetically(Student[] catalogue, int i)
+    private void OrderCurrentAndPreviousStudentAlphabetically(int i)
     {
         if (catalogue[i].DetermineIfAlphabeticallyPrecedes(catalogue[i - 1]))
             Swap(ref catalogue[i], ref catalogue[i - 1]);
@@ -28,7 +28,7 @@ public class Catalog
     {
         for (int i = 0; i < catalogue.Length; i++)
         {
-            Swap(ref catalogue[i], ref catalogue[MaxValueIndex(catalogue, i)]);
+            Swap(ref catalogue[i], ref catalogue[MaxGeneralMeanIndex(i)]);
         }
         return catalogue;
     }
@@ -59,14 +59,14 @@ public class Catalog
         Student[] students = new Student[0];
         foreach (Student student in catalogue)
         {
-            students = AddStudentToResultsIfNumberOfSpecificGradeIsTheHighest(catalogue, inputGrade, students, student);
+            students = AddStudentToResultsIfNumberOfSpecificGradeIsTheHighest(inputGrade, students, student);
         }
         return students;
     }
 
-    private Student[] AddStudentToResultsIfNumberOfSpecificGradeIsTheHighest(Student[] catalogue, int inputGrade, Student[] students, Student student)
+    private Student[] AddStudentToResultsIfNumberOfSpecificGradeIsTheHighest(int inputGrade, Student[] students, Student student)
     {
-        if (student.Count(inputGrade) == MaxNumberOfSpecificGrade(catalogue, inputGrade))
+        if (student.Count(inputGrade) == MaxCountOfSpecificGrade(inputGrade))
         {
             Array.Resize(ref students, students.Length + 1);
             students[students.Length - 1] = student;
@@ -80,14 +80,14 @@ public class Catalog
         Student[] students = new Student[0];
         foreach (Student student in catalogue)
         {
-            students = AddStudentToResultsIfGeneralMeanIsTheLowest(catalogue, students, student);
+            students = AddStudentToResultsIfGeneralMeanIsTheLowest(students, student);
         }
         return students;
     }
 
-    private Student[] AddStudentToResultsIfGeneralMeanIsTheLowest(Student[] catalogue, Student[] students, Student student)
+    private Student[] AddStudentToResultsIfGeneralMeanIsTheLowest(Student[] students, Student student)
     {
-        if (student.GeneralMean() == MinValue(catalogue))
+        if (student.GeneralMean() == MinGeneralMean())
         {
             Array.Resize(ref students, students.Length + 1);
             students[students.Length - 1] = student;
@@ -96,36 +96,36 @@ public class Catalog
         return students;
     }
 
-    private int MaxValueIndex(Student[] array, int startIndex)
+    private int MaxGeneralMeanIndex(int startIndex)
     {
         int maxIndex = startIndex;
-        double max = array[startIndex].GeneralMean();
-        for (int i = startIndex + 1; i < array.Length; i++)
+        double max = catalogue[startIndex].GeneralMean();
+        for (int i = startIndex + 1; i < catalogue.Length; i++)
         {
-            if (array[i].GeneralMean() > max)
+            if (catalogue[i].GeneralMean() > max)
                 maxIndex = i;
         }
         return maxIndex;
     }
 
-    private int MaxNumberOfSpecificGrade(Student[] array, int grade)
+    private int MaxCountOfSpecificGrade(int grade)
     {
         int max = 0;
-        for (int i = 0; i < array.Length; i++)
+        for (int i = 0; i < catalogue.Length; i++)
         {
-            if (array[i].Count(grade) > max)
-                max = array[i].Count(grade);
+            if (catalogue[i].Count(grade) > max)
+                max = catalogue[i].Count(grade);
         }
         return max;
     }
 
-    private double MinValue(Student[] array)
+    private double MinGeneralMean()
     {
         double min = 10;
-        for (int i = 0; i < array.Length; i++)
+        for (int i = 0; i < catalogue.Length; i++)
         {
-            if (array[i].GeneralMean() < min)
-                min = array[i].GeneralMean();
+            if (catalogue[i].GeneralMean() < min)
+                min = catalogue[i].GeneralMean();
         }
         return min;
     }
