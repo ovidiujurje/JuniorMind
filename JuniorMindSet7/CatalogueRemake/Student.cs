@@ -15,17 +15,34 @@ public class Student
     }
     public Double GeneralMean()
     {
-        double sum = 0;
+        double meansSum = 0;
         foreach (Discipline discipline in disciplines)
-            sum += discipline.Mean();
-        double generalMean = sum / disciplines.Length;
+        {
+            meansSum += CalculateDisciplineMean(discipline);
+        }
+        double generalMean = meansSum / disciplines.Length;
         return generalMean;
     }
+
+    private static double CalculateDisciplineMean( Discipline discipline)
+    {
+        double sum = 0;
+        int gradeCount = 0;
+        foreach (int grade in discipline)
+        {
+            sum += grade;
+            gradeCount++;
+        }
+        double mean = sum / gradeCount;
+        return mean;
+    }
+
     public int Count(int inputGrade)
     {
         int count = 0;
         foreach (Discipline discipline in disciplines)
-            count += discipline.Count(inputGrade);
+            foreach (int grade in discipline)
+                if (grade == inputGrade) count ++;
         return count;
     }
     public Student(string inputName, Discipline[] inputDisciplines)
