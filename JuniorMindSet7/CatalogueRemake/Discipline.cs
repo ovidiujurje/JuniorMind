@@ -1,37 +1,14 @@
 ﻿using System;
 using System.Collections;
 
-public class Discipline: IEnumerator
+public class Discipline: IEnumerable
 {
     private string id;
     private int[] grades;
-    int position = -1;
 
-    public bool MoveNext()
+    public IEnumerator GetEnumerator()
     {
-        position++;
-        return (position < grades.Length);
-    }
-
-    public void Reset()
-    {
-        position = -1;
-    }
-
-    object IEnumerator.Current
-    {
-        get
-        {
-            return Current;
-        }
-    }
-
-    public int Current
-    {
-        get
-        {
-            return grades[position];
-        }
+        return grades.GetEnumerator();
     }
 
     public Discipline(string inputId, int[] inputGrades)
