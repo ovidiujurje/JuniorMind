@@ -28,9 +28,10 @@ public class Student
     {
         double sum = 0;
         int gradeCount = 0;
-        foreach (int grade in discipline)
+        discipline.Reset();
+        while (discipline.MoveNext())
         {
-            sum += grade;
+            sum += discipline.Current;
             gradeCount++;
         }
         double mean = sum / gradeCount;
@@ -41,8 +42,11 @@ public class Student
     {
         int count = 0;
         foreach (Discipline discipline in disciplines)
-            foreach (int grade in discipline)
-                if (grade == inputGrade) count ++;
+        {
+            discipline.Reset();
+            while (discipline.MoveNext())
+                if (discipline.Current == inputGrade) count++;
+        }
         return count;
     }
     public Student(string inputName, Discipline[] inputDisciplines)
