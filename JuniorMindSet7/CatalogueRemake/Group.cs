@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 
-public class Group<T>: IList
+public class Group<T>: IList<T>
 {
     private T[] array;
 
@@ -10,16 +11,16 @@ public class Group<T>: IList
         array = arr;
     }
 
-    public object this[int index]
+    public T this[int index]
     {
         get
         {
-            return ((IList)array)[index];
+            return ((IList<T>)array)[index];
         }
 
         set
         {
-            ((IList)array)[index] = value;
+            ((IList<T>)array)[index] = value;
         }
     }
 
@@ -27,15 +28,7 @@ public class Group<T>: IList
     {
         get
         {
-            return ((IList)array).Count;
-        }
-    }
-
-    public bool IsFixedSize
-    {
-        get
-        {
-            return array.IsFixedSize;
+            return ((IList<T>)array).Count;
         }
     }
 
@@ -43,29 +36,13 @@ public class Group<T>: IList
     {
         get
         {
-            return array.IsReadOnly;
+            return ((IList<T>)array).IsReadOnly;
         }
     }
 
-    public bool IsSynchronized
+    public void Add(T item)
     {
-        get
-        {
-            return array.IsSynchronized;
-        }
-    }
-
-    public object SyncRoot
-    {
-        get
-        {
-            return array.SyncRoot;
-        }
-    }
-
-    public int Add(object value)
-    {
-        return ((IList)array).Add(value);
+        ((IList<T>)array).Add(item);
     }
 
     public void Clear()
@@ -73,27 +50,27 @@ public class Group<T>: IList
         array = new T[0];
     }
 
-    public bool Contains(object value)
+    public bool Contains(T item)
     {
-        return ((IList)array).Contains(value);
+        return ((IList<T>)array).Contains(item);
     }
 
-    public void CopyTo(System.Array array, int index)
+    public void CopyTo(T[] array, int arrayIndex)
     {
-        this.array.CopyTo(array, index);
+        ((IList<T>)this.array).CopyTo(array, arrayIndex);
     }
 
-    public IEnumerator GetEnumerator()
+    public IEnumerator<T> GetEnumerator()
     {
-        return array.GetEnumerator();
+        return ((IList<T>)array).GetEnumerator();
     }
 
-    public int IndexOf(object value)
+    public int IndexOf(T item)
     {
-        return ((IList)array).IndexOf(value);
+        return ((IList<T>)array).IndexOf(item);
     }
 
-    public void Insert(int index, object value)
+    public void Insert(int index, T value)
     {
         Array.Resize(ref array, array.Length + 1);
         for (int i = array.Length - 1; i > index; i--)
@@ -113,12 +90,13 @@ public class Group<T>: IList
         arr[arr.Length - 1] = value;
     }
 
-    public void Remove(object value)
+    public bool Remove(T value)
     {
         T[] newArray = new T[0];
-        foreach (object element in array)
-            if (element != value) AddLastAr(ref newArray, (T)(element));
+        foreach (T element in array)
+            if ((object)(element) != (object)(value)) AddLastAr(ref newArray, (T)(element));
         array = newArray;
+        return true;
     }
 
     public void RemoveAt(int index)
@@ -134,5 +112,11 @@ public class Group<T>: IList
         T temp = array[firstIndex];
         array[firstIndex] = array[secondIndex];
         array[secondIndex] = temp;
+    }
+
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return ((IList<T>)array).GetEnumerator();
     }
 }
