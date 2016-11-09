@@ -8,7 +8,16 @@ public class Group<T>: IList<T>
 
     public Group (T[] arr)
     {
-        array = arr;
+        if (arr.Length % 10 == 0 && (object)arr[arr.Length - 1] == (object)default(T))
+        {
+            array = arr;
+        }
+        else
+        {
+            if (arr.Length < 10) Array.Resize(ref arr, 10);
+            else Array.Resize(ref arr, 3 * ((arr.Length / 10) * 10));
+            array = arr;
+        }
     }
 
     public T this[int index]
@@ -47,7 +56,7 @@ public class Group<T>: IList<T>
 
     public void Clear()
     {
-        array = new T[0];
+        ((IList<T>)array).Clear();
     }
 
     public bool Contains(T item)
@@ -72,7 +81,6 @@ public class Group<T>: IList<T>
 
     public void Insert(int index, T value)
     {
-        Array.Resize(ref array, array.Length + 1);
         for (int i = array.Length - 1; i > index; i--)
             array[i] = array[i - 1];
         array[index] = (T)(value);
@@ -92,18 +100,44 @@ public class Group<T>: IList<T>
 
     public bool Remove(T value)
     {
-        T[] newArray = new T[0];
-        foreach (T element in array)
-            if ((object)(element) != (object)(value)) AddLastAr(ref newArray, (T)(element));
+        T[] newArray = new T[array.Length];
+        int position = 0;
+        for (int i = 0; i < array.Length; i++)
+        {
+            if ((object)(array[i]) != (object)(value))
+            {
+                newArray[position] = array[i];
+                position++;
+            }
+            else
+            {
+                newArray[position] = array[i + 1];
+                position ++;
+                i++;
+            }
+        }
         array = newArray;
         return true;
     }
 
     public void RemoveAt(int index)
     {
-        T[] newArray = new T[0];
+        T[] newArray = new T[array.Length];
+        int position = 0;
         for (int i = 0; i < array.Length; i++)
-            if (i != index) AddLastAr(ref newArray, array[i]);
+        {
+            if (i != index)
+            {
+                newArray[position] = array[i];
+                position++;
+            }
+            else
+            {
+                newArray[position] = array[i + 1];
+                position++;
+                i++;
+            }
+        }
         array = newArray;
     }
 

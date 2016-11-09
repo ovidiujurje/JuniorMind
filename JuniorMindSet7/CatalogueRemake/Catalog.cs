@@ -20,7 +20,7 @@ public class Catalog<T>
         {
             for (int i = 1; i < catalogue.Count; i++)
             {
-                OrderCurrentAndPreviousStudentAlphabetically(i);
+                if (catalogue[i] != null) OrderCurrentAndPreviousStudentAlphabetically(i);
             }
         }
         return catalogue;
@@ -36,7 +36,7 @@ public class Catalog<T>
     {
         for (int i = 0; i < catalogue.Count; i++)
         {
-            catalogue.SwapItemsAtIndexes(i, MaxGeneralMeanIndex(i));
+            if (catalogue[i] != null) catalogue.SwapItemsAtIndexes(i, MaxGeneralMeanIndex(i));
         }
         return catalogue;
     }
@@ -44,21 +44,21 @@ public class Catalog<T>
     public Group<T> GetStudentsWithSpecificGeneralMean(double targetMean)
     {
         foreach (T student in catalogue)
-            if (((Student)((object)student)).GeneralMean() != targetMean) catalogue.Remove(student);
+            if (student != null && ((Student)((object)student)).GeneralMean() != targetMean) catalogue.Remove(student);
         return catalogue;
     }
 
     public Group<T> GetStudentsWithGreatestNumberOfASpecificGrade(int inputGrade)
     {
         foreach (T student in catalogue)
-            if (((Student)((object)student)).Count(inputGrade) != MaxCountOfSpecificGrade(inputGrade)) catalogue.Remove(student);
+            if (student != null && ((Student)((object)student)).Count(inputGrade) != MaxCountOfSpecificGrade(inputGrade)) catalogue.Remove(student);
         return catalogue;
     }
 
     public Group<T> GetStudentsWithLowestGeneralMean()
     {
         foreach (T student in catalogue)
-            if (((Student)((object)student)).GeneralMean() != MinGeneralMean()) catalogue.Remove(student);
+            if (student != null && ((Student)((object)student)).GeneralMean() != MinGeneralMean()) catalogue.Remove(student);
         return catalogue;
     }
 
@@ -68,7 +68,8 @@ public class Catalog<T>
         double max = ((Student)((object)catalogue[startIndex])).GeneralMean();
         for (int i = startIndex + 1; i < catalogue.Count; i++)
         {
-            if (((Student)((object)catalogue[i])).GeneralMean() > max) maxIndex = i;
+            if (catalogue[i] != null)
+                if (((Student)((object)catalogue[i])).GeneralMean() > max) maxIndex = i;
         }
         return maxIndex;
     }
@@ -78,7 +79,7 @@ public class Catalog<T>
         int max = 0;
         for (int i = 0; i < catalogue.Count; i++)
         {
-            if (((Student)((object)catalogue[i])).Count(grade) > max) max = ((Student)((object)catalogue[i])).Count(grade);
+            if (catalogue[i] != null && ((Student)((object)catalogue[i])).Count(grade) > max) max = ((Student)((object)catalogue[i])).Count(grade);
         }
         return max;
     }
@@ -88,7 +89,7 @@ public class Catalog<T>
         double min = 10;
         for (int i = 0; i < catalogue.Count; i++)
         {
-            if (((Student)((object)catalogue[i])).GeneralMean() < min) min = ((Student)((object)catalogue[i])).GeneralMean();
+            if (catalogue[i] != null && ((Student)((object)catalogue[i])).GeneralMean() < min) min = ((Student)((object)catalogue[i])).GeneralMean();
         }
         return min;
     }

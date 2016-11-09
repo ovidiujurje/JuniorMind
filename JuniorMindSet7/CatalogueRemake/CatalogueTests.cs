@@ -14,7 +14,7 @@ namespace CatalogueRemake
             Student two = new Student("Brete Origen", new Discipline[] { new Discipline("Math", new int[] { 5 }), new Discipline("English", new int[] { 5 }), new Discipline("Chemistry", new int[] { 8, 6 }) });
             Student one = new Student("Chira Iulia", new Discipline[] { new Discipline("Math", new int[] { 7, 10 }), new Discipline("English", new int[] { 9 }), new Discipline("Chemistry", new int[] { 8 }) });
             Catalog<Student> catalogue = new Catalog<Student>(new Group<Student>(new Student[] { one, two, three }));
-            CollectionAssert.AreEqual(new Student[] { two, three, one }, catalogue.SortAlphabetically().ToArray());
+            CollectionAssert.AreEqual(new Group<Student>(new Student[] { two, three, one }).ToArray(), catalogue.SortAlphabetically().ToArray());
         }
         [TestMethod]
         public void SortStudentsbyGeneralMeanDescending()
@@ -23,7 +23,7 @@ namespace CatalogueRemake
             Student two = new Student("Brete Origen", new Discipline[] { new Discipline("Math", new int[] { 5 }), new Discipline("English", new int[] { 5 }), new Discipline("Chemistry", new int[] { 8, 6 }) });
             Student one = new Student("Chira Iulia", new Discipline[] { new Discipline("Math", new int[] { 7, 10 }), new Discipline("English", new int[] { 9 }), new Discipline("Chemistry", new int[] { 8 }) });
             Catalog<Student> catalogue = new Catalog<Student>(new Group<Student>(new Student[] { one, two, three }));
-            CollectionAssert.AreEqual(new Student[] { three, one, two }, catalogue.SortByGeneralMeanDescending().ToArray());
+            CollectionAssert.AreEqual(new Group<Student>(new Student[] { three, one, two }).ToArray(), catalogue.SortByGeneralMeanDescending().ToArray());
         }
         [TestMethod]
         public void GetStudentsWithSpecificGeneralMean()
@@ -32,7 +32,7 @@ namespace CatalogueRemake
             Student two = new Student("Brete Origen", new Discipline[] { new Discipline("Math", new int[] { 5 }), new Discipline("English", new int[] { 5 }), new Discipline("Chemistry", new int[] { 8, 6 }) });
             Student one = new Student("Chira Iulia", new Discipline[] { new Discipline("Math", new int[] { 9, 10 }), new Discipline("English", new int[] { 9 }), new Discipline("Chemistry", new int[] { 10 }) });
             Catalog<Student> catalogue = new Catalog<Student>(new Group<Student>(new Student[] { one, two, three }));
-            CollectionAssert.AreEqual(new Student[] { one, three }, catalogue.GetStudentsWithSpecificGeneralMean(9.5).ToArray());
+            CollectionAssert.AreEqual(new Group<Student>(new Student[] { one, three }).ToArray(), catalogue.GetStudentsWithSpecificGeneralMean(9.5).ToArray());
         }
         [TestMethod]
         public void GetStudentsWithGreatestNumberOfTens()
@@ -41,7 +41,7 @@ namespace CatalogueRemake
             Student two = new Student("Brete Origen", new Discipline[] { new Discipline("Math", new int[] { 5 }), new Discipline("English", new int[] { 5 }), new Discipline("Chemistry", new int[] { 8, 6 }) });
             Student one = new Student("Chira Iulia", new Discipline[] { new Discipline("Math", new int[] { 9, 10 }), new Discipline("English", new int[] { 9 }), new Discipline("Chemistry", new int[] { 10 }) });
             Catalog<Student> catalogue = new Catalog<Student>(new Group<Student>(new Student[] { one, two, three }));
-            CollectionAssert.AreEqual(new Student[] { one, three }, catalogue.GetStudentsWithGreatestNumberOfASpecificGrade(10).ToArray());
+            CollectionAssert.AreEqual(new Group<Student>(new Student[] { one, three }).ToArray(), catalogue.GetStudentsWithGreatestNumberOfASpecificGrade(10).ToArray());
         }
         [TestMethod]
         public void GetStudentsWithLowestGeneralMean()
@@ -50,7 +50,7 @@ namespace CatalogueRemake
             Student two = new Student("Brete Origen", new Discipline[] { new Discipline("Math", new int[] { 5 }), new Discipline("English", new int[] { 5 }), new Discipline("Chemistry", new int[] { 8, 6 }) });
             Student one = new Student("Chira Iulia", new Discipline[] { new Discipline("Math", new int[] { 9, 10 }), new Discipline("English", new int[] { 9 }), new Discipline("Chemistry", new int[] { 10 }) });
             Catalog<Student> catalogue = new Catalog<Student>(new Group<Student>(new Student[] { one, two, three }));
-            CollectionAssert.AreEqual(new Student[] { two }, catalogue.GetStudentsWithLowestGeneralMean().ToArray());
+            CollectionAssert.AreEqual(new Group<Student>(new Student[] { two }).ToArray(), catalogue.GetStudentsWithLowestGeneralMean().ToArray());
         }
     }
 }

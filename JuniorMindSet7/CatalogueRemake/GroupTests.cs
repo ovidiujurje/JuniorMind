@@ -8,16 +8,6 @@ namespace CatalogueRemake
     public class GroupTests
     {
         [TestMethod]
-        public void AddLast()
-        {
-            Student three = new Student("Chereches Voicu", new Discipline[] { new Discipline("Math", new int[] { 10 }), new Discipline("English", new int[] { 10, 9 }), new Discipline("Chemistry", new int[] { 9 }) });
-            Student two = new Student("Brete Origen", new Discipline[] { new Discipline("Math", new int[] { 5 }), new Discipline("English", new int[] { 5 }), new Discipline("Chemistry", new int[] { 8, 6 }) });
-            Student one = new Student("Chira Iulia", new Discipline[] { new Discipline("Math", new int[] { 7, 10 }), new Discipline("English", new int[] { 9 }), new Discipline("Chemistry", new int[] { 8 }) });
-            Group<Student> students = new Group<Student>(new Student[] { three, two, one });
-            students.AddLast(two);
-            CollectionAssert.AreEqual(new Group<Student>(new Student[] { three, two, one, two }).ToArray(), students.ToArray());
-        }
-        [TestMethod]
         public void Insert()
         {
             Student three = new Student("Chereches Voicu", new Discipline[] { new Discipline("Math", new int[] { 10 }), new Discipline("English", new int[] { 10, 9 }), new Discipline("Chemistry", new int[] { 9 }) });
@@ -26,16 +16,6 @@ namespace CatalogueRemake
             Group<Student> students = new Group<Student>(new Student[] { three, two, one });
             students.Insert(1, two);
             CollectionAssert.AreEqual(new Group<Student>(new Student[] { three, two, two, one }).ToArray(), students.ToArray());
-        }
-        [TestMethod]
-        public void Clear()
-        {
-            Student three = new Student("Chereches Voicu", new Discipline[] { new Discipline("Math", new int[] { 10 }), new Discipline("English", new int[] { 10, 9 }), new Discipline("Chemistry", new int[] { 9 }) });
-            Student two = new Student("Brete Origen", new Discipline[] { new Discipline("Math", new int[] { 5 }), new Discipline("English", new int[] { 5 }), new Discipline("Chemistry", new int[] { 8, 6 }) });
-            Student one = new Student("Chira Iulia", new Discipline[] { new Discipline("Math", new int[] { 7, 10 }), new Discipline("English", new int[] { 9 }), new Discipline("Chemistry", new int[] { 8 }) });
-            Group<Student> students = new Group<Student>(new Student[] { three, two, one });
-            students.Clear();
-            CollectionAssert.AreEqual(new Group<Student>(new Student[] { }).ToArray(), students.ToArray());
         }
         [TestMethod]
         public void Remove()
