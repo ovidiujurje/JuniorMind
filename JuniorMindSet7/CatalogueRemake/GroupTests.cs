@@ -8,7 +8,7 @@ namespace CatalogueRemake
     public class GroupTests
     {
         [TestMethod]
-        public void Insert()
+        public void Insert1()
         {
             Student three = new Student("Chereches Voicu", new Discipline[] { new Discipline("Math", new int[] { 10 }), new Discipline("English", new int[] { 10, 9 }), new Discipline("Chemistry", new int[] { 9 }) });
             Student two = new Student("Brete Origen", new Discipline[] { new Discipline("Math", new int[] { 5 }), new Discipline("English", new int[] { 5 }), new Discipline("Chemistry", new int[] { 8, 6 }) });
@@ -16,6 +16,38 @@ namespace CatalogueRemake
             Group<Student> students = new Group<Student>(new Student[] { three, two, one });
             students.Insert(1, two);
             CollectionAssert.AreEqual(new Group<Student>(new Student[] { three, two, two, one }).ToArray(), students.ToArray());
+        }
+        [TestMethod]
+        public void Insert2()
+        {
+            Student three = new Student("Chereches Voicu", new Discipline[] { new Discipline("Math", new int[] { 10 }), new Discipline("English", new int[] { 10, 9 }), new Discipline("Chemistry", new int[] { 9 }) });
+            Student two = new Student("Brete Origen", new Discipline[] { new Discipline("Math", new int[] { 5 }), new Discipline("English", new int[] { 5 }), new Discipline("Chemistry", new int[] { 8, 6 }) });
+            Student one = new Student("Chira Iulia", new Discipline[] { new Discipline("Math", new int[] { 7, 10 }), new Discipline("English", new int[] { 9 }), new Discipline("Chemistry", new int[] { 8 }) });
+            Group<Student> students = new Group<Student>(new Student[] { one, one, one, one, one, one, one, one, one, one });
+            students.Insert(1, two);
+            CollectionAssert.AreEqual(new Group<Student>(new Student[] { one, two, one, one, one, one, one, one, one, one, one }).ToArray(), students.ToArray());
+            Assert.AreEqual(30, students.ToArray().Length);
+        }
+        [TestMethod]
+        public void Add1()
+        {
+            Student three = new Student("Chereches Voicu", new Discipline[] { new Discipline("Math", new int[] { 10 }), new Discipline("English", new int[] { 10, 9 }), new Discipline("Chemistry", new int[] { 9 }) });
+            Student two = new Student("Brete Origen", new Discipline[] { new Discipline("Math", new int[] { 5 }), new Discipline("English", new int[] { 5 }), new Discipline("Chemistry", new int[] { 8, 6 }) });
+            Student one = new Student("Chira Iulia", new Discipline[] { new Discipline("Math", new int[] { 7, 10 }), new Discipline("English", new int[] { 9 }), new Discipline("Chemistry", new int[] { 8 }) });
+            Group<Student> students = new Group<Student>(new Student[] { three, two, one });
+            students.Add(two);
+            CollectionAssert.AreEqual(new Group<Student>(new Student[] { three, two, one, two }).ToArray(), students.ToArray());
+        }
+        [TestMethod]
+        public void Add2()
+        {
+            Student three = new Student("Chereches Voicu", new Discipline[] { new Discipline("Math", new int[] { 10 }), new Discipline("English", new int[] { 10, 9 }), new Discipline("Chemistry", new int[] { 9 }) });
+            Student two = new Student("Brete Origen", new Discipline[] { new Discipline("Math", new int[] { 5 }), new Discipline("English", new int[] { 5 }), new Discipline("Chemistry", new int[] { 8, 6 }) });
+            Student one = new Student("Chira Iulia", new Discipline[] { new Discipline("Math", new int[] { 7, 10 }), new Discipline("English", new int[] { 9 }), new Discipline("Chemistry", new int[] { 8 }) });
+            Group<Student> students = new Group<Student>(new Student[] { one, one, one, one, one, one, one, one, one, one });
+            students.Add(two);
+            CollectionAssert.AreEqual(new Group<Student>(new Student[] { one, one, one, one, one, one, one, one, one, one, two }).ToArray(), students.ToArray());
+            Assert.AreEqual(30, students.ToArray().Length);
         }
         [TestMethod]
         public void Remove()

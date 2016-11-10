@@ -5,19 +5,14 @@ using System.Collections.Generic;
 public class Group<T>: IList<T>
 {
     private T[] array;
+    private int _count;
 
     public Group (T[] arr)
     {
-        if (arr.Length % 10 == 0 && (object)arr[arr.Length - 1] == (object)default(T))
-        {
-            array = arr;
-        }
-        else
-        {
-            if (arr.Length < 10) Array.Resize(ref arr, 10);
-            else Array.Resize(ref arr, 3 * ((arr.Length / 10) * 10));
-            array = arr;
-        }
+        _count = arr.Length;
+        if (arr.Length < 10) Array.Resize(ref arr, 10);
+        else Array.Resize(ref arr, 3 * ((arr.Length / 10) * 10));
+        array = arr;
     }
 
     public T this[int index]
@@ -51,7 +46,12 @@ public class Group<T>: IList<T>
 
     public void Add(T item)
     {
-        ((IList<T>)array).Add(item);
+        if ((object)array[array.Length - 1] != (object)default(T)) Array.Resize(ref array, 3 * ((array.Length / 10) * 10));
+        if (_count < array.Length)
+        {
+            array[_count] = item;
+            _count++;
+        }
     }
 
     public void Clear()
@@ -81,21 +81,12 @@ public class Group<T>: IList<T>
 
     public void Insert(int index, T value)
     {
-        for (int i = array.Length - 1; i > index; i--)
+
+        if ((object)array[array.Length - 1] != (object)default(T)) Array.Resize(ref array, 3 * ((array.Length / 10) * 10));
+        for (int i = _count; i > index; i--)
             array[i] = array[i - 1];
         array[index] = (T)(value);
-    }
-
-    public void AddLast(T value)
-    {
-        Array.Resize(ref array, array.Length + 1);
-        array[array.Length - 1] = value;
-    }
-
-    private void AddLastAr(ref T[] arr, T value)
-    {
-        Array.Resize(ref arr, arr.Length + 1);
-        arr[arr.Length - 1] = value;
+        _count++;
     }
 
     public bool Remove(T value)
