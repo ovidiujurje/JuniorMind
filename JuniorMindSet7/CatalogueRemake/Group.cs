@@ -148,11 +148,17 @@ public class Group<T>: IList<T>
 
     IEnumerator IEnumerable.GetEnumerator()
     {
-        return ((IList<T>)array).GetEnumerator();
+        return (IEnumerator<T>)array.GetEnumerator();
     }
 
     public IEnumerator<T> GetEnumerator()
     {
-        return ((IList<T>)array).GetEnumerator();
+        int index = -1;
+        while (index < _count - 1)
+        {
+            index++;
+            return (IEnumerator<T>)array[index];
+        }
+        return (IEnumerator<T>)array[_count - 1];
     }
 }
