@@ -32,7 +32,15 @@ public class Group<T>: IList<T>
     {
         get
         {
-            return ((IList<T>)array).Count;
+            return _count;
+        }
+    }
+
+    public int ArrayLength
+    {
+        get
+        {
+            return array.Length;
         }
     }
 
@@ -46,12 +54,9 @@ public class Group<T>: IList<T>
 
     public void Add(T item)
     {
-        if ((object)array[array.Length - 1] != (object)default(T)) Array.Resize(ref array, 3 * ((array.Length / 10) * 10));
-        if (_count < array.Length)
-        {
+        if (_count >= array.Length) Array.Resize(ref array, 3 * ((array.Length / 10) * 10));
             array[_count] = item;
             _count++;
-        }
     }
 
     public void Clear()
@@ -64,14 +69,14 @@ public class Group<T>: IList<T>
         return ((IList<T>)array).Contains(item);
     }
 
-    public void CopyTo(T[] array, int arrayIndex)
+    public void CopyTo(T[] newArray, int index)
     {
-        ((IList<T>)this.array).CopyTo(array, arrayIndex);
-    }
-
-    public IEnumerator<T> GetEnumerator()
-    {
-        return ((IList<T>)array).GetEnumerator();
+        int j = index;
+        for (int i = 0; i < _count; i++)
+        {
+            newArray.SetValue(array[i], j);
+            j++;
+        }
     }
 
     public int IndexOf(T item)
@@ -82,7 +87,7 @@ public class Group<T>: IList<T>
     public void Insert(int index, T value)
     {
 
-        if ((object)array[array.Length - 1] != (object)default(T)) Array.Resize(ref array, 3 * ((array.Length / 10) * 10));
+        if (_count >= array.Length) Array.Resize(ref array, 3 * ((array.Length / 10) * 10));
         for (int i = _count; i > index; i--)
             array[i] = array[i - 1];
         array[index] = (T)(value);
@@ -108,6 +113,7 @@ public class Group<T>: IList<T>
             }
         }
         array = newArray;
+        _count--;
         return true;
     }
 
@@ -130,6 +136,7 @@ public class Group<T>: IList<T>
             }
         }
         array = newArray;
+        _count--;
     }
 
     public void SwapItemsAtIndexes(int firstIndex, int secondIndex)
@@ -139,8 +146,12 @@ public class Group<T>: IList<T>
         array[secondIndex] = temp;
     }
 
-
     IEnumerator IEnumerable.GetEnumerator()
+    {
+        return ((IList<T>)array).GetEnumerator();
+    }
+
+    public IEnumerator<T> GetEnumerator()
     {
         return ((IList<T>)array).GetEnumerator();
     }
