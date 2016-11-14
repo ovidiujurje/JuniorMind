@@ -176,7 +176,7 @@ public class Enumerator<T>: IEnumerator<T>
 
     public bool MoveNext()
     {
-        if (++currentIndex >= _collection.ToArray().Length)
+        if (++currentIndex >= _collection.ToArray().Length || _collection[++currentIndex] == null)
         {
             return false;
         }
