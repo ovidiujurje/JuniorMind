@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class Group<T>: IList<T>
 {
@@ -55,8 +56,8 @@ public class Group<T>: IList<T>
     public void Add(T item)
     {
         if (_count >= array.Length) Array.Resize(ref array, 3 * ((array.Length / 10) * 10));
-            array[_count] = item;
-            _count++;
+        array[_count] = item;
+        _count++;
     }
 
     public void Clear()
@@ -88,15 +89,28 @@ public class Group<T>: IList<T>
     {
 
         if (_count >= array.Length) Array.Resize(ref array, 3 * ((array.Length / 10) * 10));
-        for (int i = _count; i > index; i--)
-            array[i] = array[i - 1];
+        ShiftElementsToRight(index);
         array[index] = (T)(value);
         _count++;
+    }
+
+    private void ShiftElementsToRight(int index)
+    {
+        for (int i = _count; i > index; i--)
+            array[i] = array[i - 1];
     }
 
     public bool Remove(T value)
     {
         T[] newArray = new T[array.Length];
+        CopyAllElementsExceptValueToNewArray(value, newArray);
+        array = newArray;
+        _count--;
+        return true;
+    }
+
+    private void CopyAllElementsExceptValueToNewArray(T value, T[] newArray)
+    {
         int position = 0;
         for (int i = 0; i < array.Length; i++)
         {
@@ -108,33 +122,16 @@ public class Group<T>: IList<T>
             else
             {
                 newArray[position] = array[i + 1];
-                position ++;
+                position++;
                 i++;
             }
         }
-        array = newArray;
-        _count--;
-        return true;
     }
 
     public void RemoveAt(int index)
     {
         T[] newArray = new T[array.Length];
-        int position = 0;
-        for (int i = 0; i < array.Length; i++)
-        {
-            if (i != index)
-            {
-                newArray[position] = array[i];
-                position++;
-            }
-            else
-            {
-                newArray[position] = array[i + 1];
-                position++;
-                i++;
-            }
-        }
+        CopyAllElementsExceptValueToNewArray(array[index], newArray);
         array = newArray;
         _count--;
     }
@@ -146,19 +143,62 @@ public class Group<T>: IList<T>
         array[secondIndex] = temp;
     }
 
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        return (IEnumerator<T>)array.GetEnumerator();
-    }
-
     public IEnumerator<T> GetEnumerator()
     {
-        int index = -1;
-        while (index < _count - 1)
+        return (IEnumerator<T>)(new Group<T>(array));
+    }
+
+    private Enumerator<T> GetEnumerator1()
+    {
+        return (Enumerator<T>)GetEnumerator();
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator1();
+    }
+}
+
+public class Enumerator<T>: IEnumerator<T>
+{
+    private T[] _collection;
+    private int currentIndex;
+    private T currentItem;
+
+
+    public Enumerator(T[] collection)
+    {
+        _collection = collection;
+        currentIndex = -1;
+        currentItem = default(T);
+
+    }
+
+    public bool MoveNext()
+    {
+        if (++currentIndex >= _collection.ToArray().Length)
         {
-            index++;
-            return (IEnumerator<T>)array[index];
+            return false;
         }
-        return (IEnumerator<T>)array[_count - 1];
+        else
+        {
+            currentItem = _collection[currentIndex];
+        }
+        return true;
+    }
+
+    public void Reset() { currentIndex = -1; }
+
+    void IDisposable.Dispose() { }
+
+    public T Current
+    {
+        get { return currentItem; }
+    }
+
+
+    object IEnumerator.Current
+    {
+        get { return Current; }
     }
 }
