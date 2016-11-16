@@ -94,28 +94,14 @@ namespace LinkedListGroup
 
         public void InsertBefore(T v1, T v2)
         {
-            for (var node = head.Next; node != head; node = node.Next)
-            {
-                if (node.Value.Equals(v1))
-                {
-                    InsertBeforeNode(v2, node);
-                    break;
-                }
-            }
+            var node = FindFirst(v1);
+            InsertBeforeNode(v2, node);
         }
 
         public void InsertAfter(T v1, T v2)
         {
-            Node<T> node = head.Next;
-            while (node != head)
-            {
-                if ((object)node.Value == (object)v1)
-                {
-                    InsertAfterNode(v2, node);
-                    break;
-                }
-                node = node.Next;
-            }
+            var node = FindFirst(v1);
+            InsertAfterNode(v2, node);
         }
 
         private void InsertBeforeNode(T v2, Node<T> node)
@@ -148,18 +134,10 @@ namespace LinkedListGroup
 
         public void RemoveValue(T value)
         {
-            Node<T> node = head.Next;
-            while (node != head)
-            {
-                if ((object)node.Value == (object)value)
-                {
-                    node.Previous.Next = node.Next;
-                    node.Next.Previous = node.Previous;
-                    count--;
-                    break;
-                }
-                node = node.Next;
-            }
+            var node = FindFirst(value);
+            node.Previous.Next = node.Next;
+            node.Next.Previous = node.Previous;
+            count--;
         }
 
         public Node<T> FindFirst(T value)
