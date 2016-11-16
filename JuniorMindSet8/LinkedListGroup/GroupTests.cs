@@ -54,5 +54,25 @@ namespace LinkedListGroup
             list.RemoveValue("two");
             Assert.Equal(new string[] { "one" }, list);
         }
+        
+        [Fact]
+        public void ShouldKeepTheCoutZeroWhenRemovingFirstOfAnEmptyList()
+        {
+            var list = new LinkedList<int>();
+            list.RemoveFirst();
+            Assert.Equal(0, list.Count);
+        }
+        [Fact]
+        public void FindFirst()
+        {
+            var list = new LinkedList<string> { "one", "two" };
+            Assert.Equal("two", list.FindFirst("two").Value);
+        }
+        [Fact]
+        public void FindLast()
+        {
+            var list = new LinkedList<string> { "one", "two" };
+            Assert.Equal("two", list.FindLast("two").Value);
+        }
     }
 }

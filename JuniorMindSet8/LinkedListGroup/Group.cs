@@ -79,12 +79,12 @@ namespace LinkedListGroup
             Node<T> newNode = new Node<T>(node, node.Next, value);
             node.Next.Previous = newNode;
             node.Next = newNode;
+            count++;
         }
 
         public void AddLast(T value)
         {
             InsertBeforeNode(value, head);
-            count++;
         }
 
         public void Add(T value)
@@ -94,17 +94,14 @@ namespace LinkedListGroup
 
         public void InsertBefore(T v1, T v2)
         {
-            Node<T> node = head.Next;
-            while (node != head)
+            for (var node = head.Next; node != head; node = node.Next)
             {
-                if ((object)node.Value == (object)v1)
+                if (node.Value.Equals(v1))
                 {
                     InsertBeforeNode(v2, node);
                     break;
                 }
-                node = node.Next;
             }
-            count++;
         }
 
         public void InsertAfter(T v1, T v2)
@@ -119,14 +116,14 @@ namespace LinkedListGroup
                 }
                 node = node.Next;
             }
-            count++;
         }
 
-        private static void InsertBeforeNode(T v2, Node<T> node)
+        private void InsertBeforeNode(T v2, Node<T> node)
         {
             Node<T> newNode = new Node<T>(node.Previous, node, v2);
             node.Previous.Next = newNode;
             node.Previous = newNode;
+            count++;
         }
 
         public void RemoveFirst()
@@ -135,8 +132,8 @@ namespace LinkedListGroup
             {
                 head.Next.Next.Previous = head;
                 head.Next = head.Next.Next;
+                count--;
             }
-            count--;
         }
 
         public void RemoveLast()
@@ -145,8 +142,8 @@ namespace LinkedListGroup
             {
                 head.Previous.Previous.Next = head;
                 head.Previous = head.Previous.Previous;
+                count--;
             }
-            count--;
         }
 
         public void RemoveValue(T value)
@@ -158,11 +155,30 @@ namespace LinkedListGroup
                 {
                     node.Previous.Next = node.Next;
                     node.Next.Previous = node.Previous;
+                    count--;
                     break;
                 }
                 node = node.Next;
             }
-            count--;
+        }
+
+        public Node<T> FindFirst(T value)
+        {
+            for (Node<T> node = head.Next; node != head; node = node.Next)
+            {
+                if (node.Value.Equals(value))
+                    return node;
+            }
+            throw new InvalidOperationException();
+        }
+        public Node<T> FindLast(T value)
+        {
+            for (Node<T> node = head.Previous; node != head; node = node.Previous)
+            {
+                if (node.Value.Equals(value))
+                    return node;
+            }
+            throw new InvalidOperationException();
         }
 
         public IEnumerator<T> GetEnumerator()
