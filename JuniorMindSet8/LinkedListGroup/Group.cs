@@ -136,6 +136,7 @@ namespace LinkedListGroup
                 head.Next.Next.Previous = head;
                 head.Next = head.Next.Next;
             }
+            count--;
         }
 
         public void RemoveLast()
@@ -145,6 +146,23 @@ namespace LinkedListGroup
                 head.Previous.Previous.Next = head;
                 head.Previous = head.Previous.Previous;
             }
+            count--;
+        }
+
+        public void RemoveValue(T value)
+        {
+            Node<T> node = head.Next;
+            while (node != head)
+            {
+                if ((object)node.Value == (object)value)
+                {
+                    node.Previous.Next = node.Next;
+                    node.Next.Previous = node.Previous;
+                    break;
+                }
+                node = node.Next;
+            }
+            count--;
         }
 
         public IEnumerator<T> GetEnumerator()
