@@ -7,46 +7,31 @@ namespace LinkedListGroup
     public class GroupTests
     {
         [Fact]
-        public void AddFirst()
+        public void ShouldCount()
         {
-            Group<string> set = new Group<string>(new string[] { "one", "two", "three" });
-            set.AddFirst("four");
-            Assert.Equal(new string[] { "four", "one", "two", "three" }, set);
+            var list = new LinkedList<string> { "one", "two" };
+            Assert.Equal(2, list.Count);
         }
         [Fact]
-        public void AddLast()
+        public void ShouldAddElement()
         {
-            Group<string> set = new Group<string>(new string[] { "one", "two", "three" });
-            set.AddLast("four");
-            Assert.Equal(new string[] { "one", "two", "three", "four" }, set);
+            var list = new LinkedList<string> { "one", "two" };
+            list.Add("three");
+            Assert.Equal(new string[] { "one", "two", "three" }, list);
         }
         [Fact]
-        public void InsertBefore()
+        public void ShouldAddElementAtBeginning()
         {
-            Group<string> set = new Group<string>(new string[] { "one", "two", "three" });
-            set.Insert("two", "four");
-            Assert.Equal(new string[] {  "one", "four", "two", "three" }, set);
+            var list = new LinkedList<string> { "one", "two" };
+            list.AddFirst("three");
+            Assert.Equal(new string[] { "three", "one", "two" }, list);
         }
         [Fact]
-        public void RemoveFirst()
+        public void ShouldInsertBeforeValue()
         {
-            Group<string> set = new Group<string>(new string[] { "one", "two", "three" });
-            set.RemoveFirst();
-            Assert.Equal(new string[] { "two", "three" }, set);
-        }
-        [Fact]
-        public void RemoveLast()
-        {
-            Group<string> set = new Group<string>(new string[] { "one", "two", "three" });
-            set.RemoveLast();
-            Assert.Equal(new string[] { "one", "two"}, set);
-        }
-        [Fact]
-        public void Remove()
-        {
-            Group<string> set = new Group<string>(new string[] { "one", "two", "three" });
-            set.Remove("two");
-            Assert.Equal(new string[] { "one", "three" }, set);
+            var list = new LinkedList<string> { "one", "two" };
+            list.InsertBefore("two", "three");
+            Assert.Equal(new string[] { "one", "three", "two" }, list);
         }
     }
 }
