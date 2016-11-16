@@ -33,5 +33,12 @@ namespace LinkedListGroup
             list.InsertBefore("two", "three");
             Assert.Equal(new string[] { "one", "three", "two" }, list);
         }
+        [Fact]
+        public void ShouldRemoveFirst()
+        {
+            var list = new LinkedList<string> { "one", "two" };
+            list.RemoveFirst();
+            Assert.Equal(new string[] { "two" }, list);
+        }
     }
 }

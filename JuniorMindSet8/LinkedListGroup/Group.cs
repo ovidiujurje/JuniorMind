@@ -81,10 +81,15 @@ namespace LinkedListGroup
             node.Next = newNode;
         }
 
-        public void Add(T value)
+        public void AddLast(T value)
         {
             InsertBeforeNode(value, head);
             count++;
+        }
+
+        public void Add(T value)
+        {
+            AddLast(value);
         }
 
         public void InsertBefore(T v1, T v2)
@@ -122,6 +127,15 @@ namespace LinkedListGroup
             Node<T> newNode = new Node<T>(node.Previous, node, v2);
             node.Previous.Next = newNode;
             node.Previous = newNode;
+        }
+
+        public void RemoveFirst()
+        {
+            if (head.Next != head)
+            {
+                head.Next.Next.Previous = head;
+                head.Next = head.Next.Next;
+            }
         }
 
         public IEnumerator<T> GetEnumerator()
