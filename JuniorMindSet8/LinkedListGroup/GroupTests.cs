@@ -40,5 +40,12 @@ namespace LinkedListGroup
             list.RemoveFirst();
             Assert.Equal(new string[] { "two" }, list);
         }
+        [Fact]
+        public void ShouldRemoveLast()
+        {
+            var list = new LinkedList<string> { "one", "two" };
+            list.RemoveLast();
+            Assert.Equal(new string[] { "one" }, list);
+        }
     }
 }

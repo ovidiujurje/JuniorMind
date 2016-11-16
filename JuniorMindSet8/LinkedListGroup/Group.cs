@@ -138,6 +138,15 @@ namespace LinkedListGroup
             }
         }
 
+        public void RemoveLast()
+        {
+            if (head.Previous != head)
+            {
+                head.Previous.Previous.Next = head;
+                head.Previous = head.Previous.Previous;
+            }
+        }
+
         public IEnumerator<T> GetEnumerator()
         {
             Node<T> node = head.Next;
