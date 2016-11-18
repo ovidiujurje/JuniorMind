@@ -36,11 +36,25 @@ namespace HashTableProject
             }
         }
 
+        public int Find(TKey key)
+        {
+            if (buckets != null)
+            {
+                for (int i = buckets[key.GetHashCode() % buckets.Length]; i >= 0; i = pairs[i].next)
+                {
+                    if (pairs[i].key.Equals(key))
+                        return i;
+                }
+            }
+            throw new NotImplementedException();
+        }
+
         public TValue this[TKey key]
         {
             get
             {
-                throw new NotImplementedException();
+                int i = Find(key);
+                return pairs[i].value;
             }
 
             set
@@ -147,14 +161,16 @@ namespace HashTableProject
 
         public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
         {
-            for (int i = 0; i < buckets.Length; i++)
-                for (int j = 0; j < pairs.Length; j++)
-                    yield return new KeyValuePair<TKey, TValue>(pairs[i].key, pairs[i].value);
+
+            for (int i = 0; i < pairs.Length; i++)
+            {
+                yield return new KeyValuePair< TKey, TValue >(pairs[i].key, pairs[i].value);
+            }
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return this.GetEnumerator();
+            return GetEnumerator();
         }
     }
 }
