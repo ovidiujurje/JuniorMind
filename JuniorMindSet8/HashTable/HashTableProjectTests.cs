@@ -38,5 +38,16 @@ namespace HashTableProject
             var result = new KeyValuePair<string, int>[] { new KeyValuePair<string, int>("zero", 0), new KeyValuePair<string, int>("one", 1) };
             Assert.Equal(result , collection);
         }
+        [Fact]
+        public void ShouldRemove()
+        {
+            var collection = new HashTable<string, int>(2) {
+                { "zero", 0 },
+                { "one", 1 }
+            };
+            collection.Remove("one");
+            var result = new KeyValuePair<string, int>[] { new KeyValuePair<string, int>("zero", 0) };
+            Assert.Equal(result, collection);
+        }
     }
 }

@@ -151,7 +151,32 @@ namespace HashTableProject
 
         public bool Remove(TKey key)
         {
-            throw new NotImplementedException();
+            if (buckets != null)
+            {
+                int bucket = key.GetHashCode() % buckets.Length;
+                int last = -1;
+                for (int i = buckets[bucket]; i >= 0; last = i, i = pairs[i].next)
+                {
+                    if (pairs[i].key.Equals(key))
+                    {
+                        if (last < 0)
+                        {
+                            buckets[bucket] = pairs[i].next;
+                        }
+                        else
+                        {
+                            pairs[last].next = pairs[i].next;
+                        }
+                        pairs[i].next = vacancyPosition;
+                        pairs[i].key = default(TKey);
+                        pairs[i].value = default(TValue);
+                        vacancyPosition = i;
+                        numberOfVacancies++;
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
 
         public bool TryGetValue(TKey key, out TValue value)
