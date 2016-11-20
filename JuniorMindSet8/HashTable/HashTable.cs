@@ -36,25 +36,31 @@ namespace HashTableProject
             }
         }
 
-        public int Find(TKey key)
+        public int FindIndex(TKey key)
         {
             if (buckets != null)
             {
-                for (int i = buckets[key.GetHashCode() % buckets.Length]; i >= 0; i = pairs[i].next)
+                for (int i = buckets[key.GetHashCode() % buckets.Length]; i > -1; i = pairs[i].next)
                 {
-                    if (pairs[i].key.Equals(key))
-                        return i;
+                    try
+                    {
+                        if (pairs[i].key.Equals(key))
+                            return i;
+                    }
+                    catch (NullReferenceException)
+                    {
+                        return -1;
+                    }
                 }
             }
-            throw new NotImplementedException();
+            return -1;
         }
 
         public TValue this[TKey key]
         {
             get
             {
-                int i = Find(key);
-                return pairs[i].value;
+                return pairs[FindIndex(key)].value;
             }
 
             set
@@ -151,32 +157,11 @@ namespace HashTableProject
 
         public bool Remove(TKey key)
         {
-            if (buckets != null)
-            {
-                int bucket = key.GetHashCode() % buckets.Length;
-                int last = -1;
-                for (int i = buckets[bucket]; i >= 0; last = i, i = pairs[i].next)
-                {
-                    if (pairs[i].key.Equals(key))
-                    {
-                        if (last < 0)
-                        {
-                            buckets[bucket] = pairs[i].next;
-                        }
-                        else
-                        {
-                            pairs[last].next = pairs[i].next;
-                        }
-                        pairs[i].next = vacancyPosition;
-                        pairs[i].key = default(TKey);
-                        pairs[i].value = default(TValue);
-                        vacancyPosition = i;
-                        numberOfVacancies++;
-                        return true;
-                    }
-                }
-            }
-            return false;
+            int index = FindIndex(key);
+            if (index == -1)
+                return false;
+            pairs[index] = default(Pair);
+            return true;
         }
 
         public bool TryGetValue(TKey key, out TValue value)

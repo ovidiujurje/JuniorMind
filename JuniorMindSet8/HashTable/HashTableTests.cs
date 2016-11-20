@@ -41,13 +41,12 @@ namespace HashTableProject
         [Fact]
         public void ShouldRemove()
         {
-            var collection = new HashTable<string, int>(2) {
+            var collection = new HashTable<string, int>(3) {
                 { "zero", 0 },
                 { "one", 1 }
             };
-            collection.Remove("one");
-            var result = new KeyValuePair<string, int>[] { new KeyValuePair<string, int>("zero", 0) };
-            Assert.Equal(result, collection);
+            collection.Remove("zero");
+            Assert.Equal(-1, collection.FindIndex("zero"));
         }
     }
 }

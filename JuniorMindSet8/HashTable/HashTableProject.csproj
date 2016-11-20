@@ -59,7 +59,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HashTableProjectTests.cs" />
+    <Compile Include="HashTableTests.cs" />
     <Compile Include="HashTable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
