@@ -36,7 +36,7 @@ namespace HashTableProject
             }
         }
 
-        public int FindIndex(TKey key)
+        private int FindIndex(TKey key)
         {
             if (buckets != null)
             {
@@ -137,12 +137,12 @@ namespace HashTableProject
 
         public bool Contains(KeyValuePair<TKey, TValue> item)
         {
-            throw new NotImplementedException();
+            return FindIndex(item.Key) > -1;
         }
 
         public bool ContainsKey(TKey key)
         {
-            throw new NotImplementedException();
+            return FindIndex(key) > -1;
         }
 
         public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
