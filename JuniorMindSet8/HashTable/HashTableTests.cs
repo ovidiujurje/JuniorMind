@@ -63,6 +63,18 @@ namespace HashTableProject
             Assert.False(collection.Contains(new KeyValuePair<string, int>("zero", 0)));
             Assert.True(collection.Contains(new KeyValuePair<string, int>("one", 1)));
             Assert.True(collection.Contains(new KeyValuePair<string, int>("two", 2)));
+        }
+        [Fact]
+        public void ShouldClearHashTable()
+        {
+            var collection = new HashTable<string, int>(2) {
+                { "zero", 0 },
+                { "one", 1 }
+            };
+            collection.Clear();
+            Assert.Equal(0, collection.Count);
+            Assert.False(collection.Contains(new KeyValuePair<string, int>("zero", 0)));
+            Assert.False(collection.Contains(new KeyValuePair<string, int>("one", 1)));
 
         }
     }

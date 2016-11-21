@@ -136,6 +136,9 @@ namespace HashTableProject
             {
                 for (int i = 0; i < buckets.Length; i++) buckets[i] = -1;
                 Array.Clear(pairs, 0, count);
+                count = 0;
+                vacancyPosition = -1;
+                numberOfVacancies = 0;
             }
         }
 
