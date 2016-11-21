@@ -40,7 +40,7 @@ namespace HashTableProject
         {
             if (buckets != null)
             {
-                for (int i = buckets[key.GetHashCode() % buckets.Length]; i > -1; i = pairs[i].next)
+                for (int i = buckets[Math.Abs(key.GetHashCode() % buckets.Length)]; i > -1; i = pairs[i].next)
                 {
                     try
                     {
@@ -108,7 +108,7 @@ namespace HashTableProject
 
         public void Add(TKey key, TValue value)
         {
-            int bucket = key.GetHashCode() % buckets.Length;
+            int bucket = Math.Abs(key.GetHashCode() % buckets.Length);
             int index;
             if (numberOfVacancies > 0)
             {
@@ -132,7 +132,11 @@ namespace HashTableProject
 
         public void Clear()
         {
-            throw new NotImplementedException();
+            if (count > 0)
+            {
+                for (int i = 0; i < buckets.Length; i++) buckets[i] = -1;
+                Array.Clear(pairs, 0, count);
+            }
         }
 
         public bool Contains(KeyValuePair<TKey, TValue> item)
