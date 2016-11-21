@@ -7,7 +7,21 @@ using System.Threading.Tasks;
 
 namespace HashTableProject
 {
+    public class NullKeyException : Exception
+    {
+        public NullKeyException(string message)
+        {
+            message = "Key is null";
+        }
+    }
+    public class TakenKeyException : Exception
+    {
+        public TakenKeyException(string message)
+        {
+            message = "An element with the same key already exists in this collection";
 
+        }
+    }
     public class HashTable<TKey, TValue> : IDictionary<TKey, TValue>
     {
         private struct Pair
@@ -106,6 +120,9 @@ namespace HashTableProject
 
         public void Add(TKey key, TValue value)
         {
+            if (key == null) throw new NullKeyException("Key is null");
+            if (FindIndex(key) != -1) throw new TakenKeyException("An element with the same key already exists in this collection");
+
             var bucket = GetKeyIndex(key);
             var index = FindFreePair();
             pairs[index].key = key;
@@ -113,6 +130,7 @@ namespace HashTableProject
             pairs[index].next = buckets[bucket];
             buckets[bucket] = index;
             count++;
+
         }
 
         private int FindFreePair()
@@ -137,7 +155,6 @@ namespace HashTableProject
         {
             if (count <= 0)
                 return;
-            
             for (int i = 0; i < buckets.Length; i++) buckets[i] = -1;
             Array.Clear(pairs, 0, count);
             count = 0;
@@ -152,6 +169,8 @@ namespace HashTableProject
 
         public bool ContainsKey(TKey key)
         {
+            if (key == null) throw new NullKeyException("Key is null");
+
             return FindIndex(key) > -1;
         }
 
@@ -167,6 +186,8 @@ namespace HashTableProject
 
         public bool Remove(TKey key)
         {
+            if (key == null) throw new NullKeyException("Key is null");
+
             int bucket = GetKeyIndex(key);
             int previous = -1;
             for (int i = buckets[bucket]; i >= 0; previous = i, i = pairs[i].next)

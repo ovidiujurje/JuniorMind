@@ -41,6 +41,24 @@ namespace HashTableProject
             Assert.True(collection.Contains(new KeyValuePair<string, int>("two", 2)));
         }
         [Fact]
+        public void ShouldThrowNullKeyException()
+        {
+            var collection = new HashTable<string, int>(3) {
+                { "zero", 0 },
+                { "one", 1 }
+            };
+            Assert.Throws<NullKeyException>(() => collection.Add(null, 3));
+        }
+        [Fact]
+        public void ShouldThrowtakenKeyException()
+        {
+            var collection = new HashTable<string, int>(3) {
+                { "zero", 0 },
+                { "one", 1 }
+            };
+            Assert.Throws<TakenKeyException>(() => collection.Add("zero", 3));
+        }
+        [Fact]
         public void ShouldRemove()
         {
             var collection = new HashTable<string, int>(2) {
@@ -50,6 +68,15 @@ namespace HashTableProject
             collection.Remove("zero");
             Assert.False(collection.Contains(new KeyValuePair<string, int>("zero", 0)));
             Assert.True(collection.Contains(new KeyValuePair<string, int>("one", 1)));
+        }
+        [Fact]
+        public void ShouldThrowNullKeyException2()
+        {
+            var collection = new HashTable<string, int>(3) {
+                { "zero", 0 },
+                { "one", 1 }
+            };
+            Assert.Throws<NullKeyException>(() => collection.Remove(null));
         }
         [Fact]
         public void ShouldOccupyVacantPosition()
