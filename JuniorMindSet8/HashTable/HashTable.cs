@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace HashTableProject
 {
-    public class HashTable<TKey, TValue>:IDictionary<TKey, TValue>
+
+    public class HashTable<TKey, TValue> : IDictionary<TKey, TValue>
     {
         private struct Pair
         {
@@ -38,23 +39,20 @@ namespace HashTableProject
 
         private int FindIndex(TKey key)
         {
-            if (buckets != null)
+            if (buckets == null)
+                return -1;
+
+            var index = GetKeyIndex(key);
+            for (int i = buckets[index]; i > -1; i = pairs[i].next)
             {
-                for (int i = buckets[Math.Abs(key.GetHashCode() % buckets.Length)]; i > -1; i = pairs[i].next)
-                {
-                    try
-                    {
-                        if (pairs[i].key.Equals(key))
-                            return i;
-                    }
-                    catch (NullReferenceException)
-                    {
-                        return -1;
-                    }
-                }
+                if (pairs[i].key.Equals(key))
+                    return i;
             }
+
             return -1;
         }
+
+        private int GetKeyIndex(TKey key) => Math.Abs(key.GetHashCode() % buckets.Length);
 
         public TValue this[TKey key]
         {
@@ -108,38 +106,43 @@ namespace HashTableProject
 
         public void Add(TKey key, TValue value)
         {
-            int bucket = Math.Abs(key.GetHashCode() % buckets.Length);
-            int index;
-            if (numberOfVacancies > 0)
-            {
-                index = vacancyPosition;
-                vacancyPosition = pairs[index].next;
-                numberOfVacancies--;
-                pairs[index].key = key;
-                pairs[index].value = value;
-                buckets[bucket] = index;
-            }
-            else
-            {
-                pairs[count].key = key;
-                pairs[count].value = value;
-                if (buckets[bucket] != -1)
-                    pairs[count].next = buckets[bucket];
-                buckets[bucket] = count;
-                count++;
-            }
+            var bucket = GetKeyIndex(key);
+            var index = FindFreePair();
+            pairs[index].key = key;
+            pairs[index].value = value;
+            pairs[index].next = buckets[bucket];
+            buckets[bucket] = index;
+            count++;
+        }
+
+        private int FindFreePair()
+        {
+            return HasVacancies() ? UseNextFreePair() : count;
+        }
+
+        private bool HasVacancies()
+        {
+            return numberOfVacancies > 0;
+        }
+
+        private int UseNextFreePair()
+        {
+            var nextFreeIndex = vacancyPosition;
+            vacancyPosition = pairs[vacancyPosition].next;
+            numberOfVacancies--;
+            return nextFreeIndex;
         }
 
         public void Clear()
         {
-            if (count > 0)
-            {
-                for (int i = 0; i < buckets.Length; i++) buckets[i] = -1;
-                Array.Clear(pairs, 0, count);
-                count = 0;
-                vacancyPosition = -1;
-                numberOfVacancies = 0;
-            }
+            if (count <= 0)
+                return;
+            
+            for (int i = 0; i < buckets.Length; i++) buckets[i] = -1;
+            Array.Clear(pairs, 0, count);
+            count = 0;
+            vacancyPosition = -1;
+            numberOfVacancies = 0;
         }
 
         public bool Contains(KeyValuePair<TKey, TValue> item)
@@ -164,31 +167,38 @@ namespace HashTableProject
 
         public bool Remove(TKey key)
         {
-            if (buckets != null)
+            int bucket = GetKeyIndex(key);
+            int previous = -1;
+            for (int i = buckets[bucket]; i >= 0; previous = i, i = pairs[i].next)
             {
-                int bucket = key.GetHashCode() % buckets.Length;
-                int previous = -1;
-                for (int i = buckets[bucket]; i >= 0; previous = i, i = pairs[i].next)
+                if (pairs[i].key.Equals(key))
                 {
-                    if (pairs[i].key.Equals(key))
-                    {
-                        if (previous < 0)
-                        {
-                            buckets[bucket] = pairs[i].next;
-                        }
-                        else
-                        {
-                            pairs[previous].next = pairs[i].next;
-                        }
-                        pairs[i].next = vacancyPosition;
-                        pairs[i] = default(Pair);
-                        vacancyPosition = i;
-                        numberOfVacancies++;
-                        return true;
-                    }
+                    RemovePair(bucket, previous, i);
+                    return true;
                 }
             }
             return false;
+        }
+
+        private void RemovePair(int bucket, int previous, int index)
+        {
+            if (previous < 0)
+            {
+                buckets[bucket] = pairs[index].next;
+            }
+            else
+            {
+                pairs[previous].next = pairs[index].next;
+            }
+            AddPairToVacant(index);
+        }
+
+        private void AddPairToVacant(int index)
+        {
+            pairs[index] = default(Pair);
+            pairs[index].next = vacancyPosition;
+            vacancyPosition = index;
+            numberOfVacancies++;
         }
 
         public bool TryGetValue(TKey key, out TValue value)
@@ -201,7 +211,7 @@ namespace HashTableProject
 
             for (int i = 0; i < pairs.Length; i++)
             {
-                yield return new KeyValuePair< TKey, TValue >(pairs[i].key, pairs[i].value);
+                yield return new KeyValuePair<TKey, TValue>(pairs[i].key, pairs[i].value);
             }
         }
 

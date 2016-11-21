@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
@@ -75,7 +75,6 @@ namespace HashTableProject
             Assert.Equal(0, collection.Count);
             Assert.False(collection.Contains(new KeyValuePair<string, int>("zero", 0)));
             Assert.False(collection.Contains(new KeyValuePair<string, int>("one", 1)));
-
         }
     }
 }
