@@ -11,11 +11,14 @@ namespace WordSort
         [TestMethod]
         public void SortWordsAscendingByTheNumberOfAppearence()
         {
-            CollectionAssert.AreEqual(new string[] { "one", "two", "three" }, SortWordsByNumberOfAppearences("three two three two three one").ToArray());
+            CollectionAssert.AreEqual(new string[] { "one", "two", "three" }, 
+                SortWordsByNumberOfAppearences("three two three two three one").ToArray());
         }
         IEnumerable<string> SortWordsByNumberOfAppearences(string text)
         {
-            return text.Split(' ').GroupBy(t => t).OrderBy(g => g.Count()).Select(gr => gr.First());
+            return text.Split(' ').GroupBy(word => word)
+                .OrderBy(instance => instance.Count())
+                .Select(wordGroup => wordGroup.First());
         }
     }
 }
