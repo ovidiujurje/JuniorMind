@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace WordSort
 {
@@ -10,20 +11,12 @@ namespace WordSort
         [TestMethod]
         public void SortWordsAscendingByTheNumberOfAppearence()
         {
-            CollectionAssert.AreEqual(new string[] { "one", "two", "two", "three", "three", "three" }, SortWordsByNumberOfAppearences("three two three two three one"));
+            CollectionAssert.AreEqual(new string[] { "one", "two", "three" }, SortWordsByNumberOfAppearences("three two three two three one").ToArray());
         }
-        string[] SortWordsByNumberOfAppearences(string text)
+        IEnumerable<string> SortWordsByNumberOfAppearences(string text)
         {
-            var textArray = text.Split(' ');
             int count = 0;
-            var grouped = textArray.GroupBy(t => t).OrderBy(g => g.Count());
-            foreach (var group in grouped)
-                foreach (var el in group)
-                {
-                    textArray[count] = el;
-                    count++;
-                }
-            return textArray;
+            return text.Split(' ').GroupBy(t => t).OrderBy(g => g.Count()).Select(gr => gr.First());
         }
     }
 }
