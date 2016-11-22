@@ -15,7 +15,6 @@ namespace WordSort
         }
         IEnumerable<string> SortWordsByNumberOfAppearences(string text)
         {
-            int count = 0;
             return text.Split(' ').GroupBy(t => t).OrderBy(g => g.Count()).Select(gr => gr.First());
         }
     }
