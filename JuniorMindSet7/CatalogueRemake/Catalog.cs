@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
-public class Catalog<T>
+public class Catalog
 {
-    private Group<T> catalogue;
-    public Catalog(Group<T> students)
+    private Student[] catalogue;
+    public Catalog(Student[] students)
     {
         catalogue = students;
     }
@@ -14,83 +16,30 @@ public class Catalog<T>
         return catalogue.GetEnumerator();
     }
 
-    public Group<T> SortAlphabetically()
+    public IEnumerable<Student> SortAlphabetically()
     {
-        for (int k = 1; k < catalogue.Count; k++)
-        {
-            for (int i = 1; i < catalogue.Count; i++)
-            {
-                if (catalogue[i] != null) OrderCurrentAndPreviousStudentAlphabetically(i);
-            }
-        }
-        return catalogue;
+        return catalogue.OrderBy(student => student.Name);
     }
 
-    private void OrderCurrentAndPreviousStudentAlphabetically(int i)
+    public IEnumerable<Student> SortByGeneralMeanDescending()
     {
-        if (((Student)((object)catalogue[i])).DetermineIfAlphabeticallyPrecedes((Student)((object)catalogue[i - 1])))
-            catalogue.SwapItemsAtIndexes(i, i - 1);
+        return catalogue.OrderByDescending(student => student.Disciplines.Average(dis => dis.Grades.Average(gra => gra)));
     }
 
-    public Group<T> SortByGeneralMeanDescending()
+    public IEnumerable<Student> GetStudentsWithSpecificGeneralMean(double targetMean)
     {
-        for (int i = 0; i < catalogue.Count; i++)
-        {
-            if (catalogue[i] != null) catalogue.SwapItemsAtIndexes(i, MaxGeneralMeanIndex(i));
-        }
-        return catalogue;
+        return catalogue.Where(student => student.Disciplines.Average(dis => dis.Grades.Average(gra => gra)) == targetMean);
     }
 
-    public Group<T> GetStudentsWithSpecificGeneralMean(double targetMean)
+    public IEnumerable<Student> GetStudentsWithGreatestNumberOfASpecificGrade(int inputGrade)
     {
-        foreach (T student in catalogue)
-            if (student != null && ((Student)((object)student)).GeneralMean() != targetMean) catalogue.Remove(student);
-        return catalogue;
+        return catalogue
+            .Where(student => student.Count(inputGrade) == catalogue.OrderBy(st => st.Count(inputGrade)).Last().Count(inputGrade));
     }
 
-    public Group<T> GetStudentsWithGreatestNumberOfASpecificGrade(int inputGrade)
+    public IEnumerable<Student> GetStudentsWithLowestGeneralMean()
     {
-        foreach (T student in catalogue)
-            if (student != null && ((Student)((object)student)).Count(inputGrade) != MaxCountOfSpecificGrade(inputGrade)) catalogue.Remove(student);
-        return catalogue;
-    }
-
-    public Group<T> GetStudentsWithLowestGeneralMean()
-    {
-        foreach (T student in catalogue)
-            if (student != null && ((Student)((object)student)).GeneralMean() != MinGeneralMean()) catalogue.Remove(student);
-        return catalogue;
-    }
-
-    private int MaxGeneralMeanIndex(int startIndex)
-    {
-        int maxIndex = startIndex;
-        double max = ((Student)((object)catalogue[startIndex])).GeneralMean();
-        for (int i = startIndex + 1; i < catalogue.Count; i++)
-        {
-            if (catalogue[i] != null)
-                if (((Student)((object)catalogue[i])).GeneralMean() > max) maxIndex = i;
-        }
-        return maxIndex;
-    }
-
-    private int MaxCountOfSpecificGrade(int grade)
-    {
-        int max = 0;
-        for (int i = 0; i < catalogue.Count; i++)
-        {
-            if (catalogue[i] != null && ((Student)((object)catalogue[i])).Count(grade) > max) max = ((Student)((object)catalogue[i])).Count(grade);
-        }
-        return max;
-    }
-
-    private double MinGeneralMean()
-    {
-        double min = 10;
-        for (int i = 0; i < catalogue.Count; i++)
-        {
-            if (catalogue[i] != null && ((Student)((object)catalogue[i])).GeneralMean() < min) min = ((Student)((object)catalogue[i])).GeneralMean();
-        }
-        return min;
+        return catalogue
+            .Where(student => student.Disciplines.Average(dis => dis.Grades.Average(gra => gra)) == catalogue.OrderBy(st => st.Disciplines.Average(dis => dis.Grades.Average(gra => gra))).First().Disciplines.Average(dis => dis.Grades.Average(gra => gra)));
     }
 }

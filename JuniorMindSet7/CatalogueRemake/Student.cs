@@ -4,6 +4,29 @@ public class Student
 {
     private string name;
     private Discipline[] disciplines;
+
+    public Discipline[] Disciplines
+    {
+        get
+        {
+            return disciplines;
+        }
+    }
+
+    public Student(string inputName, Discipline[] inputDisciplines)
+    {
+        name = inputName;
+        disciplines = inputDisciplines;
+    }
+
+    public string Name
+    {
+        get
+        {
+            return name;
+        }
+    }
+
     public bool DetermineIfAlphabeticallyPrecedes(Student student)
     {
         for (int i = 0; i < name.Length; i++)
@@ -44,10 +67,5 @@ public class Student
             foreach (int grade in discipline)
                 if (grade == inputGrade) count ++;
         return count;
-    }
-    public Student(string inputName, Discipline[] inputDisciplines)
-    {
-        name = inputName;
-        disciplines = inputDisciplines;
     }
 }

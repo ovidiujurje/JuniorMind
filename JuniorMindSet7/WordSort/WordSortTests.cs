@@ -11,8 +11,10 @@ namespace WordSort
         [TestMethod]
         public void SortWordsAscendingByTheNumberOfAppearence()
         {
-            CollectionAssert.AreEqual(new Group[] { new Group("one", 1), new Group("two", 2), new Group("three", 3) }, 
-                SortWordsByNumberOfAppearences("three two three two three one").ToArray());
+            CollectionAssert.AreEqual(
+                new Group[] { new Group("one", 1), new Group("two", 2), new Group("three", 3) }, 
+                SortWordsByNumberOfAppearences("three two three two three one").ToArray()
+                );
         }
 
         public struct Group
