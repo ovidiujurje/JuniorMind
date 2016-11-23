@@ -31,15 +31,74 @@ public class Catalog
         return catalogue.Where(student => student.Disciplines.Average(dis => dis.Grades.Average(gra => gra)) == targetMean);
     }
 
+    public struct StudCount
+    {
+        private Student student;
+        private int count;
+
+        public int Count
+        {
+            get
+            {
+                return count;
+            }
+        }
+
+        public Student Student
+        {
+            get
+            {
+                return student;
+            }
+        }
+
+        public StudCount(Student student, int count)
+        {
+            this.student = student;
+            this.count = count;
+        }
+    }
+
     public IEnumerable<Student> GetStudentsWithGreatestNumberOfASpecificGrade(int inputGrade)
     {
-        return catalogue
-            .Where(student => student.Count(inputGrade) == catalogue.OrderBy(st => st.Count(inputGrade)).Last().Count(inputGrade));
+        var stud = catalogue.Select(student => new StudCount(student, student.Count(inputGrade)))
+            .OrderBy(student => student.Count);
+
+        return stud.Where(student =>  student.Count == stud.Last().Count).Select(student => student.Student);
+    }
+
+    public struct StudAv
+    {
+        private Student student;
+        private double mean;
+
+        public double Mean
+        {
+            get
+            {
+                return mean;
+            }
+        }
+
+        public Student Student
+        {
+            get
+            {
+                return student;
+            }
+        }
+
+        public StudAv(Student student, double mean)
+        {
+            this.student = student;
+            this.mean = mean;
+        }
     }
 
     public IEnumerable<Student> GetStudentsWithLowestGeneralMean()
     {
-        return catalogue
-            .Where(student => student.Disciplines.Average(dis => dis.Grades.Average(gra => gra)) == catalogue.OrderBy(st => st.Disciplines.Average(dis => dis.Grades.Average(gra => gra))).First().Disciplines.Average(dis => dis.Grades.Average(gra => gra)));
+        var stud = catalogue.Select(student => new StudAv(student, student.Disciplines.Average(dis => dis.Grades.Average(gra => gra))))
+            .OrderBy(student => student.Mean);
+        return stud.Where(student => student.Mean == stud.First().Mean).Select(student => student.Student);
     }
 }
