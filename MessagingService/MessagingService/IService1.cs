@@ -10,13 +10,13 @@ namespace MessagingService
     [ServiceContract(CallbackContract = typeof(IService1Callback))]
     public interface IService1
     {
-        [OperationContract]
+        [OperationContract(IsOneWay = true)]
         void GetData(string value);
     }
 
     public interface IService1Callback
     {
-        [OperationContract]
+        [OperationContract(IsOneWay = true)]
         void AddMessage(string history);
     }
 }

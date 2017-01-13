@@ -38,23 +38,15 @@
   <wsdl:message name="IService1_GetData_InputMessage">
     <wsdl:part name="parameters" element="tns:GetData" />
   </wsdl:message>
-  <wsdl:message name="IService1_GetData_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetDataResponse" />
-  </wsdl:message>
   <wsdl:message name="IService1_AddMessage_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:AddMessage" />
-  </wsdl:message>
-  <wsdl:message name="IService1_AddMessage_InputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:AddMessageResponse" />
   </wsdl:message>
   <wsdl:portType name="IService1">
     <wsdl:operation name="GetData">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetData" message="tns:IService1_GetData_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetDataResponse" message="tns:IService1_GetData_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="AddMessage">
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/AddMessage" message="tns:IService1_AddMessage_OutputCallbackMessage" />
-      <wsdl:input wsaw:Action="http://tempuri.org/IService1/AddMessageResponse" message="tns:IService1_AddMessage_InputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetTcpBinding_IService1" type="tns:IService1">
@@ -65,15 +57,9 @@
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="AddMessage">
       <soap12:operation soapAction="http://tempuri.org/IService1/AddMessage" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
