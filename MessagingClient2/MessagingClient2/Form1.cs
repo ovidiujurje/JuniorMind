@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using System.ServiceModel;
 using System.Timers;
 
-namespace MessagingClient1
+namespace MessagingClient2
 {
     //[CallbackBehavior(UseSynchronizationContext = false)]
     public partial class Form1 : Form
@@ -25,22 +25,22 @@ namespace MessagingClient1
         {
             InitializeComponent();
         }
-               
+
         private void button1_Click(object sender, EventArgs e)
         {
-            var message = "Client 1 said: " + textBox1.Text;
+            var message = "Client 2 said: " + textBox1.Text;
 
             if (!string.IsNullOrEmpty(message))
             {
-                    if (service1Client.State == CommunicationState.Faulted)
-                    {
-                        service1Client.Abort();
-                        service1Client = new ServiceReference1.Service1Client(instanceContext);
-                    }
+                if (service1Client.State == CommunicationState.Faulted)
+                {
+                    service1Client.Abort();
+                    service1Client = new ServiceReference1.Service1Client(instanceContext);
+                }
 
-                    service1Client.SendMessage(clientId, message);
+                service1Client.SendMessage(clientId, message);
 
-                    textBox1.Text = string.Empty;
+                textBox1.Text = string.Empty;
             }
         }
 
@@ -69,11 +69,11 @@ namespace MessagingClient1
             (
             (object o, ElapsedEventArgs args) =>
             {
-                    if (service1Client.State == CommunicationState.Faulted)
-                    {
-                        service1Client.Abort();
-                        service1Client = new ServiceReference1.Service1Client(instanceContext);
-                    }
+                if (service1Client.State == CommunicationState.Faulted)
+                {
+                    service1Client.Abort();
+                    service1Client = new ServiceReference1.Service1Client(instanceContext);
+                }
             }
             );
         }
@@ -82,11 +82,11 @@ namespace MessagingClient1
         {
             if (service1Client != null)
             {
-                    if (service1Client.State != CommunicationState.Faulted)
-                    {
-                        service1Client.LogOut(clientId);
-                        service1Client.Close();
-                    }
+                if (service1Client.State != CommunicationState.Faulted)
+                {
+                    service1Client.LogOut(clientId);
+                    service1Client.Close();
+                }
             }
         }
     }

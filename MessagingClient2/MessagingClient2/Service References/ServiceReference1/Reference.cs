@@ -8,11 +8,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MessagingClient1.ServiceReference1 {
+namespace MessagingClient2.ServiceReference1 {
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReference1.IService1", CallbackContract=typeof(MessagingClient1.ServiceReference1.IService1Callback))]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReference1.IService1", CallbackContract=typeof(MessagingClient2.ServiceReference1.IService1Callback))]
     public interface IService1 {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/LogIn", ReplyAction="http://tempuri.org/IService1/LogInResponse")]
@@ -42,12 +42,12 @@ namespace MessagingClient1.ServiceReference1 {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IService1Channel : MessagingClient1.ServiceReference1.IService1, System.ServiceModel.IClientChannel {
+    public interface IService1Channel : MessagingClient2.ServiceReference1.IService1, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class Service1Client : System.ServiceModel.DuplexClientBase<MessagingClient1.ServiceReference1.IService1>, MessagingClient1.ServiceReference1.IService1 {
+    public partial class Service1Client : System.ServiceModel.DuplexClientBase<MessagingClient2.ServiceReference1.IService1>, MessagingClient2.ServiceReference1.IService1 {
         
         public Service1Client(System.ServiceModel.InstanceContext callbackInstance) : 
                 base(callbackInstance) {
