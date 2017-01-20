@@ -13,7 +13,7 @@ using System.Timers;
 namespace MessagingClient2
 {
     //[CallbackBehavior(UseSynchronizationContext = false)]
-    public partial class Form1 : Form
+    public partial class Form2 : Form
     {
         private Guid clientId;
 
@@ -21,12 +21,12 @@ namespace MessagingClient2
 
         private InstanceContext instanceContext;
 
-        public Form1()
+        public Form2()
         {
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private async void button1_Click(object sender, EventArgs e)
         {
             var message = "Client 2 said: " + textBox1.Text;
 
@@ -38,10 +38,21 @@ namespace MessagingClient2
                     service1Client = new ServiceReference1.Service1Client(instanceContext);
                 }
 
-                service1Client.SendMessage(clientId, message);
+                //service1Client.SendMessage(clientId, message);
+                //await SendM(message);
+                await Task.Run(() =>
+                {
+                    SendM(message);
+                });
+
 
                 textBox1.Text = string.Empty;
             }
+        }
+
+        private async Task SendM(string message)
+        {
+            service1Client.SendMessage(clientId, message);
         }
 
         private void Service1Callback_ClientNotified(object sender, ClientNotifiedEventArgs e)
@@ -54,7 +65,7 @@ namespace MessagingClient2
             richTextBox1.Text += e.Message;
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void Form1_Load_1(object sender, EventArgs e)
         {
             var service1Callback = new Service1Callback();
             service1Callback.ClientNotified += Service1Callback_ClientNotified;
@@ -78,7 +89,7 @@ namespace MessagingClient2
             );
         }
 
-        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        private void Form1_FormClosed_1(object sender, FormClosedEventArgs e)
         {
             if (service1Client != null)
             {

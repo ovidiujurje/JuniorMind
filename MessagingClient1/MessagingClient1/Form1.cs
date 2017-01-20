@@ -25,23 +25,34 @@ namespace MessagingClient1
         {
             InitializeComponent();
         }
-               
-        private void button1_Click(object sender, EventArgs e)
+
+        private async void button1_Click(object sender, EventArgs e)
         {
             var message = "Client 1 said: " + textBox1.Text;
 
             if (!string.IsNullOrEmpty(message))
             {
-                    if (service1Client.State == CommunicationState.Faulted)
-                    {
-                        service1Client.Abort();
-                        service1Client = new ServiceReference1.Service1Client(instanceContext);
-                    }
+                if (service1Client.State == CommunicationState.Faulted)
+                {
+                    service1Client.Abort();
+                    service1Client = new ServiceReference1.Service1Client(instanceContext);
+                }
 
-                    service1Client.SendMessage(clientId, message);
+                //service1Client.SendMessage(clientId, message);
+                //await SendM(message);
+                await Task.Run(() =>
+                {
+                    SendM(message);
+                });
 
-                    textBox1.Text = string.Empty;
+
+                textBox1.Text = string.Empty;
             }
+        }
+
+        private async Task SendM(string message)
+        {
+            service1Client.SendMessage(clientId, message);
         }
 
         private void Service1Callback_ClientNotified(object sender, ClientNotifiedEventArgs e)
