@@ -50,6 +50,18 @@
   <wsdl:message name="IService1_SendMessage_OutputMessage">
     <wsdl:part name="parameters" element="tns:SendMessageResponse" />
   </wsdl:message>
+  <wsdl:message name="IService1_GetHistory_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetHistory" />
+  </wsdl:message>
+  <wsdl:message name="IService1_GetHistory_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetHistoryResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_KeepConnection_InputMessage">
+    <wsdl:part name="parameters" element="tns:KeepConnection" />
+  </wsdl:message>
+  <wsdl:message name="IService1_KeepConnection_OutputMessage">
+    <wsdl:part name="parameters" element="tns:KeepConnectionResponse" />
+  </wsdl:message>
   <wsdl:message name="IService1_HandleMessage_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:HandleMessage" />
   </wsdl:message>
@@ -64,6 +76,14 @@
     <wsdl:operation name="SendMessage">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/SendMessage" message="tns:IService1_SendMessage_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/SendMessageResponse" message="tns:IService1_SendMessage_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetHistory">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetHistory" message="tns:IService1_GetHistory_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetHistoryResponse" message="tns:IService1_GetHistory_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="KeepConnection">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/KeepConnection" message="tns:IService1_KeepConnection_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/KeepConnectionResponse" message="tns:IService1_KeepConnection_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="HandleMessage">
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/HandleMessage" message="tns:IService1_HandleMessage_OutputCallbackMessage" />
@@ -89,6 +109,24 @@
     </wsdl:operation>
     <wsdl:operation name="SendMessage">
       <soap12:operation soapAction="http://tempuri.org/IService1/SendMessage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHistory">
+      <soap12:operation soapAction="http://tempuri.org/IService1/GetHistory" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="KeepConnection">
+      <soap12:operation soapAction="http://tempuri.org/IService1/KeepConnection" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

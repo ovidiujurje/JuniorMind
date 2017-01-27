@@ -8,11 +8,15 @@ using System.Threading;
 
 namespace MessagingService
 {
-    //[ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Reentrant)]
-    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode =ConcurrencyMode.Multiple)]
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Multiple)]
     public class Service1 : IService1
     {
         private readonly Dictionary<Guid, IService1Callback> clients = new Dictionary<Guid, IService1Callback>();
+
+        public void KeepConnection(string client)
+        {
+            Console.WriteLine(client + " Ping " + DateTime.Now.ToString());
+        }
 
         Guid IService1.LogIn()
         {
@@ -43,12 +47,20 @@ namespace MessagingService
             }
         }
 
+        private IMessageRepository history = new SynchedRepository(new FileBasedMessageRepository(@"C:\Users\Ovidiu Jurje\Documents\GitHub\JuniorMind\MessagingService\history.txt"));
+
         void IService1.SendMessage(Guid clientId, string message)
         {
-            BroadcastMessage(clientId, message);
+            BroadcastMessage(message);
+            history.AddMessage(message);
         }
 
-        private void BroadcastMessage(Guid clientId, string message)
+        public string GetHistory()
+        {
+            return history.GetAll();
+        }
+
+        public void BroadcastMessage(string message)
         {
             ThreadPool.QueueUserWorkItem
                 (

@@ -12,7 +12,6 @@ using System.Timers;
 
 namespace MessagingClient1
 {
-    //[CallbackBehavior(UseSynchronizationContext = false)]
     public partial class Form1 : Form
     {
         private Guid clientId;
@@ -38,24 +37,16 @@ namespace MessagingClient1
                     service1Client = new ServiceReference1.Service1Client(instanceContext);
                 }
 
-                //service1Client.SendMessage(clientId, message);
-                //await SendM(message);
                 await Task.Run(() =>
                 {
-                    SendM(message);
+                    service1Client.SendMessage(clientId, message);
                 });
-
 
                 textBox1.Text = string.Empty;
             }
         }
 
-        private async Task SendM(string message)
-        {
-            service1Client.SendMessage(clientId, message);
-        }
-
-        private void Service1Callback_ClientNotified(object sender, ClientNotifiedEventArgs e)
+        private void GetMessages(object sender, ClientNotifiedEventArgs e)
         {
             if (!string.IsNullOrEmpty(richTextBox1.Text))
             {
@@ -68,25 +59,29 @@ namespace MessagingClient1
         private void Form1_Load(object sender, EventArgs e)
         {
             var service1Callback = new Service1Callback();
-            service1Callback.ClientNotified += Service1Callback_ClientNotified;
+            service1Callback.ClientNotified += GetMessages;
 
             instanceContext = new InstanceContext(service1Callback);
             service1Client = new ServiceReference1.Service1Client(instanceContext);
 
             clientId = service1Client.LogIn();
 
-            var timer = new System.Timers.Timer(300000);
-            timer.Elapsed +=
+            richTextBox1.Text = service1Client.GetHistory();
+
+            var timer = new System.Timers.Timer(3000);
+            timer.Elapsed += new ElapsedEventHandler
             (
             (object o, ElapsedEventArgs args) =>
             {
-                    if (service1Client.State == CommunicationState.Faulted)
-                    {
-                        service1Client.Abort();
-                        service1Client = new ServiceReference1.Service1Client(instanceContext);
-                    }
+                if (service1Client.State == CommunicationState.Faulted)
+                {
+                    service1Client.Abort();
+                    service1Client = new ServiceReference1.Service1Client(instanceContext);
+                }
+                service1Client.KeepConnection("Client 1");
             }
             );
+            timer.Enabled = true;
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
@@ -100,32 +95,5 @@ namespace MessagingClient1
                     }
             }
         }
-    }
-
-    public class Service1Callback : ServiceReference1.IService1Callback
-    {
-        public event ClientNotifiedEventHandler ClientNotified;
-
-        void ServiceReference1.IService1Callback.HandleMessage(string message)
-        {
-            if (ClientNotified != null)
-            {
-                ClientNotified(this, new ClientNotifiedEventArgs(message));
-            }
-        }
-    }
-
-    public delegate void ClientNotifiedEventHandler(object sender, ClientNotifiedEventArgs e);
-
-    public class ClientNotifiedEventArgs : EventArgs
-    {
-        private readonly string message;
-
-        public ClientNotifiedEventArgs(string message)
-        {
-            this.message = message;
-        }
-
-        public string Message { get { return message; } }
     }
 }

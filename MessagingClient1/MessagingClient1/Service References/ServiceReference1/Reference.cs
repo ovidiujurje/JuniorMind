@@ -32,6 +32,18 @@ namespace MessagingClient1.ServiceReference1 {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/SendMessage", ReplyAction="http://tempuri.org/IService1/SendMessageResponse")]
         System.Threading.Tasks.Task SendMessageAsync(System.Guid clientId, string message);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetHistory", ReplyAction="http://tempuri.org/IService1/GetHistoryResponse")]
+        string GetHistory();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetHistory", ReplyAction="http://tempuri.org/IService1/GetHistoryResponse")]
+        System.Threading.Tasks.Task<string> GetHistoryAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/KeepConnection", ReplyAction="http://tempuri.org/IService1/KeepConnectionResponse")]
+        void KeepConnection(string client);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/KeepConnection", ReplyAction="http://tempuri.org/IService1/KeepConnectionResponse")]
+        System.Threading.Tasks.Task KeepConnectionAsync(string client);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -91,6 +103,22 @@ namespace MessagingClient1.ServiceReference1 {
         
         public System.Threading.Tasks.Task SendMessageAsync(System.Guid clientId, string message) {
             return base.Channel.SendMessageAsync(clientId, message);
+        }
+        
+        public string GetHistory() {
+            return base.Channel.GetHistory();
+        }
+        
+        public System.Threading.Tasks.Task<string> GetHistoryAsync() {
+            return base.Channel.GetHistoryAsync();
+        }
+        
+        public void KeepConnection(string client) {
+            base.Channel.KeepConnection(client);
+        }
+        
+        public System.Threading.Tasks.Task KeepConnectionAsync(string client) {
+            return base.Channel.KeepConnectionAsync(client);
         }
     }
 }

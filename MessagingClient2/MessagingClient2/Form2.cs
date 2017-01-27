@@ -12,7 +12,6 @@ using System.Timers;
 
 namespace MessagingClient2
 {
-    //[CallbackBehavior(UseSynchronizationContext = false)]
     public partial class Form2 : Form
     {
         private Guid clientId;
@@ -38,21 +37,13 @@ namespace MessagingClient2
                     service1Client = new ServiceReference1.Service1Client(instanceContext);
                 }
 
-                //service1Client.SendMessage(clientId, message);
-                //await SendM(message);
                 await Task.Run(() =>
                 {
-                    SendM(message);
+                    service1Client.SendMessage(clientId, message);
                 });
-
 
                 textBox1.Text = string.Empty;
             }
-        }
-
-        private async Task SendM(string message)
-        {
-            service1Client.SendMessage(clientId, message);
         }
 
         private void Service1Callback_ClientNotified(object sender, ClientNotifiedEventArgs e)
@@ -75,8 +66,10 @@ namespace MessagingClient2
 
             clientId = service1Client.LogIn();
 
-            var timer = new System.Timers.Timer(300000);
-            timer.Elapsed +=
+            richTextBox1.Text = service1Client.GetHistory();
+
+            var timer = new System.Timers.Timer(3000);
+            timer.Elapsed += new ElapsedEventHandler
             (
             (object o, ElapsedEventArgs args) =>
             {
@@ -85,8 +78,10 @@ namespace MessagingClient2
                     service1Client.Abort();
                     service1Client = new ServiceReference1.Service1Client(instanceContext);
                 }
+                service1Client.KeepConnection("Client 2");
             }
             );
+            timer.Enabled = true;
         }
 
         private void Form1_FormClosed_1(object sender, FormClosedEventArgs e)

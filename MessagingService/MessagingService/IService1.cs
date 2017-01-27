@@ -18,6 +18,12 @@ namespace MessagingService
 
         [OperationContract]
         void SendMessage(Guid clientId, string message);
+
+        [OperationContract]
+        string GetHistory();
+
+        [OperationContract]
+        void KeepConnection(string client);
     }
 
     public interface IService1Callback
